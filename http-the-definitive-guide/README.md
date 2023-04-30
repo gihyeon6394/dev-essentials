@@ -7,7 +7,7 @@
 
 <h2>contents</h2>
 
-1. [HTTP:웹의 기초](https://github.com/gihyeon6394/book-http-the-definitive-guide/tree/main/1%EB%B6%80_HTTP_%EC%9B%B9%EC%9D%98_%EA%B8%B0%EC%B4%88)  
+1. HTTP:웹의 기초  
     01. HTTP 개관
     02. URL과 리소스
     03. HTTP 메시지
