@@ -93,7 +93,7 @@ HTTP 메시지의 모든 것
        클라이언트 / 서버 / 프락시를 경우에 따라 잘 분류해서 사용
 
     2. 200-299 : 성공 상태 코드
-       > https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
+       > [코드 가이드](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200)
 
     3. 300-399 : 리다이렉션 상태 코드
        > 다른 대안을 제시, **리다이렉트 URL과 설명을 포함하는 건 좋은 습관**
