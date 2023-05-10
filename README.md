@@ -1,5 +1,13 @@
-![image](https://user-images.githubusercontent.com/53042858/235349300-61fcdca6-c28e-4eb4-af96-8f9fb21683d6.png)
 
+<h2>데이터 중심 어플리케이션 설계</h2>
 
+<img src="img_1.png"  width="40%"/>
 
-![image](https://user-images.githubusercontent.com/53042858/235349321-7a80f1ea-2cd9-4556-a5be-e7b42b728e69.png)
+<h2>HTTP 완벽가이드</h2>
+
+<img src="img_2.png"  width="40%"/>
+
+<h2>그림과 실습으로 배우는 도커 & 쿠버네티스</h2>
+<h3>개념과 작동 원리가 쏙쏙 이해되는 완벽 입문서</h3>
+
+<img src="img.png"  width="40%"/>
