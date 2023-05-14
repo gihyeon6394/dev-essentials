@@ -10,51 +10,68 @@
 - 인터넷 곳곳에 설치된 다양한 HTTP 구성요소
 
 
-<h2>contents</h2>  
-  
-1. HTTP: 인터넷의 멀티미디어 배달부 
+## 1. HTTP: 인터넷의 멀티미디어 배달부
 
-    > HTTP는 **신뢰성**을 가지고 리소스들을 인터넷을 통해 항해 중  
-    > HTTP는 어떻게 이 수많은 웹트래픽 (리소스)을 전송하는가?
+- 수십억개의 리소스 <sup>ex. jpg, html, text, wav 등</sup> 들이 HTTP로 인터넷에 항해중
+- HTTP **신뢰성** : 메시지 손상, 왜곡, 중복 되지 않음을 보장
 
-2. 웹 클라이언트와 서버
-    > 웹 서버 : 웹 리소스를 HTTP 프로토콜로 클라이언트와 통신하는 서버   
-    > 클라이언트 : HTTP를 요청하는 자 (브라우저 등) <sub>http://www.foo.com/index.html</sub> 
+
+## 2. 웹 클라이언트와 서버
+
+<img src="img.png"  width="30%"/>  
+
+- <sup>(웹)</sup>서버 : 웹 리소스를 HTTP 프로토콜로 클라이언트와 통신하는 서버
+- 클라이언트 : HTTP를 요청하는 자 (브라우저 등) <sub>http://www.foo.com/index.html </sub> 
     
-3. 리소스  
+## 3. 리소스
 
-    > 웹 리소스 : 정적 파일 <sub>ex. js, css, jpeg, html, word</sub>  
-    > 리소스 : 웹 리소스 + 동적 파일 <sub>ex. 주식 거래, 데이터베이스 검색, 실시간 엔진</sub> 
+#### 웹 서버는 웹 리소스를 관리하고 제공한다. 
 
-    01. 미디어 타입
+- 웹 리소스 : 정적 파일 <sub>ex. js, css, jpeg, html, word</sub> 
+- 리소스 : 웹 리소스 + 동적 파일 <sub>ex. 주식 거래, 데이터베이스 검색, 실시간 엔진</sub>
 
-        > 다룰수 있는 객체인지 **MIME** <sup>Multipurpose Internet Mail Extensions</sup> 타입을 통해 확인  
-        > 포맷 : 주타입 / 부타입  
-        > ex. text/html <sup>html로 작성된 텍스트</sup>, text/plain<sup>일반 ASCII 텍스트</sup>, image/jpeg<sup>jpeg   형식의 이미지</sup>, image/gif<sup>gif 형식의 이미지</sup>, ...
+### 1. 미디어 타입
 
-    02. URI  
-        
-        > 요청할 리소스를 명확하게 지목하는 방법  
-        > 인터넷 우편물 주소와도 같은 것    
-        > http://www.foo.com/home/index.html <= foo.com에 가서 home디렉토리 밑의 index.html을 요청  
-        > URI는 URL, URN이 있음
+#### 웹 서버는 모든 HTTP 객체 데이터에 MIME <sup>Multipurpose Internet Mail Extensions</sup> 타입이라는 데이터 포맷 라벨을 붙인다.
 
-    03. URL 
+- MIME 타입 : 리소스의 **성격**을 라벨링
+- MIME 타입은 웹 브라우저가 리소스를 처리하는 방법을 결정
+- 수백가지의 MIME 타입과 실험용, 특정 용도로 사용되는 타입이 존재
+- 포맷 : 주타입 / 부타입 <sup>primary object type / specific subtype</sup>
+  - ex. text/html <sup>html로 작성된 텍스트</sup>, text/plain<sup>일반 ASCII 텍스트</sup>, image/jpeg<sup>jpeg 형식의 이미지</sup>, image/gif<sup>gif 형식의 이미지</sup>, ...
 
-        > **오늘날 대부분의 URI**  
-        > URL : unioform resource locator  
-        > URL의 세부분 ex. http://www.foo.com/home/index.html    
-        >     http:// : 리소스에 접근하기 위한 프로토콜 <sup>scheme</sup>  
-        >     www.foo.com : 인터넷 주소  
-        >     /home/index.html : 해당 웹서버의 리소스 주소  
-        > **통상적으로 URL = URI**
+#### 2. URI
 
-    04. URN
+웹 리소스는 각자 이름을 가지고 있고, 클라이언트는 그 이름을 지목하여 리소스를 요청한다.
 
-        > 리소스 위치를 옮겨도 URN으로 찾아 들어감  
-        > 리소스 위치에 독립적임  
-        > 아직 실험중이나 미래가 밝음  
+#### URI <sup>Uniform Resource Identifier</sup> : 리소스를 고유하게 식별하고 위치를 지정할 수 있다.
 
+<img src="img_2.png"  width="30%"/>  
+
+- http : http 프로토콜을 사용
+- www.foo.com : 리소스를 소유한 도메인
+- /index.html : / 경로에 위치한 index.html 파일 요청
+
+### 3. URL
+
+#### URL <sup>Uniform Resource Locator</sup> : 통합 자원 지시자
+
+- **오늘날 대부분의 URI 는 URL**
+- URL 구성요소
+  - 스킴 <sup>scheme</sup> : 리소스에 접근하기 위해 사용할 프로토콜
+  - 서버의 인터넷 주소 <sup>ex. www.naver.com</sup> 
+  - 웹 서버의 리소스 <sup>ex. /myPage/orderInfo.html</sup>
+
+### 4. URN
+
+#### URN <sup>Uniform Resource Name</sup> : 리소스 위치에 의존하지 않는 지시자
+
+- 리소스 위치를 옮겨도 URN으로 찾아 들어감  
+- 아직 실험중이고, 미래성이 있음   
+
+
+
+   
 4. 트랜잭션
     > HTTP 트랜잭션은 클라이언트의 메서드와 그에 따른 응답으로 상태코드와 reason phrase로 이루어짐  
     > 하나의 웹페이지는 하나 이상의 HTTP 트랜잭션으로 이루어짐
