@@ -18,7 +18,7 @@
 
 ## 2. 웹 클라이언트와 서버
 
-<img src="img.png"  width="30%"/>  
+<img src="img.png"  width="40%"/>  
 
 - <sup>(웹)</sup>서버 : 웹 리소스를 HTTP 프로토콜로 클라이언트와 통신하는 서버
 - 클라이언트 : HTTP를 요청하는 자 (브라우저 등) <sub>http://www.foo.com/index.html </sub> 
@@ -46,7 +46,7 @@
 
 #### URI <sup>Uniform Resource Identifier</sup> : 리소스를 고유하게 식별하고 위치를 지정할 수 있다.
 
-<img src="img_2.png"  width="30%"/>  
+<img src="img_2.png"  width="40%"/>  
 
 - http : http 프로토콜을 사용
 - www.foo.com : 리소스를 소유한 도메인
