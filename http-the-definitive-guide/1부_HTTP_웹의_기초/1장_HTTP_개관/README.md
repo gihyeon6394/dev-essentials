@@ -40,7 +40,7 @@
 - 포맷 : 주타입 / 부타입 <sup>primary object type / specific subtype</sup>
   - ex. text/html <sup>html로 작성된 텍스트</sup>, text/plain<sup>일반 ASCII 텍스트</sup>, image/jpeg<sup>jpeg 형식의 이미지</sup>, image/gif<sup>gif 형식의 이미지</sup>, ...
 
-#### 2. URI
+### 2. URI
 
 웹 리소스는 각자 이름을 가지고 있고, 클라이언트는 그 이름을 지목하여 리소스를 요청한다.
 
