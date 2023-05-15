@@ -46,7 +46,7 @@
 
 #### URI <sup>Uniform Resource Identifier</sup> : 리소스를 고유하게 식별하고 위치를 지정할 수 있다.
 
-<img src="img_2.png"  width="50%"/>  
+<img src="img_2.png"  width="35%"/>  
 
 #### URI 구성요소
 
@@ -64,7 +64,7 @@
   - 서버의 인터넷 주소 <sup>ex. www.naver.com</sup> 
   - 웹 서버의 리소스 <sup>ex. /myPage/orderInfo.html</sup>
 
-### 4. URN
+### 4. URN즈
 
 #### URN <sup>Uniform Resource Name</sup> : 리소스 위치에 의존하지 않는 지시자
 
@@ -119,7 +119,7 @@ HTTP 트랜잭션 = 요청 명령 <sup>HTTP 메시지</sup> + 응답 결과 <sup
   - ex. HTML 문서, 이미지, 동영상, JSON 데이터 등
 
 ### 1. 간단한 메시지의 예
-<img src="img_1.png"  width="50%"/>  
+<img src="img_1.png"  width="55%"/>  
 
 
 6. TCP 커넥션
