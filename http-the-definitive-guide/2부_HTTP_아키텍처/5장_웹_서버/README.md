@@ -85,7 +85,7 @@ ex. apache, nginx, IIS, 등
 웹 서버는 알아낸 호스트명으로 접근제어, 로깅에 사용한다.
 
 hostname lookup 은 시간이 오래 걸리기 때문에, 트랜잭션의 성능을 저하시킨다.  
-따라서 **특정 리소스에 대해서만** hostname reslolution <sup>호스트명 분석</sup>을 수행하도록 설정하자.
+따라서 **특정 리소스에 대해서만** hostname resolution <sup>호스트명 분석</sup>을 수행하도록 설정하자.
 
 ### 3. ident를 통해 클라이언트 사용자 알아내기
 
