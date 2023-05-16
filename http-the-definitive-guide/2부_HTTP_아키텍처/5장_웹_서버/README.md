@@ -37,7 +37,7 @@ ex. apache, nginx, IIS, 등
 
 #### 2022년 기준 웹 서버 점유율 (출처 : 넷크래프트 https://news.netcraft.com/archives/2022/)
 
-<img src="img.png"  width="70%"/>  
+<img src="img.png"  width="80%"/>  
 
 ### 3. 임베디드 웹 서버
 
