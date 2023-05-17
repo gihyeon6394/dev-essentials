@@ -186,7 +186,7 @@ MR은 다음 내용을 내포한다.
 
 ## 6. 정리
 
-<img src="img.png"  width="85%"/>
+<img src="img_1.png"  width="85%"/>
 
 # 4. 회고
 
