@@ -225,7 +225,8 @@ DocumentRoot "/usr/local/httpd/files"
 - 에러 반환
 - '색인 파일' 반환
 - 디렉터리를 탐색해서 그 내용을 담은 html 반환
-  - 디렉터리 목록 <sup>directory listing</sup> : 디렉터리 내의 파일 목록을 보여주는 것
+    - 디렉터리 목록 <sup>directory listing</sup> : 디렉터리 내의 파일 목록을 보여주는 것
+
 ```shell
 
 ## 아파치 설정 > 색인파일 우선순위  
@@ -237,17 +238,18 @@ DirectoryIndex index.html index.htm index.php index.cgi
 
 웹 서버는 대부분 백엔드 애플리케이션 <sup>java servlet</sup>과 연동되어 동적 콘텐츠를 제공한다.
 이 떄 웹 서버는 동적 콘텐츠 생성 프로그램이 어디에있는지<sup>1</sup>,   
-어떻게 그 프로그램을 실행하는지 <sup>2</sup> 알아야 한다.  
- 
+어떻게 그 프로그램을 실행하는지 <sup>2</sup> 알아야 한다.
+
 ```shell
 ## 아파치 설정 > 프로그램 위치 매핑
 ## httpd.conf
 ## /cgi-bin/ 요청이 들어오면 아래 경로로 매핑
 ScriptAlias /cgi-bin/ /usr/local/httpd/cgi-bin/
 ```
+
 ### 7.4. 서버 사이드 인클루드 (Server-Sdie Includes, SSI)
 
-만일, 어떤 리소스가 SSI를 포함하고 있다면, 웹 서버는 SSI를 처리하고 클라이언트에게 리소스를 반환한다.  
+만일, 어떤 리소스가 SSI를 포함하고 있다면, 웹 서버는 SSI를 처리하고 클라이언트에게 리소스를 반환한다.
 
 ### 7.5. 접근 제어
 
@@ -256,11 +258,60 @@ ScriptAlias /cgi-bin/ /usr/local/httpd/cgi-bin/
 
 ## 8. 단계 5 : 응답 만들기
 
-### 1. 응답 엔터티
+### 8.1. 응답 엔터티
 
-### 2. MIME 유형 결정하기
+트랜잭션이 응답 본문을 생성해야한다면 응답 메시지에 본문을 함께 보내야 한다.
 
-### 3. 리다이렉션
+#### 본문이 있는 응답 메시지 내용
+
+- Content-Type : 본문의 MIME 유형
+- Content-Length : 본문의 길이
+- 응답 본문
+
+### 8.2. MIME 유형 결정하기
+
+웹 서버는 응답 본문의 MIME 타입을 지정해야할 의무가 있다.
+
+#### MIME 타입 결정 방법
+
+- mime.types : 파일의 확장자를 보고 MIME 타입을 결정한다.
+    - 가장 흔한 방법
+- Magic typing
+    - 매직파일 : 리소스의 내용 패턴 정보를 저장한 테이블
+    - 매직파일을 탐색해서 결정
+    - 느림, 파일이 표준 확장자 없이 지어진 경우 유용
+- Explicit typing <sup>유형 명시</sup>
+    - 특정 리소스에 대해 특정 MIME 타입을 임의로 지정
+- Type negotiation <sup>유형 협상</sup>
+    - 클라이언트가 원하는 MIME 타입을 지정
+    - 서버는 그 중 하나를 선택
+    - 클라이언트가 Accept 헤더를 보내지 않으면, 서버는 기본 MIME 타입을 선택
+
+### 8.3. 리다이렉션
+
+웹 서버가 요청의 수행을 위해 클라이언트가 다른곳으로 가도록 라다이렉트  
+리다이렉션은 3xx 응답 코드를 사용한다.  
+Location 헤더 필드에 리다이렉트할 URI를 담는다.
+
+#### 리다이렉트가 유용한 경우
+
+- 영구히 리소스가 옮겨진 경우 : 301 <sup>Moved Permanently</sup>
+    - "리소스가 옮겨졌으니 북마크를 갱신하라"
+- 일시적으로 리소스가 옮겨진 경우 :  303 <sup>See Other</sup>, 307 <sup>Temporary Redirect</sup>
+    - "리소스가 일시적으로 옮겨졌으니 북마크를 갱신하지 말고, 잠시동안은 여기로 와서 찾아봐라"
+- URL 증강
+    - fat URL을 만듦
+    - 문맥 정보를 URL에 추가하여 리다이렉트
+    - 303 <sup>See Other</sup>
+    - 307 <sup>Temporary Redirect</sup>
+- 부하 균형
+    - 리다이렉트를 통해 부하를 분산
+    - 303 <sup>See Other</sup>
+    - 307 <sup>Temporary Redirect</sup>
+- 친밀한 다른 서버가 있을 때 : 303 <sup>See Other</sup>, 307 <sup>Temporary Redirect</sup>
+    - 클라리언트에 대한 정보를 가진 다른 서버로 리다이렉트
+- 디렉터리 이름 정규화
+    - /index.html -> /index.html/
 
 ## 9. 단계 6 : 응답 보내기
 
