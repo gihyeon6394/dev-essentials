@@ -63,14 +63,14 @@
 
 #### 어린이 필터 <sup>필터링 프락시</sup>
 
-<img src="img_2.png"  width="50%"/>  
+<img src="img_2.png"  width="30%"/>  
 
 #### 문서 접근 제어자
 
 - 대기업 환경, 분산된 관료 조직에 유용
 - 각 웹서버들의 접근제어 설정 없이, 중앙 프락시 서버에서 접근제어 설정
 
-<img src="img_4.png"  width="50%"/>  
+<img src="img_4.png"  width="30%"/>  
 
 #### 보안 방화벽
 
@@ -78,7 +78,7 @@
 - 프락시 서버가 조직에 들어오고 나가는 응용 프로토콜 통제
 - hook 제공
 
-<img src="img_5.png"  width="50%"/>
+<img src="img_5.png"  width="30%"/>
 
 ## 3. 프락시는 어디에 있는가?
 
