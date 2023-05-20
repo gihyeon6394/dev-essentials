@@ -27,7 +27,7 @@
 
 ## OSI 참조 모델
 
-<img src="img.png"  width="40%"/>
+<img src="img.png"  width="25%"/>
 
 - 개방형 시스템의 상호 접속을 위한 참조 모델
 - 이기종 시스템간의 통신이 가능하도록 표준 제정
@@ -141,7 +141,7 @@
 
 - 4 바이트 <sup>32비트</sup>로 구성
 
-<img src="img_4.png"  width="80%"/>
+<img src="img_4.png"  width="60%"/>
 
 #### 포트 주소
 
