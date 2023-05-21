@@ -212,5 +212,77 @@
 - 인터넷에서 multicast를 지원하기 위한 프로토콜
 - IP 호스트가 어떤 멀티캐스트 그룹에 속하는지 알려주는 프로토콜
     - 멀티캐스트 라우터를 통해 알려줌
+- 클래스 D 주소 사용
+    - 주소 범위 : 224.0.0.0 ~ 239.255.255.255
 
+### IGMP 메시지
 
+<img src="img_4.png"  width="40%"/>
+
+1. Type : 8bit
+    - Query (general/special)
+    - Membership Report
+    - Leave report
+2. Max Response Time : 8bit
+    - 질의에 응답해야하는 최대 허용시간
+3. Checksum : 16bit
+    - 오류 검출
+4. Group Address : 32bit
+    - 멀티캐스트 그룹 주소
+    - 클래스 D IP 주소
+
+## DHCP <sup>Dynamic Host Configuration Protocol</sup>s
+
+### IP 주소관리
+
+- IP 주소는 기억하기 어려워 관리 방법이 필요함
+- 관리 방법
+    - Host Table
+    - DNS <sup>Domain Name System</sup>
+    - BOOTP <sup>Bootstrap Protocol</sup>
+    - DHCP <sup>Dynamic Host Configuration Protocol</sup>
+
+#### Host Table
+
+- 모든 IP 주소와 매핑되는 호스트 이름으로 구성된 테이블
+- 장점
+    - 중앙 집중 관리
+    - host table 구조 간단
+- 단점
+    - 호스트 개수 증가와 변화에 대응 어려움 <sub>매핑 정보 일관성 유지의 어려움</sub>
+    - 평면구조이기 때문에 중복 정보 포함
+
+#### DNS <sup>Domain Name System</sup>
+
+- 계층적 구조 및 분산관리 특성
+    - 도메인 이름 : naver.com
+- 분산관리 문제
+    - name server는 특정 네트워크만의 정보를 가짐
+- name server 데이터 복잡성
+    - 수작업에 의한 데이터 오류 가능성
+
+#### BOOTP <sup>Bootstrap Protocol</sup>
+
+- 동적으로 IP 주소를 할당하는 프로토콜sss
+- 디스크가 없는 호스트에 대해 주소, 설정정보를 자동으로 할당하고 관리
+
+#### DHCP <sup>Dynamic Host Configuration Protocol</sup>
+
+- 응용계층 프로토콜
+- BOOTP 에서 발전된 동적 주소 할당 프로토콜
+- IP 주소 재사용 가능
+- 메시지 형식은 BOOTP 와 동일
+- IP 주소 pool 에서 사용가능한 IP 주소를 선택하여 원하는 호스트에게 일정기간 임대
+
+<img src="img_5.png"  width="40%"/>
+
+### DHCP 프로토콜 순서
+
+1. DHCP Discover
+    - "DHCP 서버가 있습니까?"
+2. DHCP Offer
+    - "IP 주소 210.22.31.100으로 2일간 사용가능합니다."
+3. DHCP Request
+    - "IP 주소 210.22.31.100으로 2일간 사용가능?"
+4. DHCP ACK
+    - "네, 이 서브넷 마스크, DNS 서버 주소, WING 서버, 노드 유형, 도메인 이름을 쓰세요."
