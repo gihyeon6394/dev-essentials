@@ -168,4 +168,5 @@
 - 역캡슐화 <sup>Decapsulation</sup>
     - 수신측 시스템의 해당 계층에서 제어 정보를 제거하는 것
     - 캡슐화의 반대 과정
+    - 물리 계층 제외 모든 계층에서 수행
     - Protocol Data Unit - Protocol Control Information = Service Data Unit
