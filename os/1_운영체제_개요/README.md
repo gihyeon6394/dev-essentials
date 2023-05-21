@@ -10,7 +10,7 @@
 
 ## 1. 운영체제의 개념
 
-<img src="img_1.png"  width="80%"/>
+<img src="img_1.png"  width="60%"/>
 
 ### 운영체제?
 
