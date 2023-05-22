@@ -186,6 +186,8 @@
 
 #### TCP 연결 종료 : 양방향 모두 연결 종료
 
+<img src="img_8.png"  width="60%"/>
 
+## 참고
 
-
+- http://www.tcpipguide.com/
