@@ -187,13 +187,10 @@
 - 강력한 인증방법
 - 안전하지 않은 네트워크를 안전하게 통신
 - rsh, rcp, rloign, telnet, ftp 등의 서비스를 안전하게 사용하도록 제공
--
 
 ### SSH 동작 방식
 
-<img src="img_10.png"  width="60%"/>
-
-<img src="img_11.png"  width="50%"/>
+<img src="img_10.png"  width="40%"/> <img src="img_11.png"  width="40%"/>
 
 ## 메일 서비스
 

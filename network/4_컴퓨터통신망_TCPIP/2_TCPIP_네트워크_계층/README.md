@@ -14,7 +14,7 @@
 
 - Internet Protocol : OSI 모델의 네트워크 계층에 해당하는 프로토콜
 - 사용자에게 복잡한 인터넷 개별 네트워크 구조를 숨김
-- 모든 호스트들을 연결하는 1개의가상 네트워크로 보이게 함
+- 모든 호스트들을 연결하는 1개의 가상 네트워크로 보이게 함
 
 ### 투명성 <sup>transparency</sup>
 
@@ -81,7 +81,7 @@
 - MTU <sup>Maximum Transmission Unit</sup> : 데이터 링크 계층에서 전송 가능한 최대 데이터 길이
     - Ethernet LAN : 1500 byte
     - CCCITT X.25 : 128 byte
-- IP 데이터그램은 전송 중 각 네트워크에서 MTu에 적합한 크기로 분할 됨
+- IP 데이터그램은 전송 중 각 네트워크에서 MTU에 적합한 크기로 분할 됨
 - 목적지 호스트에서 각 fragment를 재조립
 
 <img src="img_2.png"  width="50%"/>
