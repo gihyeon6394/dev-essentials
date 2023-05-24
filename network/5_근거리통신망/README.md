@@ -2,6 +2,11 @@
 
 - 근거리 통신망
 - 근거리 통신망 분류
+- 근거리 통신망의 모델
+    - 유선 LAN
+    - 무선 LAN
+    - 고속 LAN
+    - 초고속 무선 인터넷
 
 ## 근거리 통신망 <sup>Local Area Network, LAN</sup>
 
@@ -189,3 +194,87 @@
 - Data Point 사의 ARCNET
 
 <img src="img_3.png"  width="20%"/>
+
+## 유선 LAN
+
+- LAN 케이블로 모뎀을 연결하여 네트워크 구축
+- 장점
+    - 데이터 전송속도 높음
+    - 통신 간섭 적고 안정적인 통신 가능
+- 단점
+    - 케이블 길이가 길어질 경우 손상 위험
+    - 통신장애 발생할 가능성 높아짐
+- 전송매체
+    - 동축 케이블
+    - 꼬임선 케이블
+    - 광섬유 케이블
+- Ethernet
+    - 일반적으로 LAN 구성시 가장 많이 활용되는 기술 규격
+    - 토큰 링 등을 대체함
+    - OSI 모델에서 물리계층의 신호, 배선, 데이터 링크계층의 MAC 패킷, 프로토콜 정의
+    - 속도가 점점 빨라짐 (이더넷 , 패스트 이더넷, 기가비트 이더넷)
+
+## 무선 LAN
+
+- 적외선이나 전파를 사용하여 네트워크 구축
+- 장점
+    - 이동 중에 통신 가능
+    - 빠른 시간 내에 네트워크 구축 가능
+    - 노드들의 배치도에 의존 X
+    - 복잡한 배선 작업 제거
+- 단점
+    - 전송 속도가 느림
+    - 간섭 가능성
+    - 보안 취약
+- 무선 LAN 전송 매체
+    - 적외선 기술 사용
+    - 대부분 2.4GHz ~ 60GHz 주파수 사용
+
+### 무선 LAN의 통신 방식
+
+#### Ad hoc
+
+- "특별한 목적을 위해서"라는 뜻의 라틴어
+- 무선 LAN 전파 범위 안에서 무선 LAN 카드를 장착한 노드끼리 직접 통신
+- IBSS <sup>Independent Basic Service Set</sup> 라는 독립적 단위로 단독 네트워크 구성
+- 다른 IBSS 노드와는 데이터 송수신 불가
+
+#### infrastructure
+
+- 무선 LAN 카드를 장착한 노드들이 허브나 라우터와 연결된 AP <sup>Access Point</sup> 를 통해 통신
+- BSS <sup>Basic Service Set</sup>
+    - 하나의 AP로 구성되는 무선 LAN
+- ESS <sup>Extended Service Set</sup>
+    - 서로 연결도니 BSS 들의 집합을 하나의 BSS 처럼 보이게 만드는 무선 LAN
+
+## 고속 LAN
+
+- 기존 LAN 프로토콜을 이용하면서 100Mbps 이상의 고속 통신을 지원하는 LAN
+- ex. Fast Ethernet, Gigabit Ethernet, FDDI
+
+### Fast Ethernet
+
+- 100Mbps의 고속 통신을 지원하는 LAN
+- 기존 이더넷과 동일하나, 전송 가능한 케이블의 최대 길이를 줄여서 속도 향상
+- 매체접근방식 : CSMA/CD
+
+### Gigabit Ethernet
+
+- 1Gbps의 고속 통신을 지원하는 LAN
+
+#### FDDI <sup>Fiber Distributed Data Interface</sup>
+
+- 100 Mbps의 고속 통신을 지원하는 LAN
+- ANSI 표준 -> ISO 표준
+- 광섬유 케이블을 사용, 이중 링 구조의 LAN
+- 2개의 링이 token passing 방식으로 운용
+
+#### Wibro <sup>Wireless Broadband</sup>
+
+- 이동하면서도 고속의 무선 인터넷을 이용할 수 있는 시스템
+- 최대 전송거리 1km, 최대 속도 25Mbps
+- CDMA와 와이파이의 장점을 가짐
+- 국내 휴대 인터넷 기술 표준으로 제안, IEEE 국제 표준으로 채택, WiMax 표준
+- 우리나라 원천 기술
+- 4G 이동 통신 기술
+
