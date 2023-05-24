@@ -168,7 +168,7 @@
 - 환형 형태의 LAN을 구성한 뒤 토큰을 가진 노드만이 데이터 전송을 하게하는 제어방식
 - IBM의 Ring-LAN
 
-<img src="img_4.png"  width="30%"/>
+<img src="img_4.png"  width="60%"/>
 
 #### 동작 방식
 
@@ -188,4 +188,4 @@
 - 논리적 구성은 토큰링
 - Data Point 사의 ARCNET
 
-<img src="img_3.png"  width="30%"/>
+<img src="img_3.png"  width="20%"/>
