@@ -262,14 +262,14 @@
 
 - 1Gbps의 고속 통신을 지원하는 LAN
 
-#### FDDI <sup>Fiber Distributed Data Interface</sup>
+### FDDI <sup>Fiber Distributed Data Interface</sup>
 
 - 100 Mbps의 고속 통신을 지원하는 LAN
 - ANSI 표준 -> ISO 표준
 - 광섬유 케이블을 사용, 이중 링 구조의 LAN
 - 2개의 링이 token passing 방식으로 운용
 
-#### Wibro <sup>Wireless Broadband</sup>
+### Wibro <sup>Wireless Broadband</sup>
 
 - 이동하면서도 고속의 무선 인터넷을 이용할 수 있는 시스템
 - 최대 전송거리 1km, 최대 속도 25Mbps
