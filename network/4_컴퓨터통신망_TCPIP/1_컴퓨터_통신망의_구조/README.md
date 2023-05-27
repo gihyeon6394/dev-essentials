@@ -75,7 +75,7 @@
 
 ## 인터넷 통신망 구조 (TCP/IP)
 
-### TCP/IP 의 등장
+### TCP / IP 의 등장
 
 1. Internetworking Technology
     - 네트워크들을 상호 연결하는 기술
