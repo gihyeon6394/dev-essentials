@@ -51,3 +51,103 @@
 3. Array store(a, i, item) ::= if (i ∈ Index) then a[i] ← item else error;
 
 ## 배열의 연산의 구현
+
+### 배열의 생성
+
+```c
+void create (int *a, int n){
+    int i;
+    for (i = 0; i < n; i++)
+        a[i] = i * 2;
+}
+```
+
+#### 결과 (n = 5)
+
+<img src="img_1.png"  width="50%"/>
+
+### 배열의 검색
+
+```c
+# define array_size 5
+int retrieve (int *a, int i){
+    if (i < 0 || i >= array_size)
+        return -1;
+    else
+        return a[i];
+}
+```
+
+#### 결과 (n = 5, i= 2)
+
+##### 4
+
+<img src="img_3.png"  width="50%"/>
+
+### 배열의 저장
+
+```c
+#define array_size 5
+void store (int *a, int i, int item){
+    if (i < 0 || i >= array_size)
+        printf("error");
+    else
+        a[i] = item;
+}
+```
+
+#### 결과 (i = 3, item = 999)
+
+<img src="img_4.png"  width="50%"/>
+
+## 1차원 배열 및 배열의 확장
+
+### 1차원 배열
+
+- 한 줄짜리 배열
+- 인덱스 하나로 요소 구분
+
+### 1차원 배열의 주소 계산
+
+<img src="img_5.png"  width="50%"/>
+
+> 사이즈가 i 인 1차원 배열 A
+> - A[0], A[1], A[2], ..., A[i-1]
+> - A의 시작주소가 a라면 A[i]의 저장 주소는 a + i * k (k는 A의 원소의 크기)
+
+### 행렬의 2차원 배열 표현
+
+- 행렬을 컴퓨터에서 표현하기에 적합한 배열은 2차원 배열
+
+### m*n 2차원 배열
+
+<img src="img_6.png"  width="50%"/>
+
+### 행 / 열 우선 배열
+
+- 행 우선 배열 : 1차원 배열을 여러개 쌓아 놓은 것
+- 열 우선 배열 : 1차원 배열을 여러개 세워 놓은 것
+
+### 행 / 열 우선할당
+
+- 행 우선 할당 : 가로 1차원 배열 단위로 메모리에 우선 할당
+    - C 언어의 2차원 배열은 행 우선 할당
+- 열 우선 할당 : 세로 1차원 배열 단위로 메모리에 우선 할당
+
+<img src="img_7.png"  width="50%"/>
+
+## 희소 행렬
+
+- 원소값이 0인 원소가 그렇지 않은 원소보다 상대적으로 많은 행렬
+- 메모리 낭비를 막고자 0인 원소가 아닌 값만을 따로 모아서 저장하는 방법
+    - 0인 원소는 애초에 메모리 할당을 안함
+
+<img src="img_8.png"  width="50%"/>
+
+* 출처 : https://www.javatpoint.com/types-of-sparse-matrices
+
+## 참고
+
+- https://www.javatpoint.com/types-of-sparse-matrices
+
+
