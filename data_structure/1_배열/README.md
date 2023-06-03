@@ -91,11 +91,10 @@ int retrieve (int *a, int i){
 }
 ```
 
-#### 결과 (i= 2일 때)
+#### 결과 (i=2일 때) : 4
 
-##### 4
 
-<img src="img_3.png"  width="50%"/>
+<img src="img_3.png"  width="30%"/>
 
 ### 배열의 저장
 
@@ -111,7 +110,7 @@ void store (int *a, int i, int item){
 
 #### 결과 (i = 3, item = 999일 때)
 
-<img src="img_4.png"  width="50%"/>
+<img src="img_4.png"  width="40%"/>
 
 ## 1차원 배열 및 배열의 확장
 
@@ -155,7 +154,7 @@ void store (int *a, int i, int item){
 - 메모리 낭비를 막고자 0인 원소가 아닌 값만을 따로 모아서 저장하는 방법
     - 0인 원소는 애초에 메모리 할당을 안함
 
-<img src="img_8.png"  width="50%"/>
+<img src="img_8.png"  width="40%"/>
 
 * 출처 : https://www.javatpoint.com/types-of-sparse-matrices
 
