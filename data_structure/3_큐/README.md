@@ -69,7 +69,7 @@ Boolean Full_q(queue) ::=
 6. Delete_q();
 ```
 
-<img src="img_1.png"  width="50%"/>
+<img src="img_1.png"  width="40%"/>
 
 ## 큐의 응용
 
