@@ -46,9 +46,22 @@
 > - item : 배열에 저장되는 원소
 > - n : 배열의 최대 크기를 정의하는 정수값
 
-1. Array create(n) ::= 배열의 크기가 n인 빈 배열을 생성하고 배열을 반환한다;
-2. Element retrieve(a, i) ::= if (i ∈ Index) then a[i] else error;
-3. Array store(a, i, item) ::= if (i ∈ Index) then a[i] ← item else error;
+```
+Array create (n) ::=
+    배열의 크기가 n인 빈 배열을 생성하고 배열을 반환한다;
+
+Element retrieve (a, i) ::=
+    if (i ∈ Index) then 
+      a[i] 
+    else 
+      error;
+
+Array store (a, i, item) ::=
+    if (i ∈ Index) then 
+      a[i] ← item 
+    else 
+      error;
+```
 
 ## 배열의 연산의 구현
 

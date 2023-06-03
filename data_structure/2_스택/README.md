@@ -19,15 +19,30 @@
 
 #### CreateS 연산
 
-- Stack CreateS(maxStackSize) ::= 스택의 크기가 maxStackSize인 빈 스택을 생성 후 반환
+```
+Stack createS(maxStackSize) ::=
+    스택의 크기가 maxStackSize인 빈 스택을 생성 후 반환;
+```
 
 #### Push 연산
 
-- Element Push(S, newItem) ::= if(isFull(S)) then 오류 출력 else S에 newItem을 삽입
+```
+Element Push(S, newItem) ::=
+    if(isFull(S)) then 
+      오류 출력;
+    else 
+      S에 newItem을 삽입;
+```
 
 #### Pop 연산
 
-- Element Pop(S) ::= if(isEmpty(S)) then 오류 출력 else S의 top에 있는 원소를 삭제 후 반환
+```
+Element Pop(S) ::=
+    if(isEmpty(S)) then 
+      오류 출력;
+    else 
+      S의 top에 있는 원소를 삭제 후 반환;
+```
 
 #### Pop & Push 연산 실행
 
