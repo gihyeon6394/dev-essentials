@@ -8,7 +8,7 @@
 
 ### 스택의 정의
 
-<img src="img.png"  width="30%"/>
+<img src="img.png"  width="20%"/>
 
 - 가장 먼저 입력된 자료가 가장 나중에 출력되는 관계
 - 객체와 객체가 저장된 순서를 기억하는 자료구조
@@ -54,7 +54,7 @@ pop(s);
 push(S, 3);
 ```
 
-<img src="img_1.png"  width="60%"/>
+<img src="img_1.png"  width="50%"/>
 
 ## 스택의 응용과 구현
 
