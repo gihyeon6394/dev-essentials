@@ -9,7 +9,7 @@
 
 ### 큐의 정의
 
-<img src="img.png"  width="50%"/>
+<img src="img.png"  width="60%"/>
 
 - ex. 병원의 접수대, 은행 대기줄
 - First In First Out <sup>FIFO</sup>
@@ -127,7 +127,7 @@ element Delete_q(int *front, int rear) {
 
 ## 원형 큐
 
-<img src="img_2.png"  width="70%"/>
+<img src="img_2.png"  width="80%"/>
 
 * 출처 : https://www.geeksforgeeks.org/introduction-to-circular-queue/
 
