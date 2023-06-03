@@ -124,6 +124,8 @@ element Delete_q(int *front, int rear) {
 
 <img src="img_2.png"  width="50%"/>
 
+* 출처 : https://www.geeksforgeeks.org/introduction-to-circular-queue/
+
 ### 배열로 구현한 큐의 문제점
 
 - front 가 비었어도 rear가 마지막 원소를 가리키면 삽입 불가능
@@ -132,3 +134,7 @@ element Delete_q(int *front, int rear) {
 
 - 배열의 문제점을 해결하기 위한 원형 큐
 - 배열의 처음과 끝이 연결된 형태
+
+## 참고
+
+- https://www.geeksforgeeks.org/introduction-to-circular-queue/
