@@ -110,7 +110,7 @@ void store (int *a, int i, int item){
 
 #### 결과 (i = 3, item = 999일 때)
 
-<img src="img_4.png"  width="40%"/>
+<img src="img_4.png"  width="30%"/>
 
 ## 1차원 배열 및 배열의 확장
 
@@ -146,7 +146,7 @@ void store (int *a, int i, int item){
     - C 언어의 2차원 배열은 행 우선 할당
 - 열 우선 할당 : 세로 1차원 배열 단위로 메모리에 우선 할당
 
-<img src="img_7.png"  width="40%"/>
+<img src="img_7.png"  width="30%"/>
 
 ## 희소 행렬
 
