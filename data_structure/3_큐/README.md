@@ -64,7 +64,7 @@ Boolean Full_q(queue) ::=
 6. Delete_q();
 ```
 
-<img src="img_1.png"  width="50%"/>
+<img src="img_1.png"  width="30%"/>
 
 ## 큐의 응용
 
@@ -122,7 +122,7 @@ element Delete_q(int *front, int rear) {
 
 ## 원형 큐
 
-<img src="img_2.png"  width="50%"/>
+<img src="img_2.png"  width="70%"/>
 
 * 출처 : https://www.geeksforgeeks.org/introduction-to-circular-queue/
 
