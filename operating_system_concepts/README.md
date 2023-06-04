@@ -4,71 +4,71 @@
 
 ## PART ONE  OVERVIEW
 
-### Chapter 1  Introduction
+#### Chapter 1  Introduction
 
-### Chapter 2  Operating-System Structures
+#### Chapter 2  Operating-System Structures
 
 ## PART TWO  PROCESS MANAGEMENT
 
-### Chapter 3  Processes
+#### Chapter 3  Processes
 
-### Chapter 4  Threads & Concurrency
+#### Chapter 4  Threads & Concurrency
 
-### Chapter 5  CPU Scheduling
+#### Chapter 5  CPU Scheduling
 
 ## PART THREE PROCESS SYNCHRONIZATION
 
-### Chapter 6  Synchronization Tools
+#### Chapter 6  Synchronization Tools
 
-### Chapter 7  Synchronization Examples
+#### Chapter 7  Synchronization Examples
 
-### Chapter 8  Deadlocks
+#### Chapter 8  Deadlocks
 
 ## PART FOUR  MEMORY MANAGEMENT
 
-### Chapter 9  Main Memory
+#### Chapter 9  Main Memory
 
-### Chapter 10  Virtual Memory
+#### Chapter 10  Virtual Memory
 
 ## PART FIVE  STORAGE MANAGEMENT
 
-### Chapter 11  Mass-Storage Structure
+#### Chapter 11  Mass-Storage Structure
 
-### Chapter 12  I/O Systems
+#### Chapter 12  I/O Systems
 
 ## PART ISX FILE SYSTEMS
 
-### Chapter 13  File-System Interface
+#### Chapter 13  File-System Interface
 
-### Chapter 14  File-System Implementation
+#### Chapter 14  File-System Implementation
 
-### Chapter 15  File-System Internals
+#### Chapter 15  File-System Internals
 
 ## PART SEVEN SECURITY AND PROTECTION
 
-### Chapter 16  Security
+#### Chapter 16  Security
 
-### Chapter 17  Protection
+#### Chapter 17  Protection
 
 ## PART EIGHT  ADVANCED TOPICS
 
-### Chapter 18 Virtual Machines
+#### Chapter 18 Virtual Machines
 
-### Chapter 19  Network and Distributed Systems
+#### Chapter 19  Network and Distributed Systems
 
 ## PART NINE  CASE STUDIES
 
-### Chapter 20  The Linux System
+#### Chapter 20  The Linux System
 
-### Windows 10
+#### Windows 10
 
 ## PART TEN  APPENDICES
 
-### Chapter A Influentia Operating Systems
+#### Chapter A Influentia Operating Systems
 
-### Chapter B  Windows 7
+#### Chapter B  Windows 7
 
-### Chapter C  BSD UNIX
+#### Chapter C  BSD UNIX
 
-### Chapter D  The Mach System
+#### Chapter D  The Mach System
 
