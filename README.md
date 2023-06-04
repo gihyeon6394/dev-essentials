@@ -1,4 +1,10 @@
 
+## Operating System Concepts 
+### 10th Edition 
+#### Abraham Silberschatz, Peter B. Galvin, Greg Gagne
+
+<img src="img_4.png"  width="30%"/>
+
 ## [이것이 우분투 리눅스다 (개정판)](ubu)
 ### 우분투 리눅스 설치부터 네트워크와 서버 구축, 운영까지
 
