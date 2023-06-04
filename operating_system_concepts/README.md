@@ -1,6 +1,6 @@
 # operating system concepts
 
-<img src="img.png"  width="40%"/>
+<img src="img.png"  width="30%"/>
 
 ## PART ONE  OVERVIEW
 
