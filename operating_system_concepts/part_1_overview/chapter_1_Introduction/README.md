@@ -1,7 +1,7 @@
 # chapter 1 Introduction
 
 1. [What Operating Systems Do](1_What_Operating_Systems_Do/README.md)
-2. Computer-System Organization
+2. [Computer-System Organization](2_Computer_System_Organization/README.md)
 3. Computer-System Architecture
 4. Operating-System Structure
 5. Resource Management
