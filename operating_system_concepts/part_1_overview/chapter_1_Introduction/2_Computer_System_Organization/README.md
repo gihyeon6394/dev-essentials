@@ -148,4 +148,54 @@ CPU가 인터럽트를 캐치하여 인터럽트 핸들러에게 디스패치한
 
 ## 2.2 Storage Structure
 
+> ### STORAGE DEFINITIONS AND NOTATION
+>
+> - 컴퓨터의 기본 저장 단위는 bit <sup>비트</sup>
+> - bit : 0 or 1 vaue
+> - 비트 -> 바이트 -> 워드 -> 블록 -> 파일 -> 데이터베이스
+> - byte : 8 bit, 컴퓨터가 가장 편리하게 사용하는 저장 청크
+> - word : 컴퓨터가 한 번에 처리하는 데이터 양
+> - 64bit, 32bit 컴퓨터
+
+#### CPU, RAM
+
+- CPU는 메모리를 통해서만 명령 로딩 가능
+- 모든 프로그램은 실행 되기 전 메모리에 로드되어야 함
+- general-purpose 컴퓨터는 프로그램을 메인메모리라 불리는 재사용 가능한 메모리에 프로그램을 로딩함
+- ex. random-access memory <sup>RAM</sup>, dynamic RAM <sup>DRAM</sup>
+
+##### 컴퓨터가 사용하는 다양한 메모리
+
+- booststrap program : 컴퓨터가 시작될 때 실행되는 프로그램, OS를 로드
+- earasable programmable read-only memory <sup>EPROM</sup> : 비활성 메모리
+- 아이폰은 EEPROM에 시리얼 넘버와 하드웨어 정보를 저장
+
+### von Neuamn Architecture의 명령어 실행 주기
+
+- load instruction : 메인 메모리에서 데이터를 CPU 레지스터로 가져옴
+- store instruction : CPU 레지스터의ㅏ 내용을 메인 메모리로 데이터를 보냄
+
+1. 메인 메모리로부터 명령어를 fetch & Instruction Register에 저장
+2. 명령어 decode & 메인메모리로부터 피연산자 fetch & register에 저장
+3. 피연산자와 연산 진행 후 연산 결과를 메모리에 저장
+
+### 메인 메모리의 한계에 따른 2차 저장소
+
+- 메인 메모리는 저장 용량이 작고 <sup>1</sup>, 휘발성임 <sup>2</sup>
+- secondary storage : 비휘발성, 대용량, 저렴
+- ex. hard-disk drive <sup>HDD</sup>, solid-state drive <sup>SSD</sup>, optical storage <sup>광학 저장장치</sup>
+- 대부분의 컴퓨터는 메인메모리에 올리기 전에 2차 저장소에 저장
+
+### Storage-device hierarchy
+
+<img src="img_3.png"  width="50%"/>
+
+- trade-off : CPU와의 거리에 따라 사이즈, 속도 트레이드 오프
+- Volatile storage : 전원이 꺼지면 데이터가 사라짐, 속도 빠름
+- nonvolatile memory <sup>NVM, 비휘발성 메모리</sup>
+    - 전원이 꺼져도 데이터가 사라지지 않음
+    - HDD 보다 빠름
+    - flash memory <sup>플래시 메모리</sup> : 스마트 기기에서 인기
+- 비용, 속도를 적절히 분배하여 스토리지 조합 배치
+
 ## 2.3 I/O Structure
