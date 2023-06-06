@@ -161,11 +161,63 @@ HTTP 트래픽이 웹서버가 아닌 프락시로 가게 하는 방법
 
 ## 4. 클라이언트 프락시 설정
 
+- 수동 설정
+- 브라우저 기본 설정
+- 프락시 자동 설정 <sup>Proxy Auto-Configuration, PAC</sup>
+- WPAD <sup>Web Proxy Auto-Discovery</sup> 프락시 발견
+
 ### 4.1 클라이언트 프락시 설정: 수동
+
+- 브라우저에서 프락시의 호스트와 포트를 지정 가능
+- 단순하지만 유연하지 못함
 
 ### 4.2 클라이언트 프락시 설정 : PAC 파일
 
+- 자바스크립트 프로그램
+- 상황에 맞게 동적으로 프락시 설정
+
+#### 설정 방법
+
+- 웹 서버에 PAC 파일을 두고, 브라우저가 PAC 파일을 찾아서 실행하도록 설정
+- .pac 파일
+
+#### PAC 파일의 구조
+
+```javascript
+/**
+ * DIRECT : 프락시를 사용하지 않는다.
+ * PROXY [host]:[port] : 프락시를 사용한다.
+ * SOCKS [host]:[port] : SOCKS 프락시를 사용한다.
+ * */
+// http 요청이 들어오면 프락시 proxy.example.com:8080으로 보낸다.
+function FindProxyForURL(url, host) {
+    if (url.substring(0, 5) == "http:") {
+        return "PROXY proxy.example.com:8080";
+    } else {
+        return "DIRECT";
+    }
+}
+```
+
 ### 4.3 클라이언트 프락시 설정 : WPAD
+
+- 웹 프락시 자동발견 프로토콜
+- 브라우저에게 알맞는 PAC 파일을 자동으로 찾아주는 알고리즘
+
+#### WPAD 클라이언트 동작
+
+- PAC URI를 WPAD를 사용하여 찾음
+- 주어진 URI에서 PAC 파일을 다운로드
+- 프락시를 알아내기위해 PAC 실행
+- 프락시에 요청
+
+#### WPAD 알고리즘 우선순위
+
+1. DHCP
+2. SLP
+3. DNS well-known host
+4. DNS SRV record
+5. DNS TXT record 안의 서비스 URI
 
 ## 5. 프락시 요청의 미묘한 특징들
 
