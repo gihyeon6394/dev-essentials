@@ -51,7 +51,7 @@
 
 ### multicore system
 
-<img src="img_1.png"  width="50%"/>  
+<img src="img_1.png"  width="40%"/>  
 
 - 1개의 프로세서, 멀티 코어
 - 프로세서가 2개 이상인 전통적인 시스템보다 효율 높음
@@ -62,7 +62,7 @@
 
 #### non-uniform memory access <sup>NUMA</sup>
 
-<img src="img_2.png"  width="40%"/>  
+<img src="img_2.png"  width="30%"/>  
 
 - CPU가 많아지면 전력소모가 많아지고, 시스템 버스에 보틀넥 발생, 성능 저하
 - 그에 따른 대안으로
@@ -82,3 +82,63 @@
 - 2개 이상의 독집적인 멀티프로세서 시스템
 
 ## 3. Clustered Systems
+
+<img src="img_3.png"  width="50%"/>  
+
+- multiprocessor system
+- multiprocessor system과 다른점
+    - 개별 시스템 혹은 노드로 구성되며 각 노드는 일반적으로 멀티코어 시스템
+
+#### 일반적인 정의
+
+- 클러스터 컴퓨터는 storage를 공유하고,
+- LAN 또는 InfiniBand와 같은 빠른 네트워크를 통해 긴밀하게 연결
+
+#### 고가용성
+
+- 시스템이 클러스터에서 실패해도 서비스에 이상없도록 가용성을 확보할 수 있음
+- 시스템에 중복성 추가
+- 각 노드가 네트워크를 통해 다른 노드 모니터링
+- 모니터링 대상 머신이 실패하면 해당 실패 머신의 스토리지를 획득하여 응용 프로그램 재기동
+- 고가용성은 신뢰도 증가시킴 : 사용자는 잠깐의 서비스 중지를 경험
+
+#### graceful degradation <sup>우아한 성능 저하</sup>
+
+- 서비스 가능한 하드웨어에 비례하는 균형잡힌 서비스 능력을 가진 하드웨어의 능력
+- fault tolerant <sup>장애 허용</sup>
+    - 단일 노드의 장애에도 불구 서비스 가능
+    - 실패를 감지, 진단, 가능하면 복구할 수 있는 메커니즘까지 필요
+
+### 클러스터링 비대칭 vs 대칭
+
+- 비대칭 <sup>asymmetric</sup>
+    - hot-standby mode 머신 : 아무것도 안하고, active server만 모니터링
+    - active server가 실패하면 standby server가 active server로 승격
+- 대칭 <sup>symmetric</sup>
+    - 모든 노드가 active
+    - 각 노드는 서로를 모니터링
+    - 하나의 노드가 실패하면, 다른 노드가 해당 노드의 스토리지를 획득하여 서비스를 계속함
+    - 모든 하드웨어를 서비스하기에 더 효율적
+    - 2개 이상의 어플리케이션이 운영 가능해야함
+
+### parallelization
+
+- 클러스터는 고성능 컴퓨팅 환경 제공 가능
+- 응용 프로그램이 클러스터의 이점을 활용할 수 있게 전문화되어 설계되어야함
+- 병렬화 기술
+    - 병렬적으로 나누어 실행된다는 전제하에 프로그래밍
+    - 클러스터의 각 계산 노드가 문제를 해결한 뒤 최종 솔루션으로 결과를 결합
+
+### parallel cluster
+
+- WAN을 통해 클러스터링 가능
+- 병렬 클러스터가 다수의 호스트가 같은 스토리지에 접근하도록 허용
+- 특별한 버전의 소프트웨어나 어플리케이션 배포판이 필요
+    - 다수의 호스트가 병렬적으로 동시에 데이터에 접근할 수 있게 구현
+    - ex. Oracle Real Application Clusters, Distributed Lock Manager <sup>DLM</sup>
+
+### 클러스터 기술의 진화
+
+- 빠르게 진화하고 있음
+- storage-area-network <sup>SAN</sup>
+    - 마일 단위의 간격으로 클러스터링 가능하게 함
