@@ -65,4 +65,46 @@ Multiprogramming : 2개 이상의 프로그램을 구동하는 능력
 
 ## 2. Dual-Mode and Multimode Operation
 
+#### 실행모드 구분
+
+적절한 프로그램 실행을 위해 OS 코드에 의한 실행 <sup>1</sup> 과 사용자 코드에 의한 실행 <sup>2</sup>을 구분해야함.
+
+### user mode, kernel mode <sup>also called supervisor mode, system mode, or privileged mode</sup>
+
+- user mode : 사용자 어플리케이션 구동 시
+- kernel mode : 컴퓨터의 제어권을 얻었을 때
+- mode bit : 최근 모드가 무엇이었는지 가르킴
+    - 0 : kernel, 1 : user
+- 모드 비트를 통해 어떤 모드에 의해 실행된 작업인지 구분 가능
+
+#### user mode에서 kernel mode로 전환
+
+<img src="img_1.png"  width="60%"/>
+
+- 사용자 어플레케이션 실행 시 user mode로 진행 되다가,
+    - system call <sup>interrupt, trap </sup>을 통해 OS로부터 서비스를 요청하면 kernel mode로 전환
+- 평시에는 user mode 임
+
+1. kernel mode : 시스템 부팅 and OS 로딩
+2. user mode 로 전환 : 사용자 어플리케이션 로드
+3. trap이나 inturrupt 발생 시 kernel mode 로 전환
+
+### 모드 구분의 이유
+
+- 악성 사용자로부터 OS 보호
+- privileged instructions
+    - 커널 모드에서만 가능
+    - 사용자 모드에서 특권 명령을 시도 시 잘못된 명령으로 간주하여 OS에게 전달
+- 두가지 모드 이상도 존재함
+    - ex. Intel processors 의 protection rings
+
+### system call
+
+- 사용자 프로그램이 OS에게 본인을 대신하여 예약된 작업을 요청하는 것
+- 모드비트가 kernel mode로 전환됨
+- system-call 서비스는 OS의 일부가 됨
+- 커널이 어떤 system call이 일어났는지 검사함
+- 파라미터에 어떤유형의 사용자 요청이 들어왔는지 담김
+- 파라미터를 통해 유효한지 확인하고 실행
+
 ## 3. Timer
