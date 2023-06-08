@@ -4,6 +4,8 @@
 2. Dual-Mode and Multimode Operation
 3. Timer
 
+---
+
 OS 는 프로그램이 실행되는 환경을 제공한다.
 
 ### bootstrap program 과 Kernel
@@ -19,8 +21,6 @@ OS 는 프로그램이 실행되는 환경을 제공한다.
 
 - system daemon : 몇 서비스는 커널 외부에서 시스템 프로그램에 의해 제공
 - systemd : 리눅스의 첫번쨰 프로그램으로서 많은 다른 데몬을 시작시킴
-
----
 
 ## 1. Multiprogramming and Multitasking
 
