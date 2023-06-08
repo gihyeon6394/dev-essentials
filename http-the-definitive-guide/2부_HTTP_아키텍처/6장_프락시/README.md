@@ -397,6 +397,15 @@ Server : Microsoft-IIS/4.0
 
 ## 7. 프락시 인증
 
+<img src="img_10.png"  width="50%"/>
+
+- 요청한 콘텐츠를 차단하는 프락시 인증 메커니즘
+
+> - 제한된 콘텐츠에 대한 요청이 프락시에 도착했을 때 407 Proxy Authentication Required 응답을 보냄 (with Proxy-Authenticate 헤더)
+> - 클라이언트는 407 응답을 받고 인증 방식을 추가
+> - 클라이언트는 Proxy-Authorization 헤더를 추가해서 다시 요청을 보냄
+> - 프락시는 인증을 확인하고 콘텐츠를 전송
+
 ## 8. 프락시 상호운용성
 
 ### 8.1 지원하지 않는 헤더와 메서드 다루기
