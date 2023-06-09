@@ -96,6 +96,27 @@ OS는 아래와 같은 리소스의 관리자이다.
 
 ## 4. Mass-Storage Management
 
+### secondary storage
+
+- 대용량 저장장치, 메인 메모리의 백업
+- ex. HDD, Nonvolatile memory <sup>NVM</sup>, ...
+- 대부분의 프로그램은 메인 메모리에 데이터를 로딩하기 전에 2차 저장장치에 저장
+- OS의 성능은 대부분 2차 저장소의 속도에 의존
+
+### secondary storage 에 대한 프로세스의 책임
+
+- 마운트, 언마운트
+- 빈 공간 관리
+- 저장 공간 할당
+- 디스크 스케쥴링
+- 파티셔닝
+- 보호
+
+### Tertiary storage <sup>제 3의 저장 장치</sup>
+
+- 2차 저장소보다 비용이 낮고, 속도가 느림
+- ex. 백업 디스크, 아카이빙 스토리지, bluray, ...
+
 ## 5. Cache Management
 
 ## 6. I/O System Management
