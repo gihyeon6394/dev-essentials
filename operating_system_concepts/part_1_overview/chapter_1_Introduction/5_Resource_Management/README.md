@@ -1,18 +1,18 @@
 # 5. Resource Management
 
 1. [process Management](#1-process-management)
-2. Memory Management
-3. File-System Management
-4. Mass-Storage Management
-5. Cache Management
-6. I/O System Management
+2. [Memory Management](#2-memory-management)
+3. [File-System Management](#3-file-system-management)
+4. [Mass-Storage Management](#4-mass-storage-management)
+5. [Cache Management](#5-cache-management)
+6. [I/O System Management](#6-io-system-management)
 
 OS는 아래와 같은 리소스의 관리자이다.  
 리소스는 CPU, 메모리, I/O 장치, 파일, 캐시, 저장장치 등이 있다.
 
 ## 1. Process Management
 
-### prcoess : program in execution
+### process : program in execution
 
 - CPU에 실행되지 않으면 프로그램은 어떤 명령도 실행할 수 없음
 - 프로세스 : 실행 상태의 프로그램
@@ -161,3 +161,11 @@ OS는 아래와 같은 리소스의 관리자이다.
     - 각 시스템별로 값이 분산
 
 ## 6. I/O System Management
+
+- OS는 사용자로부터 하드웨어의 특성을 숨김
+    - ex. 유닉스는 I/O 장치를 I/O 서브 시스템에 의해 OS로부터 숨김
+- I/O 서브 시스템
+    - 메모리 관리 구성요소
+    - 장치 드라이버 인터페이스
+    - 특정 하드웨어 장치의 드라이버
+
