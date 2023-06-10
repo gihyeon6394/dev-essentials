@@ -7,7 +7,7 @@
 5. [Resource Management](5_Resource_Management/README.md)
 6. [Security and Protection](6_Security_and_Protection/README.md)
 7. [Virtualization](7_Virtualization/README.md)
-8. Distributed Systems
+8. [Distributed Systems](8_Distributed_Systems/README.md)
 9. Kernel Data Structures
 10. Computing Environments
 11. Free and Open-Source Operating Systems
