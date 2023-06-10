@@ -5,7 +5,7 @@
 3. [Computer-System Architecture](3_Computer_System_Architecture/README.md)
 4. [Operating-System Operations](4_Operating_System_Operations/README.md)
 5. [Resource Management](5_Resource_Management/README.md)
-6. Security and Protection
+6. [Security and Protection](6_Security_and_Protection/README.md)
 7. Virtualization
 8. Distributed Systems
 9. Kernel Data Structures
