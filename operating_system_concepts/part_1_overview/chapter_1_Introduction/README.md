@@ -9,5 +9,5 @@
 7. [Virtualization](7_Virtualization/README.md)
 8. [Distributed Systems](8_Distributed_Systems/README.md)
 9. [Kernel Data Structures](9_Kernel_Data_Structures/README.md)
-10. Computing Environments
+10. [Computing Environments](10_Computing_Environments/README.md)
 11. Free and Open-Source Operating Systems
