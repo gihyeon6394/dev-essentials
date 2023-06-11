@@ -28,7 +28,7 @@
 - OS를 설계하기 위한 방법론
 - **OS가 어떻게 생성되고 컴퓨터가 SO를 어떻게 시작하는지**
 
-1. Operating-System Services
+1. [Operating-System Services](1_Operating_System_Services/README.md)
 2. User and Operating-System Interface
 3. System Calls
 4. System Services
