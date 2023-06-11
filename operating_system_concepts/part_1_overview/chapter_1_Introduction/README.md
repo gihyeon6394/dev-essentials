@@ -1,7 +1,8 @@
 # chapter 1 Introduction
 
-### CHAPTER OBJECTIVES
 
+> ### CHAPTER OBJECTIVES
+> 
 > - 컴퓨터 시스템의 일반적인 조합과 역할
 > - 멀티프로세서 컴퓨터 시스템의 구조
 > - 유저모드에서 커널모드로의 전환
