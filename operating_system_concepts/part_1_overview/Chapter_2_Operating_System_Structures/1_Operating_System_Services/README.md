@@ -4,7 +4,7 @@
 
 ### OS는 사용자에게 유용한 실행 환경을 제공한다
 
-<img src="img.png"  width="40%"/> 
+<img src="img.png"  width="60%"/> 
 
 #### User interface <sup>UI, 사용자 인터페이스</sup>
 
