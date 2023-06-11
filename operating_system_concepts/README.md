@@ -3,7 +3,7 @@
 <img src="img.png"  width="30%"/>
 
 1. [PART ONE OVERVIEW](part_1_overview/README.md)
-    - [Chapter 1  Introduction](part_1_overview/chapter_1_Introduction/README.md)
+    - [Chapter 1  Introduction](part_1_overview/Chapter_1_Introduction/README.md)
     - Chapter 2 Operating-System Structures
 2. PART TWO PROCESS MANAGEMENT
     - Chapter 3 Processes
