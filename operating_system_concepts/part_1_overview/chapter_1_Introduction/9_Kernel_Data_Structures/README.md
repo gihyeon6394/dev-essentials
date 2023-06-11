@@ -5,18 +5,17 @@
 3. [Hash Functions and Maps](#3-hash-functions-and-maps)
 4. [Bitmaps](#4-bitmaps)
 
+---
+
 OS가 시스템에서 데이터를 구조화하는 방법
 
 > ### LINUX KERNEL DATA STRUCTURES
-> 
+>
 > 리눅스 커널 코드에서 자료구조 사용 가능
 > ```shell
 > # include file linked-list
 > <linux/list.h>
 > ```
-
-
----
 
 ## 1. Lists, Stacks, and Queues
 
