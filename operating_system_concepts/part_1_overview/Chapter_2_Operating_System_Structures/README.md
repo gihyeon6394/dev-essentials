@@ -29,7 +29,7 @@
 - **OS가 어떻게 생성되고 컴퓨터가 SO를 어떻게 시작하는지**
 
 1. [Operating-System Services](1_Operating_System_Services/README.md)
-2. User and Operating-System Interface
+2. [User and Operating-System Interface](2_User_and_Operating_System_Interface/README.md)
 3. System Calls
 4. System Services
 5. Linkers and Loaders
