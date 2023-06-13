@@ -17,6 +17,7 @@
 ```shell
 cp in.txt out.txt
 ```
+
 <img src="img.png"  width="50%"/>
 
 1. 프로그램 입력에 input 파일, output 파일 지정
@@ -33,9 +34,54 @@ cp in.txt out.txt
     - 쓰기 : 디스크가 가득 찼는지, 가득 찼다면 에러 반환 등
 4. 복사 완료 : 두 파일을 닫고,메시지를 콘솔에 출력
 
-## 2. Application Programming Interface
+## 2. Application Programming Interface <sup>API</sup>
 
+- 간단한 프로그램 실행에 많은 system call이 필요
+- 그 내용을 알지 않고 API를 통해 사용
+    - API : fntion, 매개변수, 결과 기대값 들의 집합 <sub>ex. POSIX API, Windows API, Java API 등</sub>
+- libc : C 언어로 작성된 Unix, Linux, macOS의 API
+- API의 함수들이 system call을 호출 <sub>프로그래머 대신</sup>
+    - ex. Window funciton CreateProcess()는 Window Kernel의 system call NTCreateProcess()를 호출
 
+#### API를 통해 system call을 호출하는 이유
 
+- portability <sup>이식성</sup> : API를 지원하는 시스템이 바뀌어도, 컴파일된 API가 실행 가능
+- 복잡성 : System call이 API보다 복잡하고 자세함
+
+#### run-time environment <sup>RTE, 실행환경</sup> 과 system-call interface
+
+<img src="img_1.png"  width="50%"/>
+
+- RTE : 응용프로그램이 실행되는 환경
+    - 실행에 필요한 소프트웨어, 컴파일러, 라이브러리, 로더 등 포함
+- RTE는 System call에 대한 인터페이스 역할
+    - API 가 호출한 System call을 가로채고, OS의 system call을 호출
+- 이 인터페이스는 각 System call에 번호 할당하여 번호를 인덱스로 테이블 유지
+- API 사용자는 System call 내부 구현을 모름
+- System call 내용을 숨기고, RTE가 관리
+
+#### OS에 파라미터를 보내는 방법
+
+<img src="img_2.png"  width="50%"/>
+
+- 레지스터
+- 블록, 테이블, 메모리 : 레지스터 수보다 파라미터가 많을 때
+- Linux는 두 방법을 혼용
+    - 5개 정도의 파라미터면 레지스터, 아니면 블록 메서드
+- 블록메서드 외에도 stack을 사용
+    - stack이나 블록은 파라미터수 제한이 없는 장점
 
 ## 3. Types of System Calls
+
+### 3.1 Process Control
+
+### 3.2 File Management
+
+### 3.3 Device Management
+
+### 3.4 Information Maintenance
+
+### 3.5 Communication
+
+### 3.6 Protection
+
