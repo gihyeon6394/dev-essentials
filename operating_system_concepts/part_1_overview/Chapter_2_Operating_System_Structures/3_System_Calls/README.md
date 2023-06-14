@@ -73,7 +73,7 @@ cp in.txt out.txt
 
 ## 3. Types of System Calls
 
-#### System cll 6가지 분류
+#### System call 6가지 분류
 
 - process control
     - 프로세스 생성 / 종료, 로드, 실행
