@@ -1,4 +1,4 @@
-# [Computer Organization and Design](computer_oragnization_and_design/README.md)
+## [Computer Organization and Design](computer_oragnization_and_design/README.md)
 
 #### RISC-V Edition
 
