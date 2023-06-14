@@ -30,8 +30,8 @@
 
 1. [Operating-System Services](1_Operating_System_Services/README.md)
 2. [User and Operating-System Interface](2_User_and_Operating_System_Interface/README.md)
-3. System Calls
-4. System Services
+3. [System Calls](3_System_Calls/README.md)
+4. [System Services](4_System_Services/README.md)
 5. Linkers and Loaders
 6. Way Applications Are Operating-System Specific
 7. Operating-System Design and Implementation
