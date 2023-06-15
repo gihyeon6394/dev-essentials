@@ -33,7 +33,7 @@
 3. [System Calls](3_System_Calls/README.md)
 4. [System Services](4_System_Services/README.md)
 5. [Linkers and Loaders](5_Linkers_and_Loaders/README.md)
-6. Way Applications Are Operating-System Specific
+6. [Why Applications Are Operating-System Specific](6_Why_Applications_Are_Operating_System_Specific/README.md)
 7. Operating-System Design and Implementation
 8. Operating-System Structure
 9. Building and Booting an Operating System
