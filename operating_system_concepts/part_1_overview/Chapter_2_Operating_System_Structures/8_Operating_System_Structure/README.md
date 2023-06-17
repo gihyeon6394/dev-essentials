@@ -34,7 +34,7 @@ OS의 컴포넌트들이 상호작용하는 법과 커널에 녹아드는 법
 
 #### Linux OS <sub>based on UNIX</sub>
 
-<img src="img_1.png"  width="40%"/>
+<img src="img_1.png"  width="30%"/>
 
 - 어플리케이션은 `glbc` 표준 C 라이브러리를 이용해 system call
 - 커널 모드에서는 모놀리식 <sub>단일 주소공간을 사용</sub>
