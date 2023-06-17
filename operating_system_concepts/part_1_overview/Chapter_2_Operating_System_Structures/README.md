@@ -35,7 +35,7 @@
 5. [Linkers and Loaders](5_Linkers_and_Loaders/README.md)
 6. [Why Applications Are Operating-System Specific](6_Why_Applications_Are_Operating_System_Specific/README.md)
 7. [Operating-System Design and Implementation](7_Operating_System_Design_and_Implementation/README.md)
-8. Operating-System Structure
+8. [Operating-System Structure](8_Operating_System_Structure/README.md)
 9. Building and Booting an Operating System
 10. Operating-System Debugging
 11. Summary
