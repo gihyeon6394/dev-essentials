@@ -5,7 +5,7 @@
 > - OS가 제공하는 서비스
 > - OS 서비스를 제공하기 위해 system call 이 어떻게 사용되는지
 > - OS 설계를 위한 모놀리식, 레이어드, 마이크로커널, 모듈러, 하이브리드 전략
-> - OS를 부팅하기 위한 프로스세스
+> - OS를 부팅하기 위한 프로세스
 > - OS 성능을 모니터링하는 도구
 > - 리눅스 커널과 상호작용하기 위해 커널 모듈을 설계하고 구현
 
@@ -34,7 +34,7 @@
 4. [System Services](4_System_Services/README.md)
 5. [Linkers and Loaders](5_Linkers_and_Loaders/README.md)
 6. [Why Applications Are Operating-System Specific](6_Why_Applications_Are_Operating_System_Specific/README.md)
-7. Operating-System Design and Implementation
+7. [Operating-System Design and Implementation](7_Operating_System_Design_and_Implementation/README.md)
 8. Operating-System Structure
 9. Building and Booting an Operating System
 10. Operating-System Debugging
