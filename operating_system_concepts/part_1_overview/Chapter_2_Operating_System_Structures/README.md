@@ -36,6 +36,6 @@
 6. [Why Applications Are Operating-System Specific](6_Why_Applications_Are_Operating_System_Specific/README.md)
 7. [Operating-System Design and Implementation](7_Operating_System_Design_and_Implementation/README.md)
 8. [Operating-System Structure](8_Operating_System_Structure/README.md)
-9. Building and Booting an Operating System
+9. [Building and Booting an Operating System](9_Building_and_Booting_an_Operating_System/README.md)
 10. Operating-System Debugging
 11. Summary
