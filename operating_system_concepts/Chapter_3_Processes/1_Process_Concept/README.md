@@ -11,7 +11,7 @@ job과 process 는 비슷한 의미로 사용되기도 함.
 
 ## 1. The Process
 
-<img src="img.png"  width="40%"/>
+<img src="img.png"  width="30%"/>
 
 - Text section : 프로그램 코드
 - Data section : 전역변수
@@ -53,7 +53,7 @@ job과 process 는 비슷한 의미로 사용되기도 함.
 
 ## 3. Process Control Block <sup>PCB, task control block</sup>
 
-<img src="img_2.png"  width="40%"/>
+<img src="img_2.png"  width="30%"/>
 
 특정 프로세스에 대한 많은 정보를 가짐  
 PCB는 프로세스 구동에 필요한 데이터 저장소
