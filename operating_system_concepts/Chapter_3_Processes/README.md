@@ -9,12 +9,12 @@
 > - client-server 커뮤니케이션 : 소켓, remote procedure call
 > - Linux OS와 상호작용하는 커널 모듈설계
 
-현대 컴퓨터는 다수의 프로그램을 load하고 동시에 실행함  
+현대 컴퓨터는 다수의 프로그램을 load 하고 동시에 실행함  
 컴퓨터가 복잡해짐에 따라 프로세스를 관리할 필요성은 더 커짐
 
 ---
 
-1. Process Concept
+1. [Process Concept](1_Process_Concept/README.md)
 2. Process Scheduling
 3. Operations on Processes
 4. Interprocess Communication
