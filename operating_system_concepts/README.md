@@ -6,7 +6,7 @@
     - [Chapter 1  Introduction](Chapter_1_Introduction/README.md)
     - [Chapter 2 Operating-System Structures](Chapter_2_Operating_System_Structures/README.md)
 2. PART TWO PROCESS MANAGEMENT
-    - Chapter 3 Processes
+    - [Chapter 3 Processes](Chapter_3_Processes/README.md)
     - Chapter 4 Threads & Concurrency
     - Chapter 5 CPU Scheduling
 3. PART THREE PROCESS SYNCHRONIZATION
