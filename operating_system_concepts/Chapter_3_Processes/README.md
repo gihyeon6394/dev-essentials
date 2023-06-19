@@ -15,7 +15,7 @@
 ---
 
 1. [Process Concept](1_Process_Concept/README.md)
-2. Process Scheduling
+2. [Process Scheduling](2_Process_Scheduling/README.md)
 3. Operations on Processes
 4. Interprocess Communication
 5. IPC in Shared Memory Systems
