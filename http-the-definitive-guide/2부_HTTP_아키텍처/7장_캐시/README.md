@@ -430,4 +430,79 @@ If-None-Match: W"v1.2"
 - `Last-Modified` 값을 같이 보내는 것도 선호
 - 엔터티 태그, `If-Modified-Since` 둘 다 받았다면 모든 조건에 참일 때만 `304 Not Modified` 응답
 
+## 9. 캐시 제어
 
+서버가 캐시 기간을 설정하는 방법
+
+#### 우선순위
+
+1. `Cache-Control : no-store`
+2. `Cache-Control : no-cache`
+3. `Cache-Control : must-revalidate`
+4. `Cache-Control : max-age`
+5. `Expires` 헤더
+6. 아무런 정보를 주지 않고, 휴리스틱 방법으로 결정하게 함
+
+### 9.1 no-cache와 no-store 헤더
+
+````html
+Cache-Control: no-cache
+Cache-Control: no-store
+Pragma: no-cache
+````
+
+- 검증되지 않은 캐시를 사용하지 않도록 함
+- `no-store` : 캐시가 응답의 사본을 만드는 것을 금지
+    - 캐시는 클라이언트에게 응답한 뒤 객체 삭제
+- `no-cache` : 재검사 없이 캐시를 제공하지 마라
+    - 로컬 캐시 저장소에 저장 가능
+- `Pragma : no-cache` : HTTP/1.0 호환을 위해 사용
+
+### 9.2 Max-Age 응답 헤더
+
+````html
+Cache-Control: max-age=3600
+Cache-Control: s-maxage=3600
+````
+
+- 캐시가 신선하다고 판단할 최대 시간
+- `s-maxage` : 공유 캐시에만 적용
+
+### 9.3 Expires 응답 헤더
+
+```html
+Expires: Thu, 01 Dec 1994 16:00:00 GMT
+```
+
+- `Expires` : 캐시가 만료되는 일시를 명시
+- 서버마다 시간이 다를 수 있어서 일시보다는 `max-age` 를 사용하는 것이 좋음
+
+### 9.4 Must-Revalidate 응답 헤더
+
+```html
+Cache-Control: must-revalidate
+```
+
+- 캐시를 사용하기 이전에 반드시 재검사를 해야함
+- 신선도 검사 시, 원서버가 사용할 수 없는 사태라면 캐시는 `504 Gateway Timeout` 응답
+
+### 9.5 휴리스틱 만료 <sup>Heuristic Expiration</sup>
+
+- `Expires` 헤더가 없거나, `Cache-Control` 헤더가 없는 경우
+- 캐시는 스스로 휴리스틱한 방법으로 최대 나이 계산
+- 어떠한 알고리즘에 의해 24시간이 지났다면, `Heuristic Expiration` 응답 헤더를 추가
+- LM 인자 알고리즘
+    - 캐시가 변경된 것이 상당히 예전이면 정적인 문서로 간주하여 더 오래 보관
+    - 캐시가 최근에 변경되었다면, 자주 변경이 있는 문서로 간주하여 짧은 시간만 보관
+- 일반적으로 휴리스틱 신선도 시간에 상한을 둠 (ex. 1주일)
+- 신선도 검사에 근단서가 없는 문서는 기본 신선도 유지기간을 설정 (ex. 1시간)
+
+### 9.6 클라이언트 신선도 제약
+
+- 웹 브라우저는 신선하지 않은 컨텐츠를 강제로 갱신해주는 리프레시 기능을 가짐
+- `Cache-Control` 요청 헤더를 Get 요청에 추가해서 강제로 재검사하거나 원서버로부터 가져옴
+
+### 9.7 주의할 점
+
+- 퍼블리셔가 유효기간을 까마득한 미래로 설정한다면 만료되기 전까지 어떠한 캐시도 갱신되지 않음
+- 유효기간을 아예 설정하지 않아서 캐시가 알기 어렵게 하는 경우도 있음
