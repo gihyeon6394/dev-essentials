@@ -22,6 +22,15 @@ job과 process 는 비슷한 의미로 사용되기도 함.
         - OS는 Heap과 Stack이 각자 서로와 겹치지 않도록 보장함
     - 함수 호출 시 activation record 가 stack에 `push`되고, 함수 종료 시 `pop`됨
 
+### Memory layout of a C program
+
+<img src="img_3.png"  width="30%"/>
+
+- initialized data : 초기화된 전역변수 `int y`
+- uninitialized data : 초기화되지 않은 전역변수 `int x`
+- `args`, `argv` : `main()`에 전잘할 매개변수 영역
+- GNU  `size` command : 프로그램의 각 섹션의 크기 <sub>bytes</sub>를 보여줌
+
 ### Process 의 특징
 
 - 프로세스는 active entity, 메모리에 load하면 실행됨
