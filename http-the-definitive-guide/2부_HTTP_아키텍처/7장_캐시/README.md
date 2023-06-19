@@ -141,7 +141,7 @@
 If-Modified-Since: <day-name>, <day> <month> <year> <hour>:<minute>:<second> GMT
 ```
 
-<img src="img_4.png"  width="40%"/>
+<img src="img_4.png"  width="60%"/>
 
 - 신선도 검사를 하기 위해 가장 많이 쓰이는 도구
 - Get, Head 요청에 사용 가능
@@ -219,7 +219,7 @@ If-Modified-Since: <day-name>, <day> <month> <year> <hour>:<minute>:<second> GMT
 
 ### 6.3 프락시 캐시 계층들
 
-<img src="img_7.png"  width="50%"/>
+<img src="img_7.png"  width="60%"/>
 
 - 캐시 프락시를 계층형으로 구성
 - 아래 단계에서 캐시 북적중이 발생하면 위 단계에서 캐시 적중을 발생시켜 트래픽 감소시킴
@@ -246,7 +246,7 @@ If-Modified-Since: <day-name>, <day> <month> <year> <hour>:<minute>:<second> GMT
 
 ## 7. 캐시 처리 단계
 
-<img src="img_9.png"  width="50%"/>
+<img src="img_9.png"  width="60%"/>
 
 1. 요청 받기 : 캐시가 HTTP 요청 메시지 받음
 2. 메시지 파싱 : 메시지를 파싱하여 URL과 헤더 추출
@@ -297,7 +297,7 @@ If-Modified-Since: <day-name>, <day> <month> <year> <hour>:<minute>:<second> GMT
 
 ### 7.8 캐시 처리 플로 차트
 
-<img src="img_10.png"  width="50%"/>
+<img src="img_10.png"  width="60%"/>
 
 ## 8. 사본을 신선하게 유지하기
 
