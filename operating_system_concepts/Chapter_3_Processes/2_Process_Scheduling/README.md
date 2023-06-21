@@ -6,8 +6,15 @@
 
 ---
 
-멀티 프로그래밍의 목표는 CPU를 최대한 활용하여 process를 실행하는 것이다.  
-시분할 시스템의 목적은 CPU 코어를 process간에 빠르게 전환하면서 유저가 실행 중인 프로그램과 상호작용 할 수 있게 하는 것이다.
+#### multiprograming의 목적은
+
+- 동시에 프로세스를 여러개 실행하는 것
+- CPU를 최대한 활용하는 것
+
+#### time sharing <sup>시분할 시스템</sup>의 목적은
+
+- CPU core를 프로세스간에 빠르게 전환해가면서
+- 사용자가 마치 동시에 프로그램이 실행 중이게 느낄 수 있게 하는 것
 
 ### Single Core system vs Multi Core system
 
@@ -50,9 +57,6 @@ struct mm_struct *mm; /* address space of this process */
 - linked list
     - 헤더는 첫번째 PCB를 가리키는 포인터
 - 각 PCB는 다음 PCB를 가리키는 포인터를 가짐
-
-### other queues
-
 - wait queue : 실행 상태였던 process가 대기 상태로 기다리는 큐
 - 코어가 할당된 process는 실행 중 특정 이벤트로 중단, 인터럽트, 대기 상태에 빠짐
     - ex. I/O 응답 대기
@@ -85,15 +89,17 @@ process는 종료될 때까지 아래 사이클을 반복
 - `swapped in` : process는 다시 메모리로 되어 실행 상태로 돌아감
 - 메모리가 과다로 할당되어있을 때 유용
 
-## 3. Context Switch
+## 3. Context Switch <sup>문맥 교환</sup>
+
+- context : process의 PCB에 저장된 정보
+    - process의 상태, PC, 레지스터 값, 메모리 할당 정보 등
 
 <img src="img_2.png"  width="50%"/>
 
 - interrupt가 발생하면, 시스템은 현재 process의 context를 저장하여,
     - 코어가 다른 process를 실행할 수 있게 함
-- context : process의 PCB에 저장된 정보
-    - process의 상태, PC, 레지스터 값, 메모리 할당 정보 등
-- state save : 현재 CPU 코어의 상태 저장
+    - 나중에 다시 process를 실해할 때 저장한 정보를 불러옴
+  - state save : 현재 CPU 코어의 상태 저장
 - state restore : 상태 복원
 
 ### Context Switch란
