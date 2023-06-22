@@ -12,10 +12,13 @@
 #### message-passing 명령어
 
 - `send(message)`
-    - 메시지 사이즈는 유한, 무한 가능
-    - 메시지 사이즈가 유한이면, system-level에선 단순하나, application-level에서의 구현이 복잡
-    - 메시지 사이즈가 무한이면, system-level에서의 구현이 복잡
 - `receive(message)`
+
+#### 구현
+
+- 메시지 사이즈는 유한, 무한 가능
+- 메시지 사이즈가 유한이면, system-level에선 단순하나, application-level에서의 구현이 복잡
+- 메시지 사이즈가 무한이면, system-level에서의 구현이 복잡
 
 #### communication link
 
@@ -53,10 +56,11 @@
 - 하나의 링크는 둘 이상의 프로세스랑 연관 가능
 - 프로세스 사이에는 여러 링크가 존재할 수 있으며 각 링크는 하나의 mailbox
 
-### 여러 프로세스가 하나의 mailbox를 사용하는 경우
+#### 여러 프로세스가 하나의 mailbox를 사용하는 경우
 
-- P1, P2, P3가 mailbox A를 사용하는 경우
-- P1이 `send()`하고, P2, P3가 `receive()`한다면?
+P1, P2, P3가 mailbox A를 사용하는 경우,   
+P1이 `send()`하고, P2, P3가 `receive()`한다면?  
+
 - 해결방법
     - 링크에는 최대 2개의 프로세스만 연결되도록 제한
     - 동시에 최대 1개의 프로세스만 `receive()`할 수 있도록 제한
@@ -85,7 +89,7 @@
 
 ### blocking send + blocking receive
 
-- 생산자 소비자 문제 해결 가능
+- 생산자 소비자 문제 해결
 - 송신자는 메시지가 수신될 때까지 기다리고,
 - 수신자는 정상 메시지가 수신될 때까지 기다림
 
