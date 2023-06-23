@@ -20,6 +20,6 @@
 4. [Interprocess Communication](4_Interprocess_Communication/README.md)
 5. [IPC in Shared Memory Systems](5_IPC_in_Shared_Memory_Systems/README.md)
 6. [IPC in Message-Passing Systems](6_IPC_in_Message_Passing_Systems/README.md)
-7. Examples of IPC Systems
+7. [Examples of IPC Systems](7_Examples_of_IPC_Systems/README.md)
 8. Communication in Client-Server Systems
 9. Summary
