@@ -7,6 +7,11 @@
 
 client-server system 에서 통신하는 2가지 방법. Socket <sup>1</sup> 과 Remote Procedure Call <sup>2</sup>
 
+#### Sockets vs RPC
+
+- Socket : low-level communication mechanism
+    - 구조화되지 않은 스트림을 통해 데이터를 전송
+
 ## 1. Sockets
 
 - socket : 네트워크를 통한 프로세스 간 통신의 endpoint
@@ -32,11 +37,10 @@ client-server system 에서 통신하는 2가지 방법. Socket <sup>1</sup> 과
 <details>
     <summary>Host : Date server</summary>
 
-- DateServer listens on port 6013
+- listens on port 6013
 - Connection을 맺고, Client에게 현재 시간을 보냄
 - `accept()` : client의 connection 요청을 기다림. blocking
-  - 
-- 
+- date를 보내면 client socket을 닫고, 다음 connection을 기다림
 
 ```java
 import java.net.*;
@@ -69,6 +73,10 @@ public class DateServer {
 
 <details>
     <summary>Client</summary>
+
+- date server에 요청을 보낼 `Socket` 생성
+- loopback : `127.0.0.1`
+    - host 본인과 TCP/IP 통신
 
 ```java
 import java.net.*;
