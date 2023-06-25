@@ -12,6 +12,14 @@
 
 <img src="img_4.png"  width="30%"/>
 
+## [Database System Concepts](database_system_concepts/README.md)
+
+### Seventh Edition
+
+#### Abraham Silberschatz, Henry F. Korth, S. Sudarshan
+
+<img src="img_7.png"  width="30%"/>
+
 ## [HTTP 완벽가이드](http-the-definitive-guide)
 
 <img src="img_2.png"  width="30%"/>
