@@ -1,0 +1,26 @@
+# 9. Summary
+
+- process는 실행 중인 프로그램이다. program counter가 process의 현재 상태를 나타낸다.
+- 메모리에 있는 process의 layout : text, data, stack, heap
+- process의 4가지 상태 : ready, running, waiting, terminated
+- process control block <sub>(PCB)</sub> : kernel의 자료구조, 프로세스의 상태를 나타내는 정보를 포함한다.
+- process scheduler : CPU에서 실행할 process를 선택한다.
+- context switch : process에서 다른 process로 switching 하는 것
+- process 생성 : `fork()` system call, `CreateProcess()` system call
+- shared memory : 두 process가 동일한 메모리 영역을 공유하는 것, POSIX 는 shared memory API를 제공한다.
+- message passing : 두 process가 메시지를 주고 받는 것, Mach OS, Windows
+- pipe : 두 process가 통신할 conduit 제공
+    - ordinary pipe : 부모-자식 관계
+    - named pipe : 2개 이상의 process가 통신 가능
+- Unix의 pipe
+    - `pipe()` system call :ordinary pipe를 생성하는 system call
+    - read end, write end
+- Windows의 pipe
+    - anonymous pipe : 단방향, 부모-자식 관계
+    - named pipe : anonymous 보다 풍부
+- client-server communication
+    - socket : client와 server가 network를 통해 통신
+    - remote procedure call <sub>(RPC)</sub> : client가 server에게 procedure를 호출하는 것
+- Android의 RPC
+    - IPC를 RPC로 구현
+    - binder framework를 통해 제공 

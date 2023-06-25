@@ -22,4 +22,4 @@
 6. [IPC in Message-Passing Systems](6_IPC_in_Message_Passing_Systems/README.md)
 7. [Examples of IPC Systems](7_Examples_of_IPC_Systems/README.md)
 8. [Communication in Client-Server Systems](8_Communication_in_Client-Server_Systems/README.md)
-9. Summary
+9. [Summary](9_Summary/README.md)
