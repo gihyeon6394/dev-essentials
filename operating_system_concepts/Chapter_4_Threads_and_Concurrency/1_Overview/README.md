@@ -44,7 +44,7 @@
 - Responsiveness
 - Resource Sharing
 - Economy
-- Sca
+- Scalability
 
 #### Responsiveness
 
