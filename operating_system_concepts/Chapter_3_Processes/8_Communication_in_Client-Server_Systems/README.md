@@ -11,6 +11,8 @@ client-server system 에서 통신하는 2가지 방법. Socket <sup>1</sup> 과
 
 - Socket : low-level communication mechanism
     - 구조화되지 않은 스트림을 통해 데이터를 전송
+- RPC : 분산 시스템에 유용
+    - RPC 데몬과 Client 집합으로 이루어짐
 
 ## 1. Sockets
 
@@ -106,3 +108,47 @@ public class DateClient {
 </details>
 
 ## 2. Remote Procedure Calls <sup>RPC</sup>
+
+- network로 연결된 시스템간의 procedure call을 추상화함
+- 메시지는 구조화되어있음
+- RPC 데몬에게 메시지를 전송
+    - RPC 데몬은 remote 시스템 port listener
+- 메시지에는 함수와 매개변수 포함
+
+#### Stub
+
+- client 측에 제공하는 인터페이스
+- Stub을 제공하고 내부사항은 숨김
+- Client가 remote procedure를 호출하면, RPC 시스템이 Stub을 호출
+- Stub이 서버의 port를 가리키고, 파라미터를 marshalling하여 전송
+
+#### issue 1 : marshal
+
+- 서버의 architecture와 관계없이 데이터를 전송 가능한 형태로 변환하는 과정
+- ex. big-endian vs little-endian
+- external data representation <sup>XDR</sup>
+
+#### issue 2 : network issue
+
+- RPC 시스템은 network의 이슈로 인해 실패할 수 있음
+- 메시지 전송을 **딱 한번만** 전송하게 함 <sub>최대 한번이 아님</sub>
+- 서버가 Ack message를 보내지 않으면, client는 다시 전송
+
+#### issue 3 : communication
+
+<img src="img_1.png"  width="50%"/>
+
+- shared memory가 아니기 떄문에 서로에 대한 정보를 완전히 알지 못함
+- server의 port 번호를 알아야함
+- 해결방안 (2)
+    - 고정됨 port 번호를 제공하여 compile 시점에 포트 번호를 알수 있게함
+    - OS의 rendezvous 데몬을 사용 a.k.a matchmaker
+
+### 2.1 Android RPC
+
+- Android는 RPC를 사용하여 IPC를 구현
+- binder framework에 RPC를 구현하여 서로 다른 프로세스에게 메시지를 전송
+- service : user interface 없이, 백그라운드에서 실행되는 component
+- `bindService()` : service가 bound 되고, 메시지 패싱이나 RPC가 가능해짐
+- `onBind()` : service가 bind 되었을 때 호출되는 method
+    - remote Object의 메서드를 가리키는 인터페이스 반환
