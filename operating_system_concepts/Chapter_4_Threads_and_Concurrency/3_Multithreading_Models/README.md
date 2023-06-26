@@ -8,7 +8,7 @@
 
 #### user threads, kernel threads
 
-<img src="png.png"  width="40%"/>
+<img src="img.png"  width="40%"/>
 
 - user level : user threads
     - kernel의 지원 없음
@@ -21,7 +21,7 @@
 
 - Many user-level threads, one kernel thread
 - thread library가 user thread를 관리
-- kernel thead 가 하나여서
+- kernel thead 가 하나이기 때문에,
     - blocking system call이 있으면, 모든 thread가 block됨
     - user space thread 병렬 실행 불가능
 - 병렬 실행이 불가능해서 잘 쓰이지 않음
@@ -52,4 +52,4 @@
 
 <img src="img_4.png"  width="40%"/>
 
-- one-to-one처럼 kernel thread에 바인딩이 가능하게 함
+one-to-one처럼 kernel thread에 바인딩이 가능하게 함
