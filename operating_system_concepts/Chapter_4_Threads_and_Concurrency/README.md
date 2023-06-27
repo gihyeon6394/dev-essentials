@@ -16,7 +16,7 @@ multicore system에서 병렬의 중요성은 커지고 있음
 1. [Overview](1_Overview/README.md)
 2. [Multicore Programming](2_Multicore_Programming/README.md)
 3. [Multithreading Models](3_Multithreading_Models/README.md)
-4. Thread Libraries
+4. [Thread Libraries](4_Thread_Libraries/README.md)
 5. Implicit Threading
 6. Threading Issues
 7. Operating-System Examples
