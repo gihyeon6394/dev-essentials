@@ -506,3 +506,56 @@ Cache-Control: must-revalidate
 
 - 퍼블리셔가 유효기간을 까마득한 미래로 설정한다면 만료되기 전까지 어떠한 캐시도 갱신되지 않음
 - 유효기간을 아예 설정하지 않아서 캐시가 알기 어렵게 하는 경우도 있음
+
+## 10. 캐시 제어 설정
+
+웹 서버 마다 캐시를 제어하기위한 헤더 설정 매커니즘이 다름  
+각 웹 서버 레퍼런스를 참고할 것
+
+### 10.1 아파치로 HTTP 헤더 제어하기
+
+#### `mod_headers` 모듈
+
+- `Header` 지시어를 사용해 HTTP 헤더를 설정
+- 아파치 정규식과 필터를 조합 가능
+
+```html
+
+<Files *.html>
+    Header set Cache-Control "max-age=3600"
+</Files>
+```
+
+#### `mod_expires` 모듈
+
+적절한 만료날짜가 담긴 `Expires` 헤더를 추가할 수 있는 프로그램 로직 제공
+
+````
+ExpiresDefault A3600
+ExpiresByType "access plus 1 hour"
+ExpiresByType text/html "modification 2 days 6 hours 12 minutes" 
+````
+
+#### `mode_cern_meta` 모듈
+
+- 제어하고자 하는 파일에 각각 메타 파일을 생성해줌
+
+### 10.2 HTTP-EQUIV를 통한 HTML 캐시 제어 <sub>HTML 2.0</sub>
+
+- 웹 서버 설정 없이도 HTML 문서에 HTTP 헤더를 추가할 수 있음
+- 대부분의 웹 서버, 프락시가 무시하는 설정
+    - 캐시 동작에 혼란을 초래함
+
+```html
+
+<HTML>
+<HEAD>
+    <TITLE>HTML 문서</TITLE>
+    <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
+</HTML>
+
+``` 
+
+- HTML이 아닌 다른 타입의 파일에 적용 불가능
+- 서버의 부하 증가시킴
+- 설정이 정적임
