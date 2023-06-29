@@ -90,7 +90,7 @@ public class ThreadPoolExample {
 
 ## 2. Fork Join
 
-<img src="img.png"  width="30%"/>
+<img src="img.png"  width="60%"/>
 
 - forks : main parent thread가 자식 thread를 생성하고 자식 thread의 종료를 기다림
 - join : 자식 thread 가 task 완료되면 parent thread에 join
@@ -167,7 +167,7 @@ public class SumTask extends RecursiveTask<Integer> {
 ## 3. OpenMP
 
 - C, C++ 로 작성된 컴파일러 지시문, API
-- shared memory 환경에서 parallelism을 위한 library
+- shared memory 환경에서 parallelism을 위한 library즈
 - parallel region
     - 병렬 실행하려는 코드블럭
     - OpenMAp 런타임 라이브러리에 해당 영역을 병렬로 실행
@@ -218,7 +218,7 @@ int main(int argc, char *argv[])
     - 이 class의 작업량이 적은 것이 중요
 - QOS_CLASS_USER_INITIATED : user-initiated class
     - user-interactive와 비슷
-    - 더 긴 시간이 필요한 작업을 담당 <sub>networking, file I/O</sub>l
+    - 더 긴 시간이 필요한 작업을 담당 <sub>networking, file I/O</sub>
 - QOS_CLASS_UTILTY : utility class
     - 더 긴 작업을 수행하지만, 즉각적인 result를 반환하지 않음
     - data import
