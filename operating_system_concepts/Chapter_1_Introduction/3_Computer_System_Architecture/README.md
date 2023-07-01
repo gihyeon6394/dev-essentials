@@ -26,7 +26,7 @@
 - 제한된 명령 수행
 - 프로세스를 구동하지 않음
 - OS에 의해 관리될 수 있음
-- ex.
+- e.g.
     - 디스크 컨트롤러 마이크로프로세서 : 메인 CPU로부터 요청을 받아 자신의 디스크 큐에 실행
 
 ## 2. Multiprocessor Systems
@@ -135,7 +135,7 @@
 - 병렬 클러스터가 다수의 호스트가 같은 스토리지에 접근하도록 허용
 - 특별한 버전의 소프트웨어나 어플리케이션 배포판이 필요
     - 다수의 호스트가 병렬적으로 동시에 데이터에 접근할 수 있게 구현
-    - ex. Oracle Real Application Clusters, Distributed Lock Manager <sup>DLM</sup>
+    - e.g. Oracle Real Application Clusters, Distributed Lock Manager <sup>DLM</sup>
 
 ### 클러스터 기술의 진화
 

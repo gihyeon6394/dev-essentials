@@ -13,12 +13,12 @@
 
 - Command Interpreter <sup>명령어 인터프리터</sup>
 - 대부분의 OS가 Command Interpreter를 대화식 시스템에 제공
-- ex. c-shell, bash, ksh, tcsh, zsh, Windows PowerShell 등
+- e.g. c-shell, bash, ksh, tcsh, zsh, Windows PowerShell 등
 
 ### 주요 기능
 
 - 사용자의 다음 명령어를 받고 실행
-- ex. create, delte, list, print, copy, exceute 등
+- e.g. create, delte, list, print, copy, exceute 등
 
 ### Command Interpreter의 분류
 

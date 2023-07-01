@@ -11,7 +11,7 @@
 
 ## 1. HTTP: 인터넷의 멀티미디어 배달부
 
-- 수십억개의 리소스 <sup>ex. jpg, html, text, wav 등</sup> 들이 HTTP로 인터넷에 항해중
+- 수십억개의 리소스 <sup>e.g. jpg, html, text, wav 등</sup> 들이 HTTP로 인터넷에 항해중
 - HTTP **신뢰성** : 메시지 손상, 왜곡, 중복 되지 않음을 보장
 
 ## 2. 웹 클라이언트와 서버
@@ -25,8 +25,8 @@
 
 #### 웹 서버는 웹 리소스를 관리하고 제공한다.
 
-- 웹 리소스 : 정적 파일 <sub>ex. js, css, jpeg, html, word</sub>
-- 리소스 : 웹 리소스 + **동적** 파일 <sub>ex. 주식 거래, 데이터베이스 검색, 실시간 엔진</sub>
+- 웹 리소스 : 정적 파일 <sub>e.g. js, css, jpeg, html, word</sub>
+- 리소스 : 웹 리소스 + **동적** 파일 <sub>e.g. 주식 거래, 데이터베이스 검색, 실시간 엔진</sub>
 
 ### 3.1. 미디어 타입
 
@@ -36,7 +36,7 @@
 - MIME 타입은 웹 브라우저가 리소스를 처리하는 방법을 결정
 - 수백가지의 MIME 타입과 실험용, 특정 용도로 사용되는 타입이 존재
 - 포맷 : 주타입 / 부타입 <sup>primary object type / specific subtype</sup>
-    - ex. text/html <sup>html로 작성된 텍스트</sup>, text/plain<sup>일반 ASCII 텍스트</sup>, image/jpeg<sup>jpeg 형식의 이미지</sup>,
+    - e.g. text/html <sup>html로 작성된 텍스트</sup>, text/plain<sup>일반 ASCII 텍스트</sup>, image/jpeg<sup>jpeg 형식의 이미지</sup>,
       image/gif<sup>gif 형식의 이미지</sup>, ...
 
 ### 3.2. URI
@@ -60,8 +60,8 @@
 - **오늘날 대부분의 URI 는 URL**
 - URL 구성요소
     - 스킴 <sup>scheme</sup> : 리소스에 접근하기 위해 사용할 프로토콜
-    - 서버의 인터넷 주소 <sup>ex. www.naver.com</sup>
-    - 웹 서버의 리소스 <sup>ex. /myPage/orderInfo.html</sup>
+    - 서버의 인터넷 주소 <sup>e.g. www.naver.com</sup>
+    - 웹 서버의 리소스 <sup>e.g. /myPage/orderInfo.html</sup>
 
 ### 3.4. URN
 
@@ -80,7 +80,7 @@ HTTP 트랜잭션 = 요청 명령 <sup>HTTP 메시지</sup> + 응답 결과 <sup
 
 #### 메서드 : 서버가 어떤 동작을 취해야하는지 지정
 
-- ex. 웹페이지 가져오기, 게이트웨이 프로그램 실행하기, 파일 삭제하기 등
+- e.g. 웹페이지 가져오기, 게이트웨이 프로그램 실행하기, 파일 삭제하기 등
 - 대표적인 메서드
     - GET : 서버에서 리소스를 가져온다.
     - PUT : 서버에 리소스를 저장한다.
@@ -92,14 +92,14 @@ HTTP 트랜잭션 = 요청 명령 <sup>HTTP 메시지</sup> + 응답 결과 <sup
 
 - 세자리 숫자
 - 클라이언트의 요청이 성공 or 실패 or 추가 조치 필요 한지 알려줌
-- ex. 200, 302, 404 등
+- e.g. 200, 302, 404 등
 - reason phrase <sup>사유 구절</sup> : 상태 코드에 대한 짧은 설명
-- ex. 404 'Not Found' <sup>없음, 리소스가 존재하지 않음</sup>
+- e.g. 404 'Not Found' <sup>없음, 리소스가 존재하지 않음</sup>
 
 ### 4.3. 웹페이지는 여러 객체로 이루어질 수 있다.
 
 - 애플리케이션은 하나의 작업을 위해 1개 이상의 HTTP 트랜잭션 수행
-- ex. 브라우저 naver.com 화면은 여러 웹 리소스 <sup>트랜잭션</sup>로 이루어짐
+- e.g. 브라우저 naver.com 화면은 여러 웹 리소스 <sup>트랜잭션</sup>로 이루어짐
 
 ## 5. 메시지
 
@@ -115,7 +115,7 @@ HTTP 트랜잭션 = 요청 명령 <sup>HTTP 메시지</sup> + 응답 결과 <sup
 - 본문 : 메시지 본문, 어떤 종류의 데이터든 포함 가능
     - 요청일 경우 웹 서버로 실어 보내는 데이터
     - 응답일 경우 클라이언트에 반환하는 데이터
-    - ex. HTML 문서, 이미지, 동영상, JSON 데이터 등
+    - e.g. HTML 문서, 이미지, 동영상, JSON 데이터 등
 
 ### 5.1. 간단한 메시지의 예
 
@@ -175,7 +175,7 @@ Date: Sat, 09 Apr 2011 14:42:11 GMT
 
 - 클라이언트와 서버의 중개자
 - 주로 보안을 위해 사용
-- ex. 회사에서 리소스 다운시 바이러스 검사, 성인 컨텐츠 차단
+- e.g. 회사에서 리소스 다운시 바이러스 검사, 성인 컨텐츠 차단
 
 ### 8.2. 캐시
 
@@ -195,7 +195,7 @@ Date: Sat, 09 Apr 2011 14:42:11 GMT
 ### 8.5. 에이전트
 
 - 사용자를 위해 HTTP 요청을 스스로 만들어주는 클라이언트 프로그램
-- ex. 스파이더, 웹로봇
+- e.g. 스파이더, 웹로봇
 
 ## 9. 시작의 끝
 

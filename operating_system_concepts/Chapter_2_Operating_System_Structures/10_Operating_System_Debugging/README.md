@@ -28,14 +28,14 @@ debugging 은 하드웨어, 소프트웨어 전반에 걸친 문제를 잡는 �
 ### 2.1 Counters
 
 - 만들어진 System call의 수, network 기기, 디스크를 위해 수행하는 명령 수 등
-- ex. Linux `/proc` 파일 시스템 , Windows 작업 관리자
+- e.g. Linux `/proc` 파일 시스템 , Windows 작업 관리자
     - 프로세스별 : `ps`, `top`
     - 시스템 전체 : `vmstat`, `iostat`, `netstat`
 
 ## 3. Tracing
 
 - 시스템의 특정 이벤트를 추적
-- ex. Linux
+- e.g. Linux
     - 프로세스별 : `strace`, `ltrace`
     - 시스템 전체 : `perf`, `tcpdump`
 

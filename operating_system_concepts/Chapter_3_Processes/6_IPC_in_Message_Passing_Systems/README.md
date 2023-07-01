@@ -64,7 +64,7 @@ P1이 `send()`하고, P2, P3가 `receive()`한다면?
 - 해결방법
     - 링크에는 최대 2개의 프로세스만 연결되도록 제한
     - 동시에 최대 1개의 프로세스만 `receive()`할 수 있도록 제한
-    - 시스템이 어떤 프로세스가 `receive()`할지 결정하도록 함 <sub>ex. round-robin</sub>
+    - 시스템이 어떤 프로세스가 `receive()`할지 결정하도록 함 <sub>e.g. round-robin</sub>
 
 #### mailbox의 owner
 

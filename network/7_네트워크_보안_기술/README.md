@@ -38,12 +38,12 @@
 #### 혼합 암호 <sup>Combination Cipher</sup>
 
 - 대치와 전치 두 방법 모두 사용
-- ex. LUCIFER, ENIGMA 등
+- e.g. LUCIFER, ENIGMA 등
 
 #### 대수화 암호 <sup>Arithmetic Cipher</sup>
 
 - 각 글자를 숫자로 바꾸어 수학적으로 처리
-- ex. CRC <sup>Cyclic Redundancy Check</sup>, Vernam 암호 등
+- e.g. CRC <sup>Cyclic Redundancy Check</sup>, Vernam 암호 등
 
 #### 스트림 암호화 <sup>Stream Cipher</sup>
 
@@ -66,7 +66,7 @@
 - 암호화 키 = 복호화 키
 - 장점 : 구현 쉽고 실행속도 빠름
 - 단점 : 키 분배, 관리 문제, 인증과 송수신 부인 방지 보장 되지 않음
-- ex. AES, DES, IDEA 등
+- e.g. AES, DES, IDEA 등
 
 #### 공개 키 암호화 <sup>Public Key Encryption</sup>
 
@@ -75,7 +75,7 @@
 - 비대칭 키 암호화 <sup>Asymmetric Key Encryption</sup>
 - 장점 : 키 분배, 관리 문제 해결, 인증과 송수신 부인 방지 보장 <sup>디지털 서명</sup>
 - 단점 : 구현 어렵고, 처리 속도 느림
-- ex. RSA, DSA 등
+- e.g. RSA, DSA 등
 
 ### 키 관리
 

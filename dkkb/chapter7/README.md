@@ -93,7 +93,7 @@ docker-compose -f [파일경로] stop [옵션]
 #### 주의사항 : 실제 생성된 컨테이너 파일과 정의파일에 명시한 이름은 다르다 
 
 - 따라서 컴포즈로 생성한 뒤 ps 커맨드로 먼저 확인해라
-- ex. penguin -> penguin_1
+- e.g. penguin -> penguin_1
 
 ### [실습] 도커 컴포즈 실행
 

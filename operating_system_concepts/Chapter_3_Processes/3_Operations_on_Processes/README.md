@@ -32,7 +32,7 @@
 
 ### Parent & Child process
 
-- 자식 프로세스는 실행 시 resource가 필요 <sub>ex. 메모리, 파일</sub>
+- 자식 프로세스는 실행 시 resource가 필요 <sub>e.g. 메모리, 파일</sub>
 - resource는 직접 얻거나, 부모 프로세스로부터 리소스 일부를 제한 받을 수 있음
 - 자식 프로세스에게 리소스를 제한하는 것은 너무 많은 자식 프로세스로 인한 시스템 부하 방지 가능
 - 자식 프로세스에게 data input을 전달할 수 있음
@@ -91,7 +91,7 @@ int main()
 - 종료 시 integer value를 부모 프로세스에게 return
 - OS에 의해 할당된 리소스를 해제
 - 주로 부모 프로세스에 의해 종료
-- system call을 통해 다른 프로세스 종료 가능 <sub>ex. TerminateProcess() in Windows</sub>
+- system call을 통해 다른 프로세스 종료 가능 <sub>e.g. TerminateProcess() in Windows</sub>
 - `exit(1)` system call : 프로세스를 종료시킴
 - `wait()` system call : 자식 프로세스가 종료될 때까지 기다림
 

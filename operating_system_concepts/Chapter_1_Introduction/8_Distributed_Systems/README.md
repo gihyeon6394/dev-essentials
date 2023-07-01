@@ -24,7 +24,7 @@
 - wide-area network <sup>WAN</sup>
     - 지리적으로 넓은 범위의 네트워크
     - 빌딩, 도시, 국가 범위
-    - ex. 글로벌 회사는 WAN을 통해 전세계 지사들을 연결
+    - e.g. 글로벌 회사는 WAN을 통해 전세계 지사들을 연결
 - metropolitan-area network <sup>MAN</sup>
     - 도시의 빌등들을 연결
 - personal-area network <sup>PAN</sup>

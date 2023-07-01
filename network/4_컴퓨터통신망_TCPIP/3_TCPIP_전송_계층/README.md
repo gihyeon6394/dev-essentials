@@ -145,7 +145,7 @@
 3. Destination Port : 2bytes, 수신지 프로세스 포트 번호
 4. Sequence Number : 4bytes, 전송되는 데이터 필드의 첫번째 바이트의 순서 번호
 5. Acknowledgement Number : 4bytes, 세그먼트에 대한 송신자의 응답, 다음에 받기를 희망하는 순서 번호
-    - ex. n 세그먼트 수신 완료 시 ACK = n+1
+    - e.g. n 세그먼트 수신 완료 시 ACK = n+1
 6. Data Offset : 4bits, TCP 헤더 길이
 7. Reserved : 6bits, 예약 필드
 8. Control Bits : 6bits

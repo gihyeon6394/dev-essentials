@@ -11,7 +11,7 @@
 
 <img src="img.png"  width="60%"/>
 
-- ex. 병원의 접수대, 은행 대기줄
+- e.g. 병원의 접수대, 은행 대기줄
 - First In First Out <sup>FIFO</sup>
 - 한쪽에서는 삽입 연산만
 - 다른 한쪽에서는 삭제 연산만 가능한 양쪽이 뚫린 관

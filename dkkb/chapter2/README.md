@@ -35,7 +35,7 @@
       > **원칙 : 한 컨테이너에는 하나의 프로그램만 설치한다** <sup>보안, 유지/보수 유리</sup>  
       1 컨테이너 n 프로그램 : 바로 실행 가능하여 자주 쓰임
       허브에서 배포된 여러 이미지들을 활용  
-      ex. centOS, Ubuntu + apache, CentOS7.6 + apache + mysql, ....
+      e.g. centOS, Ubuntu + apache, CentOS7.6 + apache + mysql, ....
       > - 공식 이미지를 사용 : 이미지 선택이 쉽고, 안전
       > - 커스텀 이미지를 사용 : 이미지를 직접 만들어서 사용
 

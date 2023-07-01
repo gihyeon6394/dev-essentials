@@ -37,7 +37,7 @@
 
 - multi-core 시스템에서는 multi-threaded program이 유리
 - CPU를 많이 사용하여, 병렬적 <sup>parallel</sup>으로 실행되게 함
-- ex. 데이터 마이닝, 그래픽, AI 등
+- e.g. 데이터 마이닝, 그래픽, AI 등
 
 ## 2. Benefits
 
@@ -50,7 +50,7 @@
 
 - 프로그램의 부분이 block 되어도 다른 스레드는 계속 실행됨
 - user interface에 적합
-- ex. 사용자의 click 처리가 시간이 걸려도 block되지 않고 다른 thread를 통해 다른 업무는 계속될 수 있음
+- e.g. 사용자의 click 처리가 시간이 걸려도 block되지 않고 다른 thread를 통해 다른 업무는 계속될 수 있음
 
 #### Resource Sharing
 

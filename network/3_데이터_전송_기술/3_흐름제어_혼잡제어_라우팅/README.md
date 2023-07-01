@@ -27,13 +27,13 @@
 ### 흐름제어의 네가지 원칙
 
 1. 속도조절 : 블록간의 도착 간격 변경
-    - ex. 감속 방법 <sup>choke packet</sup>
+    - e.g. 감속 방법 <sup>choke packet</sup>
 2. 거부 <sup>rejection</sup> : 송신측에 대한 거부상태 통지
-    - ex. 무시 방법 <sub>송신 측에대한 거부</sub>, **stop-and-go 방법** <sub>송신 이전의 수신 거부</sub>
+    - e.g. 무시 방법 <sub>송신 측에대한 거부</sub>, **stop-and-go 방법** <sub>송신 이전의 수신 거부</sub>
 3. 단일 승낙 <sup>single permission</sup> : 매번 송신 허락을 받아야함
-    - ex. wait-before-go 방법, **ask-and-wait 방법**
+    - e.g. wait-before-go 방법, **ask-and-wait 방법**
 4. 다중 승낙 <sup>multiple permission</sup> : 정해진 개수의 블록만 송신 가능
-    - ex. **sliding window 방법**
+    - e.g. **sliding window 방법**
 
 ## 혼잡제어
 
@@ -54,7 +54,7 @@
 
 - 전송량의 제한
     - 허가증 <sup>permit</sup>을 이용하여 전송량을 일정 수준 이하로 유지
-    - ex. Isarithmic 흐름제어 방법
+    - e.g. Isarithmic 흐름제어 방법
 - 부네트워크 내의 부하 감소
     - 어떤 패킷을 버림
     - 흐름제어 <sup>거부원칙</sup> 방법 이용

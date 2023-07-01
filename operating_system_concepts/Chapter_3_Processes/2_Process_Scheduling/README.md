@@ -59,7 +59,7 @@ struct mm_struct *mm; /* address space of this process */
 - 각 PCB는 다음 PCB를 가리키는 포인터를 가짐
 - wait queue : 실행 상태였던 process가 대기 상태로 기다리는 큐
 - 코어가 할당된 process는 실행 중 특정 이벤트로 중단, 인터럽트, 대기 상태에 빠짐
-    - ex. I/O 응답 대기
+    - e.g. I/O 응답 대기
 
 ### Process Scheduling
 

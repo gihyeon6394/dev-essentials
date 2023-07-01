@@ -250,7 +250,7 @@
 ## 고속 LAN
 
 - 기존 LAN 프로토콜을 이용하면서 100Mbps 이상의 고속 통신을 지원하는 LAN
-- ex. Fast Ethernet, Gigabit Ethernet, FDDI
+- e.g. Fast Ethernet, Gigabit Ethernet, FDDI
 
 ### Fast Ethernet
 

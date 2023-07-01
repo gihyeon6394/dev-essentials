@@ -18,7 +18,7 @@
     - 오픈 소스이지만 무료가 아닐 수 있음
     - 재배포 수정 허용 라이센스 제공 의무 없음
     - 많은 사람들이 개발에 참여할 수 있어 더 빠르게 발전할 수 있음
-    - ex. GNU/Linux
+    - e.g. GNU/Linux
 
 ### 소스 코드로 배우는 운영 체제
 
@@ -62,7 +62,7 @@
 ## 4. BSD UNIX
 
 - Linux 보다 오래된 운영체제
-- 다양한 배포판 존재 <sub>ex. FreeBSD, NetBSD, OpenBSD, ...</sub>
+- 다양한 배포판 존재 <sub>e.g. FreeBSD, NetBSD, OpenBSD, ...</sub>
 - SVN으로 소스코드 버전관리 중
 - macOS의 핵심 커널 구성요소 Drawin은 BSD UNIX 기반
 

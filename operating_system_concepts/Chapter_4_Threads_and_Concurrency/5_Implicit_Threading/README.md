@@ -48,7 +48,7 @@ Multicore Processing의 발전으로, 수백~수천개의 thread를 포함하는
     - CPU의 수, memory size, client의 동시성 요청 기대 수
 - 복잡한 thread pool architecture에서는 사용자 패턴에 따라 조절하기도 함
     - 더 작은 pool을 제공하여 적은 memory 를 소모하게함
-    - ex. Apple의 Grand Central Dispatch
+    - e.g. Apple의 Grand Central Dispatch
 
 #### Windows Thread Pool API
 

@@ -60,7 +60,7 @@
 #### Data Parallelism
 
 - Data를 나누어 각 Core에 할당하고, 동일한 task를 실행
-- ex. 사이즈 N 배열의 모든 원소의 합
+- e.g. 사이즈 N 배열의 모든 원소의 합
     - core 0 : 1 ~ N/2-1
     - core 1 : N/2 ~ N-1
 

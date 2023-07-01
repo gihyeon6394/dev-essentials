@@ -39,7 +39,7 @@
         - K<sub>i</sub> : 라운드 키
 - 라운드 함수와 관계 없이 역변환 가능
 - 두번의 수행으로 블록 간의 완전한 확산 이루어짐
-- ex. DES, SEED
+- e.g. DES, SEED
 
 ### SPN 구조 <sup>Substitution-Permutation Network</sup>
 
@@ -52,7 +52,7 @@
     - S-box 출력을 P-Box로 전치
 - 라운드 함수가 역변환 가능해야 함
 - 더 많은 병렬성 제공
-- ex. AES, ARIA
+- e.g. AES, ARIA
 
 ### 블록 암호의 사용 모드
 

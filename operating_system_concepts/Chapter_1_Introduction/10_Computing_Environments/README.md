@@ -32,7 +32,7 @@ OS는 다양한 컴퓨팅 환경에서 사용되고 있다.
 
 - 손에 들고 있는 컴퓨팅
 - 휴대성, 가벼움
-- 과거의 기능제약이 많이 사라짐 <sub>ex. 이메일, 웹 서핑 등</sub>
+- 과거의 기능제약이 많이 사라짐 <sub>e.g. 이메일, 웹 서핑 등</sub>
 - 모바일 OS : 안드로이드, iOS
 
 ### 특징
@@ -57,12 +57,12 @@ OS는 다양한 컴퓨팅 환경에서 사용되고 있다.
 ### 종류
 
 - compute-server system <sup>컴퓨팅 서버 시스템</sup>
-    - 클라이언트 시스템이 요청을 보낼 수 있는 인터페이스 제공 <sub>ex. 데이터 읽기</sub>
+    - 클라이언트 시스템이 요청을 보낼 수 있는 인터페이스 제공 <sub>e.g. 데이터 읽기</sub>
     - 응답으로 요청을 처리하고 결과를 클라이언트 시스템에 전달
-    - ex. 데이터베이스 시스템 : 클라이언트가 데이터를 읽거나 쓸 수 있도록 인터페이스 제공
+    - e.g. 데이터베이스 시스템 : 클라이언트가 데이터를 읽거나 쓸 수 있도록 인터페이스 제공
 - file-serve system <sup>파일 서버 시스템</sup>
     - 클라이언트가 파일을 읽거나 쓸 수 있도록 인터페이스 제공
-    - ex. 웹서버 : 클라이언트가 요청한 리소스를 웹브라우저로 전달
+    - e.g. 웹서버 : 클라이언트가 요청한 리소스를 웹브라우저로 전달
 
 ## 4. Peer-to-Peer Computing <sup>P2P</sup>
 
@@ -88,7 +88,7 @@ OS는 다양한 컴퓨팅 환경에서 사용되고 있다.
 
 ### 예시
 
-- file sharing <sub>ex. Napster, Gnutella</sub>
+- file sharing <sub>e.g. Napster, Gnutella</sub>
     - peer가 파일을 공유
     - 다른 peer가 해당 파일을 요청하면 peer가 파일을 전송
     - 저작권 관련 법적 이슈로 shutdown
@@ -114,21 +114,21 @@ OS는 다양한 컴퓨팅 환경에서 사용되고 있다.
 - Public Cloud : 누구든지 인터넷을 통해 돈을내고 사용 가능한 클라우드
 - Private Cloud : 특정 조직이나 기업 내부에서만 사용 가능한 클라우드
 - Hybrid Cloud : Public Cloud와 Private Cloud를 혼합한 형태
-- Software as a Service <sup>SaaS</sup> : 인터넷을통해 하나 이상의 어플레케이션을 제공 <sub>ex. google spreadsheet</sub>
-- Platform as a Service <sup>PaaS</sup> : 인터넷을 통해 하나 이상의 어플리케이션을 개발, 실행, 관리할 수 있는 소프트웨어 스택 제공 <sub>ex. google app
+- Software as a Service <sup>SaaS</sup> : 인터넷을통해 하나 이상의 어플레케이션을 제공 <sub>e.g. google spreadsheet</sub>
+- Platform as a Service <sup>PaaS</sup> : 인터넷을 통해 하나 이상의 어플리케이션을 개발, 실행, 관리할 수 있는 소프트웨어 스택 제공 <sub>e.g. google app
   engine</sub>
-- Infrastructure as a Service <sup>IaaS</sup> : 인터넷을 통해 하드웨어, 스토리지, 네트워크 등의 컴퓨팅 리소스를 제공 <sub>ex. Amazon EC2</sub>
+- Infrastructure as a Service <sup>IaaS</sup> : 인터넷을 통해 하드웨어, 스토리지, 네트워크 등의 컴퓨팅 리소스를 제공 <sub>e.g. Amazon EC2</sub>
 
 ## 6. Real-Time Embedded Systems
 
 ### Embedded System
 
 - 가장 보현화된 컴퓨터
-- ex. 자동차, 비행기 등의 하드웨어 장치 모니터링, 관리
+- e.g. 자동차, 비행기 등의 하드웨어 장치 모니터링, 관리
 - 원시적이고 OS는 제한된 기능을 제공
 - 사용자 인터페이스가 거의 없음
 - 네트워크, 웹과 조합되어 사용량이 늘고 있음
-    - ex. 집 전체를 네트워크화하여 웹을 통해 관리 등
+    - e.g. 집 전체를 네트워크화하여 웹을 통해 관리 등
 
 ### Real-Time System
 
@@ -136,5 +136,5 @@ OS는 다양한 컴퓨팅 환경에서 사용되고 있다.
     - 시간 제약 조건 : 시간과 관련하여 동작해야하는 제약 조건
 - 주로 전용 어플레키에션의 제어장치로 사용
 - 센서가 데이터를 컴퓨터로 가져와 분석, 시스템 제어, 센서 입력 수정 등을 수행
-- ex. 의료 영상 시스템, 산업 제어 시스템 등
+- e.g. 의료 영상 시스템, 산업 제어 시스템 등
 - 임베디드 시스템은 대부분 실시간 시스템를 사용

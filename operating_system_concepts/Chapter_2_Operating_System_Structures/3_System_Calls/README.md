@@ -38,10 +38,10 @@ cp in.txt out.txt
 
 - 간단한 프로그램 실행에 많은 system call이 필요
 - 그 내용을 알지 않고 API를 통해 사용
-    - API : fntion, 매개변수, 결과 기대값 들의 집합 <sub>ex. POSIX API, Windows API, Java API 등</sub>
+    - API : fntion, 매개변수, 결과 기대값 들의 집합 <sub>e.g. POSIX API, Windows API, Java API 등</sub>
 - libc : C 언어로 작성된 Unix, Linux, macOS의 API
 - API의 함수들이 system call을 호출 <sub>프로그래머 대신</sup>
-    - ex. Window funciton CreateProcess()는 Window Kernel의 system call NTCreateProcess()를 호출
+    - e.g. Window funciton CreateProcess()는 Window Kernel의 system call NTCreateProcess()를 호출
 
 #### API를 통해 system call을 호출하는 이유
 

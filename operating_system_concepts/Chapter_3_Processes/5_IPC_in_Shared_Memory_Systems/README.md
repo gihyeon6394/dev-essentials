@@ -7,9 +7,9 @@
 ### producer-consumer problem <sup>생산자-소비자 문제</sup>
 
 - producer : 공유 메모리에 데이터를 쓰는 프로세스
-    - ex. server
+    - e.g. server
 - consumer : 공유 메모리에서 데이터를 읽는 프로세스
-    - ex. client
+    - e.g. client
 
 #### shared memroy를 통한 해결
 

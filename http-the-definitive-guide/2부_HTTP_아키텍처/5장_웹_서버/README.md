@@ -33,7 +33,7 @@
 ### 1.2. 다목적 소프트웨어 웹 서버
 
 네트워크에 연결된 표준 컴퓨터 시스템에 설치되어 동작한다.  
-ex. apache, nginx, IIS, 등
+e.g. apache, nginx, IIS, 등
 
 #### 2022년 기준 웹 서버 점유율 (출처 : 넷크래프트 https://news.netcraft.com/archives/2022/)
 
@@ -41,7 +41,7 @@ ex. apache, nginx, IIS, 등
 
 ### 1.3. 임베디드 웹 서버
 
-소비자용 전자 제품 <sub>ex. 프린터, 냉장고 등</sub>에 내장할 목적으로 만든 웹 서버  
+소비자용 전자 제품 <sub>e.g. 프린터, 냉장고 등</sub>에 내장할 목적으로 만든 웹 서버  
 소비자용 기기에 간편한 웹 브라우저 인터페이스를 제공하기 위해 사용
 
 ## 2. 간단한 펄 웹 서버
@@ -98,7 +98,7 @@ ident <sup>신원확인</sup> 프로토콜은 웹서버가 HTTP 커넥션을 초
 1. 클라이언트가 HTTP 커넥션 <sup>80 port</sup>, ident 커넥션 <sup>80 port</sup> 요청
 2. 웹 서버가 HTTP 커넥션을 맺음
 3. 웹 서버가 클라이언트 113 포트에 ident 커넥션을 맺음
-4. 클라이언트가 ident 응답 반환 <sub>ex. 4322,80:USERID:UNIX:mary</sub>
+4. 클라이언트가 ident 응답 반환 <sub>e.g. 4322,80:USERID:UNIX:mary</sub>
 
 #### ident 프로토콜은 내부 조직에서만 쓰고 공공 인터넷에서는 안쓰인다.
 

@@ -78,8 +78,8 @@
 
 ## 데이터의 안전한 저장소
 
-- volatile memory <sup>primary memory, 휘발성 메모리</sup> : 전원이 꺼지면 데이터가 사라짐 <sub>ex. DRAM</sub>
-- nonvolatile memory <sup>비휘발성 메모리</sup> : 전원이 꺼져도 데이터가 사라지지 않음 <sub>ex. DVD</sub>
+- volatile memory <sup>primary memory, 휘발성 메모리</sup> : 전원이 꺼지면 데이터가 사라짐 <sub>e.g. DRAM</sub>
+- nonvolatile memory <sup>비휘발성 메모리</sup> : 전원이 꺼져도 데이터가 사라지지 않음 <sub>e.g. DVD</sub>
 - main memory <sup>1차 메모리</sup>: volatile memory
 - secondary memory <sup>보조기억장치</sup>: nonvolatile memory
     - magnetic disk <sup>자기 디스크</sup>, flash memory

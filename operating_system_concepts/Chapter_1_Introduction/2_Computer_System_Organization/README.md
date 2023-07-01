@@ -16,12 +16,12 @@
 - Bus 를 통해 연결
     - Bus : 공유 메모리와 컴포넌트 연결
 - 각 장치 제어기는 특정 유형의 디바이스 장치를 담당
-    - ex.
+    - e.g.
         - disk controller : disks
         - USB controller : USB devices
         - graphics adapter : monitor
 - 장치 제어기에 따라 여러개의 컴포넌트 연결 가능
-    - ex. USB port는 USB hub를 통해 여러 장치와 연결
+    - e.g. USB port는 USB hub를 통해 여러 장치와 연결
 - 장치 제어기는 일부 로컬 버퍼 저장소와 특수 목적의 레지스터 세트를 유지
 - 장치 제어기 주변 장치와 로컬 버퍼 저장소 간의 데이터 이동 책임
 
@@ -51,7 +51,7 @@
 1. 키보드를 누름
 2. 장치 드라이버는 장치 제어기에 적절한 레지스터들을 로드
 3. 장치 제어기가 레지스터의 내용을 검사하여 수행할 작업 결정
-    - ex. 키보드 장치를 통해 문자를 읽어라.
+    - e.g. 키보드 장치를 통해 문자를 읽어라.
 4. 장치 제어기가 문자를 디바이스에서 로컬 버퍼로 전송
 5. 전송이 끝나면 장치 드라이버에게 명령 <sup>입력</sup>이 끝났음을 알림
 6. 장치 드라이버는 제어를 다른 OS 일부에게 넘김
@@ -162,7 +162,7 @@ CPU가 인터럽트를 캐치하여 인터럽트 핸들러에게 디스패치한
 - CPU는 메모리를 통해서만 명령 로딩 가능
 - 모든 프로그램은 실행 되기 전 메모리에 로드되어야 함
 - general-purpose 컴퓨터는 프로그램을 메인메모리라 불리는 재사용 가능한 메모리에 프로그램을 로딩함
-- ex. random-access memory <sup>RAM</sup>, dynamic RAM <sup>DRAM</sup>
+- e.g. random-access memory <sup>RAM</sup>, dynamic RAM <sup>DRAM</sup>
 
 ##### 컴퓨터가 사용하는 다양한 메모리
 
@@ -183,7 +183,7 @@ CPU가 인터럽트를 캐치하여 인터럽트 핸들러에게 디스패치한
 
 - 메인 메모리는 저장 용량이 작고 <sup>1</sup>, 휘발성임 <sup>2</sup>
 - secondary storage : 비휘발성, 대용량, 저렴
-- ex. hard-disk drive <sup>HDD</sup>, solid-state drive <sup>SSD</sup>, optical storage <sup>광학 저장장치</sup>
+- e.g. hard-disk drive <sup>HDD</sup>, solid-state drive <sup>SSD</sup>, optical storage <sup>광학 저장장치</sup>
 - 대부분의 컴퓨터는 메인메모리에 올리기 전에 2차 저장소에 저장
 
 ### Storage-device hierarchy

@@ -36,7 +36,7 @@
 #### URL 구조
 
 - 스킴://사용자이름:비밀번호@호스트:포트/경로;파라미터?질의#프래그먼트
-- ex. http://www.example.com:80/path/to/myfile.html?key1=value1&key2=value2#SomewhereInTheDocument
+- e.g. http://www.example.com:80/path/to/myfile.html?key1=value1&key2=value2#SomewhereInTheDocument
 
 ### 2.1 스킴 : 사용할 프로토콜
 
@@ -53,7 +53,7 @@
 - 많은 서버가 리소스에 접근을 위해 사용자 이름과 비밀번호를 요구
 - FTP는 대부분 사용자 이름과 비밀번호를 요구
 
-#### ex.
+#### e.g.
 
 ```http
  ftp://ftp.prep.ai.mit.edu/pub/gnu         
@@ -70,7 +70,7 @@
 
 - 프로토콜이 요구하는 정보
 - key-value 쌍으로 구성, ';' 으로 구분
-- ex. ...com/user;level=gold/index.html;type=d
+- e.g. ...com/user;level=gold/index.html;type=d
     - level = gold, type = d
 
 ### 2.6 질의 문자열
@@ -78,16 +78,16 @@
 - 리소스에 대한 추가 질의를 전달
 - 게이트웨이 프로그램에 전달되는 정보
 - key-value 쌍으로 구성, '?' 으로 구분 <sub>포맷상 제약은 아니나 일반적으로 사용</sub>
-- ex. ...com/user;level=gold/index.html;type=d?key1=value1&key2=value2
+- e.g. ...com/user;level=gold/index.html;type=d?key1=value1&key2=value2
     - key1 = value1, key2 = value2
 
 ### 2.7 프래그먼트
 
 - 리소스의 일부분을 가리키는 이름
-- ex. HTML 의 특정 paragraph
+- e.g. HTML 의 특정 paragraph
 - URL의 # 문자 뒤에 위치
 - 프래그먼트를 서버에 전달하지 않음
-- ex. ...com/user;level=gold/index.html;type=d?key1=value1&key2=value2#SomewhereInTheDocument
+- e.g. ...com/user;level=gold/index.html;type=d?key1=value1&key2=value2#SomewhereInTheDocument
     - SomewhereInTheDocument
 
 ## 3. 단축 URL
@@ -132,7 +132,7 @@
        ex. ...com/more%20<sup>빈문자</sup>info.html
 
     3. 문자 제한
-       > 예약어 존재 <sub>ex. : ? . % 등등</sub>
+       > 예약어 존재 <sub>e.g. : ? . % 등등</sub>
 
     4. 좀 더 알아보기
        > 안전하지 않은 문자열을 애플리케이션 단<sup>브라우저</sup>에서 요청시에 변환해주는 것이 best

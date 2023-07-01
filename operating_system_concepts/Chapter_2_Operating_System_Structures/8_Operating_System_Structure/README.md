@@ -63,7 +63,7 @@ OS의 컴포넌트들이 상호작용하는 법과 커널에 녹아드는 법
 
 - 구조와 디버깅이 단순함
 - 각 레이어는 자신보다 낮은 레벨의 레이어에 대한 기능과 서비스만 사용
-    - ex. level 0은 하드웨어만 사용하기 때문에 디버깅 대상이 단순함
+    - e.g. level 0은 하드웨어만 사용하기 때문에 디버깅 대상이 단순함
 - 각 레이어는 자신보다 낮은 레이어가 제공한 기능으로 그현
     - 기능의 내부 구현은 알 필요가 없음
 - 모든 레이어는 자료구조, 기능, 하드웨어를 상위 레이어로부터 숨김
@@ -81,7 +81,7 @@ OS의 컴포넌트들이 상호작용하는 법과 커널에 녹아드는 법
 - microkernel : 커널을 모듈화하고, 분리된 주소 공간을 가짐
 - 커널에서 중요치 않은 컴포넌트를 뗴어네어, 사용자 모드에 구현
 - 사용자 공간에서 사용자 프로그램과 다양한 서비스가 마이크로 커널을 통해 간접적으로 통신
-- ex. Mach, QNX
+- e.g. Mach, QNX
 
 ### Microkernels의 특징
 
@@ -93,7 +93,7 @@ OS의 컴포넌트들이 상호작용하는 법과 커널에 녹아드는 법
 
 ## 4. Modules
 
-- ex. 현대의 Unix, Linux, macOS, Windows 등
+- e.g. 현대의 Unix, Linux, macOS, Windows 등
 - loadable kernel modules <sub>LKM</sub>
 - 커널은 핵심 컴포넌트를 가지고, 부팅 시간이나 런타임에 모듈을 통해 추가 서비스 연결
 - 커널은 핵심 서비스를 제공하고, 다른 서비스는 커널 동작 중에 동적으로 구현
@@ -102,7 +102,7 @@ OS의 컴포넌트들이 상호작용하는 법과 커널에 녹아드는 법
 ## 5. Hybrid Systems
 
 - 주소 할당 성능, 보안, 사용성 이슈를 감안하여 혼합된 시스템
-- ex. Linux
+- e.g. Linux
     - monolithic : OS가 단일 주소 공간에 위치
     - modular : 새로운 기능은 동적으로 커널에 추가
 
@@ -152,5 +152,5 @@ OS의 컴포넌트들이 상호작용하는 법과 커널에 녹아드는 법
     - native Linux 어플리케이션 구동 가능
 - Windows Pico 프로세스 : native Linux 바이너리를 프로세스의 고유 주소 공간에 load
 - LXSS : Linux System call을 Windows System call로 변환
-    - ex. `fork()` -> `CreateProcess()`
+    - e.g. `fork()` -> `CreateProcess()`
 

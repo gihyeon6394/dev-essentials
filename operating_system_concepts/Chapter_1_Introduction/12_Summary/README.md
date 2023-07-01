@@ -37,4 +37,4 @@
     - 전통적인 구조, 모바일, 클라이언트-서버, p2p, 클라우드, 리얼타임 임베디드 시스템
 - 소스코드 형식으로 된 무료, 오픈 소스 OS 시스템이 있다.
     - 무료 사용, 재배포 및 수정 가능
-    - ex. GNU/Linux, FreeBSD, Solaris 
+    - e.g. GNU/Linux, FreeBSD, Solaris 

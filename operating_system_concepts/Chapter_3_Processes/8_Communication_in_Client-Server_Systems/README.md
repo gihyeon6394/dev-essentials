@@ -125,7 +125,7 @@ public class DateClient {
 #### issue 1 : marshal
 
 - 서버의 architecture와 관계없이 데이터를 전송 가능한 형태로 변환하는 과정
-- ex. big-endian vs little-endian
+- e.g. big-endian vs little-endian
 - external data representation <sup>XDR</sup>
 
 #### issue 2 : network issue

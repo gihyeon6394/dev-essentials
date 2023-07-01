@@ -23,13 +23,13 @@
 
 - 데이터, 객체가 가지는 정보
 - 실제 구현에서는 객체에 소속된 변수
-- ex. `Student` 클래스의 `name`, `id`, `department` 등
+- e.g. `Student` 클래스의 `name`, `id`, `department` 등
 
 #### 동작 <sup>behavior</sup>
 
 - 객체가 수행하는 기능
 - 실제 구현에서는 객체에 소속된 메서드
-- ex. `Student` 클래스의 `register()`, `drop()`, `changeDepartment()` 등
+- e.g. `Student` 클래스의 `register()`, `drop()`, `changeDepartment()` 등
 
 ### 객체지향 개념
 
@@ -67,10 +67,10 @@
 - 클래스 두번쨰 영역 표시
 - 연관 관계 표시 가능
 - 접근제어/이름:타입 관계수
-    - ex. `+name:String[1]` : public, 이름은 `name`, 타입은 `String`, 관계수는 `1`
+    - e.g. `+name:String[1]` : public, 이름은 `name`, 타입은 `String`, 관계수는 `1`
 - 관계수 : 클래스 간의 관계, 1:1, 1:N, N:M 등
 - 제약 사항 : 제약조건, 속성의 성질
-    - ex. {unique, ordered, readOnly, ...}
+    - e.g. {unique, ordered, readOnly, ...}
 
 ### 메서드
 
@@ -78,14 +78,14 @@
 
 - 클래스 세번째 영역 표시
 - 접근제어 이름(인자):반환타입 {제약사항}
-    - ex. `+register(course:Course):boolean` : public, 이름은 `register`, 인자는 `course`, 반환타입은 `boolean`
+    - e.g. `+register(course:Course):boolean` : public, 이름은 `register`, 인자는 `course`, 반환타입은 `boolean`
 
 ### 정적 요소 <sup>static</sup>
 
 - 속성이나 메서드를 정적으로 선언
 - 이름에 밑줄을 그음
 - 특정 객체 소속 아님
-- ex. 현재 객체의 실행횟수를 저장하는 변수
+- e.g. 현재 객체의 실행횟수를 저장하는 변수
 
 ## 클래스 다이어그램
 

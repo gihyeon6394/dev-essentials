@@ -156,7 +156,7 @@ int main(int argc, char *argv[]) {
 - `Summation()` : thread가 실행할 함수
 - `CreateThread()` : thread 생성
 - `WaitForSingleObject()` : 자식 thread 종료를 기다림
-    - `WaitForMultipleObjects()` : 여러 thread의 종료를 기다림, ex. `WaitForMultipleObjects(2, ThreadHandle, TRUE, INFINITE);`
+    - `WaitForMultipleObjects()` : 여러 thread의 종료를 기다림, e.g. `WaitForMultipleObjects(2, ThreadHandle, TRUE, INFINITE);`
 
 ## 3. Java Threads
 

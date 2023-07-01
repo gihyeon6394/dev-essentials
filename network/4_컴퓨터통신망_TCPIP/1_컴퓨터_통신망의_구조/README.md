@@ -10,7 +10,7 @@
 
 - 컴퓨터 통신망의 기본 뼈대를 이루는 핵심
 - 컴퓨터 통신망의 물리적 요소드로가 기능, 구성, 동작 원칙, 절차, 통신 프로토콜 등을 위한 프레임워크
-- ex. IBM SNA, DEC NDA, Honeywell DSA, ISO OSI, TCP/IP
+- e.g. IBM SNA, DEC NDA, Honeywell DSA, ISO OSI, TCP/IP
 - SNA <sup>System Network Architecture</sup>
     - IBM 컴퓨터 간의 데이터 통신과 메시지 전송을 위한 폐쇄형 네트워크
 - DNA <sup>Digital Network Architecture</sup>
@@ -23,7 +23,7 @@
 초기에는 보안상의 이유로 자원 공유가 없었지만 점차 사용자간의 자원 공유 이점을 인식하여  
 상호 간에 접소을 자유롭게 할 수 있는 **개방형 네트워크 아키텍처** 등장
 
-- ex. OSI 참조 모델, TCP/IP <sup>Transmission Control Protocol / Internet Protocol</sup>
+- e.g. OSI 참조 모델, TCP/IP <sup>Transmission Control Protocol / Internet Protocol</sup>
 
 ## OSI 참조 모델
 

@@ -46,7 +46,7 @@ Multiprogramming : 2개 이상의 프로그램을 구동하는 능력
 
 - Multitasking : Multiprogramming 의 논리적 확장
 - 여러 프로세스들을 스위칭 하면서 실행
-- ex. I/O 진행 시
+- e.g. I/O 진행 시
     - display to user
     - touch screen
     - user keyboard, ...
@@ -96,7 +96,7 @@ Multiprogramming : 2개 이상의 프로그램을 구동하는 능력
     - 커널 모드에서만 가능
     - 사용자 모드에서 특권 명령을 시도 시 잘못된 명령으로 간주하여 OS에게 전달
 - 두가지 모드 이상도 존재함
-    - ex. Intel processors 의 protection rings
+    - e.g. Intel processors 의 protection rings
 
 ### system call
 
@@ -114,7 +114,7 @@ Multiprogramming : 2개 이상의 프로그램을 구동하는 능력
 
 - 일정 시간 후 컴퓨터에게 interrupt 발생시킴
 - 시간은 가변적이거나 고정적일 수 있음
-- ex. 10 bit 카운터, 1 ms timer
+- e.g. 10 bit 카운터, 1 ms timer
     - 1ms 씩 1024 ms 까지 카운팅, 1ms 마다 interrupt 허용
 - 운영체제는 타이머가 인터럽트를 발생시키도록 보장
 - 타이머가 인터럽트 발생시키면 제어는 운영체제로 넘어옴
@@ -122,4 +122,4 @@ Multiprogramming : 2개 이상의 프로그램을 구동하는 능력
 > Linux의 타이머
 >
 > - HZ : 인터럽트 주파수 지정
-> - ex. 250HZ : 1초에 250번 인터럽트
+> - e.g. 250HZ : 1초에 250번 인터럽트

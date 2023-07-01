@@ -36,7 +36,7 @@
 5. 컨테이너 생성에 익숙해지기
    > 컨테이너 Name이 필수는 아니나, ID가 식별하기 힘드므로 Name을 붙여주는게 낫다  
       컨테이너 포트는 생성 이후 수정이 불가능  
-      이미지 제작자<sup>소프트웨어</sup>에 docker run 매개 인자가 달라진다. <sub>ex. mysql image -e</sub>
+      이미지 제작자<sup>소프트웨어</sup>에 docker run 매개 인자가 달라진다. <sub>e.g. mysql image -e</sub>
 
     - 다양한 유형의 컨테이너
     - [실습] 아파치 컨테이너를 여러 개 실행하기

@@ -47,7 +47,7 @@
 #### Linux Virtual Machine
 
 - Linux가 아닌 Host OS에서 Linux를 실행하는 방법
-- ex. VirtualBox, VMWare
+- e.g. VirtualBox, VMWare
 
 ## 2. System Boot
 

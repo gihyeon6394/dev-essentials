@@ -37,7 +37,7 @@ mulithreaded program을 설계할 때 고려해야할 몇가지 issue
 #### asynchronous signal
 
 - 외부 process에 의해 발생
-    - ex. ctrl + c 로 종료
+    - e.g. ctrl + c 로 종료
 
 #### signal을 처리하는 handler
 
