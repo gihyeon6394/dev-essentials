@@ -8,7 +8,7 @@
 2. PART TWO PROCESS MANAGEMENT
     - [Chapter 3 Processes](Chapter_3_Processes/README.md)
     - [Chapter 4 Threads & Concurrency](Chapter_4_Threads_and_Concurrency/README.md)
-    - Chapter 5 CPU Scheduling
+    - [Chapter 5 CPU Scheduling](Chapter_5_CPU_Scheduling/README.md)
 3. PART THREE PROCESS SYNCHRONIZATION
     - Chapter 6 Synchronization Tools
     - Chapter 7 Synchronization Examples
