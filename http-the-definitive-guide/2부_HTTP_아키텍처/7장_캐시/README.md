@@ -559,3 +559,175 @@ ExpiresByType text/html "modification 2 days 6 hours 12 minutes"
 - HTML이 아닌 다른 타입의 파일에 적용 불가능
 - 서버의 부하 증가시킴
 - 설정이 정적임
+
+## 11. 자세한 알고리즘
+
+캐시 서버에서 문서가 충분히 신선한지 판단하는 알고리즘
+
+### 11.1 나이와 신선도 수명
+
+````
+$is_fresh_enough = ($age <  $freshness_lifetime) ;
+````
+
+- 신선도 판단의 2가지 기준
+    - 나이
+    - 신선도 수명
+- 나이가 신선도 수명보다 작다면 **신선**
+
+#### 나이 : 서버가 보낸 시점부터 지금까지 문서가 먹은 나이
+
+- up-stream에서 온것인지, 서버가 보낸것인지 모름
+- 따라서 `Age`, `Date` 헤더를 사용해 나이를 계산
+
+#### 신선도 수명 : 아직 문서가 신선하다고 볼 수 있는 수명
+
+- 문서의 유효기간과 신선도에 영향을 주는 클라이언트의 모든 요청 고려
+    - `Cache-Control: max-state` 헤더 : 클라이언트가 약간 신선하지 않은 문서도 받겠다는 표시
+    - `Cache-Control: min-fresh` 헤더 : 클라이언트가 조만간 신선하지 않을 문서도 받지 않겠다는 표시
+
+### 11.2 나이 계산
+
+- 응답의 나이 : 응답이 서버에서 생성된 이후 지금까지의 총 시간
+    - 라우터에서 떠돌던 시간, 캐시에 머물던 시간 모두 포함
+
+````
+$apparent_age = max(0, $time_got_response - $Date_header_value) ;
+$corrected_apparent_age = max($apparent_age, $Age_header_value) ;
+$response_delay_estimate = ($time_got_response - $time_issued_request) ;
+$age_when_document_arrived_at_our_cache = $corrected_apparent_age + $response_delay_estimate ; 
+$how_long_copy_has_been_in_our_cache = $current_time - $time_got_response ;
+
+$age = $age_when_document_arrived_at_our_cache + $how_long_copy_has_been_in_our_cache ;
+````
+
+- 나이 = 응답의 나이 + 로컬 캐시 나이
+    - 로컬 캐시 나이는 계산이 매우 쉬움
+    - 응답의 나이는 계산이 어려움
+        - 어디서 왔는지 알 수 없고, 각 서버가 동기화된 시각을 갖지 않음
+
+#### 겉보기 나이 : `Date` 헤더 기반
+
+````
+$apparent_age = $time_got_response - $Date_header_value ;
+$age_when_document_arrived_at_our_cache = $apparent_age ;
+````
+
+- clock skew : 서버와 클라이언트의 시간이 다른 경우 발생하는 문제
+    - 음수를 반환한 경우 즉시 0으로 만들어야 함
+
+````
+$apparent_age = max(0, $time_got_response - $Date_header_value) ;
+$age_when_document_arrived_at_our_cache = $apparent_age ;
+````
+
+#### Hop-by-hop 나이 계산
+
+- Http/1.1은 clock skew의 우회책
+- 문서가 프락시나 캐시를 통과할때마다 `Age` 상대적인 나이를 더함
+- `Age` 헤더값은 hop을 통과하면서 점점 늘어남
+
+````
+$apparent_age = max(0, $time_got_response - $Date_header_value) ;
+$corrected_apparent_age = max($apparent_age, $Age_header_value) ;
+$age_when_document_arrived_at_our_cache = $corrected_apparent_age ;
+````
+
+#### 네트워크 delay에 대한 보상
+
+- `Date` 헤더는 언제 원 서버를 떠났는지를 알려줌, 문서가 얼마나 걸려 도착했는지는 모름
+- 캐시 요청 시각과 도착 시각을 이용해 네트워크 dealy 시간을 보수적으로 알아냄
+
+````
+$appaernt_age = max(0, $time_got_response - $Date_header_value) ;
+$corrected_apparent_age = max($apparent_age, $Age_header_value) ;
+$response_delay_estimate = ($time_got_response - $time_issued_request) ;
+$age_when_document_arrived_at_our_cache = $corrected_apparent_age + $response_delay_estimate ;
+````
+
+### 11.3 완전한 나이 계산 알고리즘
+
+캐시에 대한 요청이 들어왔을 때 문서가 캐시에 머무른 시간도 계산해야함
+
+````
+$age = $age_when_document_arrived_at_our_cache + $how_long_copy_has_been_in_our_cache ;
+````
+
+<img src="img_12.png"  width="50%"/>
+
+### 11.4 신선도 수명 계산
+
+캐시의 나이 계산과 더불어 클라이언트의 제약조건에 따라 신선도를 계산해야함
+
+- 신선도 수명은 클라이언트와 서버의 제약 조건에 의존
+- 서버는 문서의 갱신 빈도를 알고 있음
+- 클라이언트는 캐시 가이드라인을 가질 수 있음
+    - 신선도보다 속도를 우선시하거나, 신선도를 우선시하거나
+
+### 11.5 완전한 서버 신선도 알고리즘
+
+- 서버 신선도 제약 계산 + 클라이언트 신선도 대조 계산
+- 나이가 신선도 한계보다 작다면 문서는 신선하다
+
+<details>   
+    <summary>서버 신선도 제약 계산 </summary>
+
+````
+sub server_freshness_limit{
+    local($heuristic, $server_fresh_ness_limit, $time_since_last_modify) ;
+    $heuristic = 0 ;
+    
+    if($Max_Age_value_set){
+        $server_freshness_limit = $Max_Age_value_set ;
+    } elseif ($Expires_value_set){
+        $server_freshness_limit = $Expires_value - $Date_value ;
+    } elseif($Last_Modified_value_set){
+        $time_since_last_modify = max(0, $Date_value - $Last_Modified_value) ;
+        $server_freshness_limit = int($time_since_last_modify * $lm_factor) ;
+        $heuristic = 1 ;
+    } else {
+        $server_freshness_limit = $Default_Freshness_Limit ;
+        $heuristic = 1 ;
+    }
+    
+    if($heuristic){
+        if($server_freeshness_limt > $default_cache_max_lifetime){
+            $server_freshness_limit = $default_cache_max_lifetime ;
+        }
+        if($server_freshness_limit < $default_cache_min_lifetime){
+            $server_freshness_limit = $default_cache_min_lifetime ;
+        }
+    }
+    return $server_freshness_limit ;
+}
+````
+
+</details>
+
+<details>   
+    <summary>클라이언트 신선도 대조 계산</summary>
+
+````
+sub client_modified_freshness_limit{
+    
+    $age_limit = server_freshness_limit() ;
+    
+    if($Max_Stale_value_set){
+        if($Max_stale_value == $INT_MAX){
+            $age_limit = $INT_MAX ;
+        } else {
+            $age_limit = server_freshness_limit() + $Max_Stale_value ;
+        }
+    }
+    
+    if($Min_Fresh_value_set){
+        $age_limit = min($age_limit, server_freshness_limit() - $Min_Fresh_value_set) ;
+    }
+    
+    if($Max_Age_value_set){
+        $age_limit = min($age_limit, $Max_Age_value_set) ;
+    }
+}
+````
+
+</details>
