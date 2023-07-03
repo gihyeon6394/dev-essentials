@@ -12,7 +12,7 @@
 
 ---
 
-1. Basic Concepts
+1. [Basic Concepts](1_Basic_Concepts/README.md)
 2. Scheduling Criteria
 3. Scheduling Algorithms
 4. Thread Scheduling
