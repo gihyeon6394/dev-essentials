@@ -13,7 +13,7 @@
 ---
 
 1. [Basic Concepts](1_Basic_Concepts/README.md)
-2. Scheduling Criteria
+2. [Scheduling Criteria](2_Scheduling_Criteria/README.md)
 3. Scheduling Algorithms
 4. Thread Scheduling
 5. Multiple-Processor Scheduling
