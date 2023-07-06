@@ -103,7 +103,7 @@
 
 #### time quantum 크기 결정
 
-<img src="img_8.png"  width="50%"/>
+<img src="img_8.png"  width="40%"/>
 
 - 현대 OS는 일반적으로 10~100ms의 time quantum을 사용
 - context switch 시간과 Turnaround time을 고려하여 결정
@@ -194,7 +194,7 @@ ready queue에 새로운 process가 enqueue되면,
 
 single queue는 우선 순위가 높은 process 탐색 시 `O(n)` 시간복잡도를 가짐
 
-<img src="img_11.png"  width="50%"/>
+<img src="img_11.png"  width="30%"/>
 
 - Multilevel Queue는 우선순위 별로 queue를 배치
 - RR 알고리즘과 결합했을 때 적합
@@ -226,7 +226,7 @@ single queue는 우선 순위가 높은 process 탐색 시 `O(n)` 시간복잡�
 - 일반적으로 사용되는 알고리즘이지만, 복잡함
     - 파라미터 정의 등
 
-<img src="img_13.png"  width="50%"/>
+<img src="img_13.png"  width="30%"/>
 
 - 모든 process가 qeueue 0에 enqueue 되서 시작
 - queue 1은 queue 0이 빈상태일때만 실행 가능
