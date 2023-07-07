@@ -2,7 +2,7 @@
 
 <img src="../img_7.png"  width="30%"/>
 
-- Chapter 1 Introduction
+- [Chapter 1 Introduction](Chapter_1_Introduction/README.md)
 
 1. PART ONE RELATIONAL LANGUAGES
     - Chapter 2 Introduction to the Relational Model
