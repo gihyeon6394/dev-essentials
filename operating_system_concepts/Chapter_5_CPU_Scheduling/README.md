@@ -16,7 +16,7 @@
 2. [Scheduling Criteria](2_Scheduling_Criteria/README.md)
 3. [Scheduling Algorithms](3_Scheduling_Algorithms/README.md)
 4. [Thread Scheduling](4_Thread_Scheduling/README.md)
-5. Multiple-Processor Scheduling
+5. [Multiple-Processor Scheduling](5_Multiple_Processor_Scheduling/README.md)
 6. Real-Time CPU Scheduling
 7. Operating-System Examples
 8. Algorithm Evaluation
