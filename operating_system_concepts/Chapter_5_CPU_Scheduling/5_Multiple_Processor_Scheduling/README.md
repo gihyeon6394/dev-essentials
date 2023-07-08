@@ -32,7 +32,7 @@ Multiple CPU 환경에서는 load sharing이 가능해짐
 - processor의 scheduler는 ready queue 보고, 실행할 thread를 선택
 - 거의 모든 modern OS에서 사용 <sub>Windows, Linux, Android, mac OS</sub>
 
-#### thread 관리 전략
+#### SMP의 thread 관리 전략
 
 <img src="img.png"  width="50%"/>
 
@@ -123,5 +123,16 @@ asymmetric multiprocessing 환경에선 필요없음
 - e.g. Linux CFS scheduler, FreeBSD system ULE scheduler
 
 ## 4. Processor Affinity
+
+processor에서 실행 중인 thread를 다른 processor로 옮기는 것을 방지하는 것  
+즉 실행 중인 thread는 자신의 processor에 Affinity를 가짐
+
+- load balancing 등의 이유로 thread를 옮기면 warm cache를 지우고 다시 채워야함
+    - warm cache : thread가 실행되는 동안 processor cache memory에 저장된 data
+- common ready queue는 매번 CPU의 cache를 비우고 다시 채워야함
+- private ready queue는 cache warm을 유지하기 위해 thread를 다른 processor로 옮기지 않음
+
+- soft affinit : OS는 Affinity를 유지하려하지만, load balancing에 따라 thread가 다른 processor로 옮겨질 수 있음
+- hard affinit system call : process가 실행할 processor 집합을 지정
 
 ## 5. Heterogeneous Multiprocessing
