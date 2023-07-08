@@ -48,6 +48,65 @@ Multiple CPU 환경에서는 load sharing이 가능해짐
 
 ## 2. Multicore Processors
 
+#### n processors vs 1 processor with n cores
+
+- Multicore Processor : 하나의 chip에 여러개의 core가 존재하는 CPU
+- 각 core가 OS에게 독립된 가상의 CPU처럼 보임
+- n 개의 processor보다 전력을 덜 소모하고 더 빠름
+
+#### memory stall
+
+<img src="img_1.png"  width="50%"/>
+
+- processor가 memory에 접근할 때 소모되는 시간 지연
+- 현대 processor는 memory보다 속도가 빨라서 발생
+- cache miss 때문에도 발생 가능
+    - cache miss : cache memory에 없는 data에 접근하려하는 것
+
+#### multithreaded processing core
+
+<img src="img_2.png"  width="50%"/>
+
+- memory stall 해결 방안
+- 각 core가 hardware thread를 2개 이상 가짐
+- 하나의 thead가 memory stall에 빠지면 다른 thread로 switching
+
+#### chip multi threading <sup>CMT</sup>
+
+<img src="img_3.png"  width="30%"/>
+
+- multithreaded processing core의 또 다른 이름
+- 각 thread는 독립된 register set, instruction pointer 등을 가짐
+- OS 관점에서 하나의 논리적 CPU로 보임
+- e.g. Intel의 hyperthreading, Oracle Sparc M7
+    - Intel i7 : 각 core가 2개의 hardware thread를 가짐
+    - Oracle Sparc M7 : 8 threads * 8 cores = 64개의 가상 CPU
+
+#### 구현 방법
+
+coarse-grained multithreading, fine-grained multithreading
+
+- coarse-grained multithreading
+    - memory stall 발생 시 다른 thread로 switching
+    - switching overhead가 큼
+        - instruction pipeline을 비우고, 다른 thread를 실행해야함
+- fine-grained multithreading
+    - thread switching overhead가 작음
+        - thread switching을 위한 logic을 가지고 있음
+
+#### multithreaded, multicore processor scheduling
+
+<img src="img_4.png"  width="40%"/>
+
+- 두 레벨의 scheduling 필요
+- OS가 하는 scheduling : software thread를 hardware thread<sup>logical CPU</sup>에 mapping
+    - 일반적인 CPU scheduling algorithm 사용
+- 각 core가 하는 scheduling : 실행할 hardware thread를 선택
+    - UltraSPARC T3의 RR algorithm
+    - Intel Itanium의 dynamic urgency value
+- 두 레벨이 서로 배타적이지 않음
+    - processor의 resource 공유를 인식하여, 서로 다른 logical processor에 mapping할 수 있음
+
 ## 3. Load Balancing
 
 ## 4. Processor Affinity
