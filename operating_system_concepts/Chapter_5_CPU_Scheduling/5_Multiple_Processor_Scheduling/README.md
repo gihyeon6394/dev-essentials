@@ -132,7 +132,37 @@ processor에서 실행 중인 thread를 다른 processor로 옮기는 것을 방
 - common ready queue는 매번 CPU의 cache를 비우고 다시 채워야함
 - private ready queue는 cache warm을 유지하기 위해 thread를 다른 processor로 옮기지 않음
 
-- soft affinit : OS는 Affinity를 유지하려하지만, load balancing에 따라 thread가 다른 processor로 옮겨질 수 있음
-- hard affinit system call : process가 실행할 processor 집합을 지정
+#### soft affinity, hard affinity
 
-## 5. Heterogeneous Multiprocessing
+- soft affinit : OS는 Affinity를 유지하려하지만, load balancing에 따라 thread가 다른 processor로 옮겨질 수 있음
+- hard affinit system call : process가 실행될 processor 하위 집합을 지정
+- e.g. Linux는 soft affiniit을 지원하면서 `sched_setaffinity()` system call을 통해 hard affinity를 지원
+
+#### non-uniform memory access <sup>NUMA</sup>
+
+<img src="img_5.png"  width="50%"/>
+
+- 각 processor chip에 CPU와 local memory 존재
+- CPU 자신의 local memory에 대한 접근이 다른 CPU의 local memory에 대한 접근보다 빠름
+- NUMA-aware 알고리즘을 사용하는 OS CPU scheduler와 memory placement algorithm
+    - 특정 CPU에 schedule된 thread는 해당 CPU의 local memory에 접근
+
+#### load balancing vs processor affinity
+
+- 한 CPU에 thread가 오래 머무는 것이 성능이 더 좋을 수 있음
+- processor의 cache memory를 이용하기 때문
+- load balancing과 affinity를 적절히 혼합하여 사용해야함
+
+## 5. Heterogeneous Multiprocessing <sup>HMP, 이기종 컴퓨팅</sup>
+
+- task의 특정 요구사항에 따라 특정 core에 할당하여 전력 소비를 줄이는 것
+
+#### e.g. ARM big.LITTLE
+
+- 고성능의 big core와 저전력의 LITTLE core를 혼합
+- big core :  고전력을 소비하기 때문에 짧은 시간만 사용됨
+    - 고성능을 요구하고, 실행시간이 짧은 작업 할당 <sub>e.g. foreground task, interactive application</sub>
+- LITTLE core : 저전력을 소비하기 때문에 오래 사용됨
+    - 고성능이 필요 없고 실행시간이 길어도 되는 작업 할당 <sub>e.g. background task</sub>
+- power-save mode에 돌입하면 big core를 disabled
+- Window 10은 HMP를 지원하여 thread가 전력 관리 설정에 부합하는 scheduling 정책을 사용
