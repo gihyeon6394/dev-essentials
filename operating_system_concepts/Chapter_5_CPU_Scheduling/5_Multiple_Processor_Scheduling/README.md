@@ -109,6 +109,19 @@ coarse-grained multithreading, fine-grained multithreading
 
 ## 3. Load Balancing
 
+SMP에서 모든 processor에게 부하량을 균등하게 분배하는 것  
+asymmetric multiprocessing 환경에선 필요없음
+
+#### load balancing 방법
+
+- push migration, pull migration 2가지가 병렬적으로 적용됨
+- push migration
+    - 각 processor의 부하량을 주기적으로 확인
+    - 불균형이 발견되면, 부하가 적은 processor에게 thread 를 이동시킴
+- pull migration
+    - 유휴 prossesor가 바쁜 processor로부터 thread를 가져옴
+- e.g. Linux CFS scheduler, FreeBSD system ULE scheduler
+
 ## 4. Processor Affinity
 
 ## 5. Heterogeneous Multiprocessing
