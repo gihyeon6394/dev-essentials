@@ -54,6 +54,35 @@
 
 ## 2. Priority-Based Scheduling
 
+- real-time process의 CPU 요청에 빠르게 응답하는 것이 중요
+- real-time OS는 priority-based scheduling을 사용
+- 각 process에 우선순위를 할당
+    - 더 중요한 task를 가진 process에 더 높은 우선순위를 할당
+    - 선점을 지원할 시, 더 높은 우선순위를 가진 process가 CPU를 선점할 수 있음
+- soft real-time system
+    - 일반적인 CPU Priority
+      Scheduling [참고](../3_Scheduling_Algorithms/README.md#4-priority-scheduling-sup-우선순위-스케줄링-sup) <sub>e.g. Linux,
+      Windows</sub>
+    - real-time process에 더 높은 우선순위 부여
+    - 우선순위를 부여하는 것에 그침
+- hard real-time system
+    - real-time task가 deadline을 만족하도록 보장
+    - 따라서 추가적인 scheduling 이 필요
+
+#### Periodic task
+
+<img src="img_3.png"  width="40%"/>
+
+- process은 주기적임 = processs는 일정한 주기로 CPU를 요청함
+- `p` : 주기, `d` : deadline, `t` : fixed processing time
+
+#### admission control algorithm
+
+- process는 deadline을 scheduler에게 알려줘야함
+- scheduler는 deadline을 보고 승인하거나 거절
+    - 승인 : deadline 만족 가능할 때
+    - 거절 : deadline 만족 불가능할 때
+
 ## 3. Rate-Monotonic Scheduling
 
 ## 4. Earliest-Deadline-First Scheduling
