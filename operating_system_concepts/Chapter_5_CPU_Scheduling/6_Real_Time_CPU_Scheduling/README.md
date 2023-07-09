@@ -85,12 +85,11 @@
 
 ## 3. Rate-Monotonic Scheduling
 
-정적인 우선순위 정책으로 선점적으로 periodic task를 스케줄링
+정적인 우선순위 정책으로 선점적으로 task를 **주기적으로** 스케줄링
 
 - 더 높은 우선순위 process가 더 낮은 우선순위 process를 선점
-    - 실행 시, 더 짧은 실행주기 process가 더 높은 우선순위를 가짐  <sub>CPU를 더 자주 요청하는 task에 더 높은 우선순위 할당</sub>
-    - 각 CPU Burst마다 실행 시간이 동일한 것으로 간주
-    - 따라서, 모든 CPU burst 시간이 동일
+- 실행 시, 더 짧은 실행주기 process가 더 높은 우선순위를 가짐  <sub>CPU를 더 자주 요청하는 task에 더 높은 우선순위 할당</sub>
+- process의 실행시간은 CPU Burst 마다 동일한 것으로 간주
 
 #### 작동 예시
 
