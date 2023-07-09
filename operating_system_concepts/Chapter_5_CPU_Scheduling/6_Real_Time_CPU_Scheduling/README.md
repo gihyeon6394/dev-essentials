@@ -71,7 +71,7 @@
 
 #### Periodic task
 
-<img src="img_3.png"  width="40%"/>
+<img src="img_3.png"  width="50%"/>
 
 - process은 주기적임 = processs는 일정한 주기로 CPU를 요청함
 - `p` : 주기, `d` : deadline, `t` : fixed processing time
@@ -84,6 +84,45 @@
     - 거절 : deadline 만족 불가능할 때
 
 ## 3. Rate-Monotonic Scheduling
+
+정적인 우선순위 정책으로 선점적으로 periodic task를 스케줄링
+
+- 더 높은 우선순위 process가 더 낮은 우선순위 process를 선점
+    - 실행 시, 더 짧은 실행주기 process가 더 높은 우선순위를 가짐  <sub>CPU를 더 자주 요청하는 task에 더 높은 우선순위 할당</sub>
+    - 각 CPU Burst마다 실행 시간이 동일한 것으로 간주
+    - 따라서, 모든 CPU burst 시간이 동일
+
+#### 작동 예시
+
+| Process | periods | processing time |
+|:-------:|:-------:|:---------------:|
+|   P1    |   50    |       20        |
+|   P2    |   100   |       35        |
+
+<img src="img_4.png"  width="50%"/>
+
+- P2가 P1보다 더 높은 우선순위를 가질 때
+- **P1의 deadline을 만족하지 못함**
+- CPU 사용률 : 75%
+
+<img src="img_5.png"  width="50%"/>
+
+- Rate-Monotonic Scheduling
+- P1이 P2보다 더 높은 우선순위를 가짐
+    - P1의 period가 더 짧기 떄문
+- CPU 사용률 : 75%
+
+#### Rate-Monotonic Scheduling 최적이 아닌 경우
+
+| Process | periods | processing time |
+|:-------:|:-------:|:---------------:|
+|   P1    |   50    |       25        |
+|   P2    |   80    |       35        |
+
+<img src="img_6.png"  width="50%"/>
+
+- **P2는 dealine 5ms 후에 완료됨**
+- CPU 사용률 : 94%
 
 ## 4. Earliest-Deadline-First Scheduling
 
