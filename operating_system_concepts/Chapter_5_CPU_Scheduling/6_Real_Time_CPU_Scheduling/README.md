@@ -85,10 +85,10 @@
 
 ## 3. Rate-Monotonic Scheduling
 
-정적인 우선순위 정책으로 선점적으로 task를 **주기적으로** 스케줄링
+task들에 정적으로 우선순위를 부여하고, task들의 실행 주기를 지정하여 scheduling
 
 - 더 높은 우선순위 process가 더 낮은 우선순위 process를 선점
-- 실행 시, 더 짧은 실행주기 process가 더 높은 우선순위를 가짐  <sub>CPU를 더 자주 요청하는 task에 더 높은 우선순위 할당</sub>
+- 더 짧은 실행주기 process가 더 높은 우선순위를 가짐 <sub>CPU를 더 자주 요청하는 task에 더 높은 우선순위 할당</sub>
 - process의 실행시간은 CPU Burst 마다 동일한 것으로 간주
 
 #### 작동 예시
@@ -123,7 +123,30 @@
 - **P2는 dealine 5ms 후에 완료됨**
 - CPU 사용률 : 94%
 
-## 4. Earliest-Deadline-First Scheduling
+## 4. Earliest-Deadline-First Scheduling <sup>EDF</sup>
+
+우선순위를 deadline에 따라 동적으로 할당
+
+- deadline에 가까울 수록 더 높은 우선순위를 가짐
+- process가 runnable 상태가 되면 system에 자신의 deadline을 알림
+- 새로운 process의 deadline을 반영하기 위해 우선순위가 수정될 수 있음
+
+#### 작동 예시
+
+| Process | periods | processing time |
+|:-------:|:-------:|:---------------:|
+|   P1    |   50    |       25        |
+|   P2    |   80    |       35        |
+
+<img src="img_6.png"  width="50%"/>
+
+- Rate-Monotonic Scheduling에서 실패함
+
+<img src="img_7.png"  width="50%"/>
+
+- P1의 deadline이 가장 짧아서 가장 높은 우선순위 배정
+- time 50 이후 : P2의 deadline이 P1보다 가깝기 때문에 P2의 우선순위가 더 높아짐
+- time 100 : P1의 deadline이 P2보다 가까워서 P1의 우선순위가 더 높아지고, P1이 선점
 
 ## 5. Proportional-Share Scheduling
 
