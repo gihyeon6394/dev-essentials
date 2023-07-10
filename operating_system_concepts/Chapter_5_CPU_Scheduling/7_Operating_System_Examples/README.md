@@ -32,8 +32,8 @@ Linux의 Task Scheduling, Windows, Solaris의 kernel threads scheduling
 - task 마다 nice value를 할당하여 priority를 계산
     - -20 ~ 19, 값이 작을수록 높은 우선순위, 많은 비율의 CPU 시간 할당
 - target latency : 모든 runnuable task가 최소 한번씩 실행되는 시간
-- `vruntime` : virtual run time, 각 task가 실행된 시간
-    - 우선순위가 낮은 task의 vruntime이 더 크게 측정됨
+- `vruntime` : task 별 변수
+    - 같은 실행시간에도 우선순위가 낮을수록 vruntime이 높아짐
     - 다음 작업 선택 시 vruntime이 가장 작은 작업 선택
     - runnuable task가 우선순위가 더 낮은 task를 선점 가능
 
@@ -62,6 +62,17 @@ Linux의 Task Scheduling, Windows, Solaris의 kernel threads scheduling
     - domain 안에서 L2 cache를 공유
 - thread는 같은 domain안에서만 이동 가능
     - 심각한 load 불균형일 경우 domain을 넘어 이동 가능
+
+### Linux CFS Performance
+
+<img src="img_2.png"  width="40%"/>
+
+- queue가 아닌 red-black tree에 task를 저장
+    - balanced binary search tree
+- task가 runnable 상태가 되면 tree에 삽입
+- leftmost node : 가장 높은 우선순위 task
+- 탐색 속도 : O(log N)
+- Linux는 `rb_leftmost` 에 leftmost node를 caching
 
 ## 2. Example: Windows Scheduling
 
