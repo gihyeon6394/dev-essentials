@@ -76,5 +76,21 @@ Linux의 Task Scheduling, Windows, Solaris의 kernel threads scheduling
 
 ## 2. Example: Windows Scheduling
 
+Windows는 우선순위 기반의 선점형 scheduling을 사용
+
+- Windows는 항상 가장 높은 우선순위의 thread가 실행 중
+- dispatcher : Windows kernel에서 scheduling을 담당하는 부분
+    - dispatcher가 실행할 thread를 선택하면 다음 시점까지 실행됨
+        - 정상 종료
+        - 더 높은 우선순위의 thread가 선점
+        - 더 높은 우선순위의 real-time thread가 선점
+        - time quantum이 끝남
+        - blocking system call
+
+#### 32-level priority scheme
+
+- 32개의 priority-level로 thread 실행 순서를 정함
+- 
+
 ## 3. Example: Solaris Scheduling
 
