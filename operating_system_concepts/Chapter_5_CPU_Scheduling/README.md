@@ -18,6 +18,6 @@
 4. [Thread Scheduling](4_Thread_Scheduling/README.md)
 5. [Multiple-Processor Scheduling](5_Multiple_Processor_Scheduling/README.md)
 6. [Real-Time CPU Scheduling](6_Real_Time_CPU_Scheduling/README.md)
-7. Operating-System Examples
+7. [Operating-System Examples](7_Operating_System_Examples/README.md)
 8. Algorithm Evaluation
 9. Summary
