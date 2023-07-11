@@ -86,11 +86,35 @@ Windows는 우선순위 기반의 선점형 scheduling을 사용
         - 더 높은 우선순위의 real-time thread가 선점
         - time quantum이 끝남
         - blocking system call
-
-#### 32-level priority scheme
-
 - 32개의 priority-level로 thread 실행 순서를 정함
-- 
+- 우선순위 2가지 clasee
+    - variable class : 1~15
+    - real-time class : 16~31
+    - 0 : memory management thread
+- queue 집합을 사용
+- queue를 탐색해서 실행가능한 thread 탐색, 없다면 idle thread 실행
+
+#### Windows API  priority class
+
+- `IDLE_PRIORITY_CLASS`
+- `BELOW_NORMAL_PRIORITY_CLASS`
+- `NORMAL_PRIORITY_CLASS`
+- `ABOVE_NORMAL_PRIORITY_CLASS`
+- `HIGH_PRIORITY_CLASS`
+- `REALTIME_PRIORITY_CLASS`
+- `SetPriorityClass()` : process의 priority class를 변경
+
+#### thread relative priority value
+
+- `IDLE`
+- `LOWEST`
+- `BELOW_NORMAL`
+- `NORMAL`
+- `ABOVE_NORMAL`
+- `HIGHEST`
+- `TIME_CRITICAL`
+
+<img src="img_3.png"  width="40%"/>
 
 ## 3. Example: Solaris Scheduling
 
