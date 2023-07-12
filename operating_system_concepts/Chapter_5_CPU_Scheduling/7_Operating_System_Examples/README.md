@@ -138,6 +138,43 @@ Windows는 우선순위 기반의 선점형 scheduling을 사용
 - scheduler는 SMT set 안에서 scheduling하려고 함
     - Processor Affinity
 
-
 ## 3. Example: Solaris Scheduling
+
+#### scheduling class
+
+- Time sharing (TS)
+    - default scheduling class
+    - 동적으로 우선순위를 조정
+    - 서로 다른 길이의 multilevel feedback queue를 사용하여 time slice 할당
+    - 우선순위가 높을수록 time slice가 작아짐
+- Interactive (IA)
+    - 우선순위가 높음
+    - CPU-Bound process는 우선순위가 낮음
+- Real-time (RT)
+    - 가장 높은 우선순위
+- System (SYS)
+    - kernel thread를 scheduling할 떄 사용
+        - e.g. scheduler, paging daemon
+    - 우선순위가 정해지면 바뀌지 않음
+- Fair Share Scheduler (FSS)
+    - 우선순위 대신 CPU share를 사용
+- Fixed Priority (FP)
+    - 우선순위가 바뀌지않음
+
+#### dispatch table : Time sharing, Interactive
+
+<img src="img_4.png"  width="40%"/>
+
+- priority : TS, IA의 우선순위, 숫자가 높을수록 우선순위 높음
+- Time quantum : 해당 우선순위의 tiem quantum
+    - 우선순위가 높을수록 time quantum이 작음
+- Time quantum expired : time quantum이 클수록 time quantum이 종료된 후 우선순위를 작게 줌
+- Return from sleep : sleep 상태에서 돌아온 thread가 가질 수 있는 우선순위
+    - 50 ~ 59의 높은 우선순위를 할당해서, interactive process의 응답시간을 향상시킴
+
+#### scheduling 방식
+
+<img src="img_5.png"  width="40%"/>
+
+- interrupt threads : 가장 높은 우선순위
 
