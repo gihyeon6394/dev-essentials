@@ -116,5 +116,28 @@ Windows는 우선순위 기반의 선점형 scheduling을 사용
 
 <img src="img_3.png"  width="40%"/>
 
+#### foreground/background process
+
+- foreground process : screen을 통해 사용자와 상호작용하는 process
+- background process
+- process가 foreground로 옮겨지면, Windows가 scheduling quantum을 늘림
+    - foregrund process가 더 오래 실행되게 함
+
+#### user-mode scheduling (UMS)
+
+- Window kernel과 독립적으로 thread를 생성하고 scheduling
+- kernel의 개입 없이 application이 user-mode에서 thread를 생성하고 관리
+- 각 thread가 자신의 thread context를 가지게 함
+- 개발자가 사용할 수 있는 scheduling framework 제공
+    - e.g. Microsoft ConcRT
+
+#### multiprocessor system scheduling
+
+- SMT sets : logical proseccor의 집합
+- 같은 CPU core에 있으면 같은 SMT set에 속함
+- scheduler는 SMT set 안에서 scheduling하려고 함
+    - Processor Affinity
+
+
 ## 3. Example: Solaris Scheduling
 
