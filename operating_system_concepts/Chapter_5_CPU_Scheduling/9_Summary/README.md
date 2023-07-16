@@ -1,0 +1,42 @@
+# 9. Summary
+
+- CPU scheduling : ready queue에 있는 process를 선택하고, CPU를 할당해주는 것
+    - dispatcher : CPU를 할당해주는 일을 하는 것
+- 선점적, 비선점적
+    - 선점적 : process가 CPU를 빼앗을 수 있음
+        - 대부분의 현대 OS
+    - 비선점적 : process가 CPU를 자발적으로 포기할 때까지 CPU를 사용
+- Scheduling 평가 기준 : CPU utilization, throughput, turnaround time, waiting time, response time
+- FCFS : 가장 간단한 알고리즘
+    - 짧은 프로세스가 오래 기다릴 수 있음
+- SJF : 가장 짧은 average waiting time
+    - 구현이 어려움 : 다음 CPU Burst time을 예측해야함
+- RR : 각 process에게 time quantum 만큼씩 CPU를 할당해줌
+    - time quantum이 초과하면 선점됨
+- Priority scheduling : 각 process에 우선순위 부여 후 높은 순위 순서로 CPU 할당
+    - 순위가 같으면 FCFS, RR 이 사용됨
+- Multilevel queue scheduling : process를 우선순위별로 분리된 n개의 queue로 파티셔닝
+    - scheduler는 높은 우선순위 queue부터 실행
+    - 각 queue마다 서로 다른 알고리즘 사용 가능
+- Multilevel feedback queue : process가 다른 queue로 이동할 수 있음
+    - 그 외에는 Multilevel queue와 비슷
+- Multicore processor 는 같은 칩에서 1개 이상의 CPU를 가질 수 있음
+    - 각 CPU는 1개 이상의 hardware thread를 가질 수 있음
+    - OS는 각 hardware thread를 가상의 CPU로 인식
+- Load balancing : multicore system에서 CPU core간의 부하를 분배하는 것
+    - core 간의 thread 이동은 cache를 무효화해서 memory access time을 증가시킴
+- soft real-time system, hard real-time system
+    - soft real-time system : real-time task에 더 높은 우선순위 부여
+    - hard real-time system : real-time task에 더 높은 우선순위 부여 + 우선 실행 보장
+- Rate-monotonic real-time shceduling : 정적 + 선점 + 우선순위 정채긍로 주기적인 task를 스케줄링
+- EDF scheduling : deadline에 따라 우선순위 부여
+    - deadline에 가까울 수록 높은 우선순위
+- Proportional share scheduling : 각 process에 CPU time을 할당해줌
+- Linux : CFS, proportional share scheduling
+    - 각 task에 CPU 일정 시간을 할당해줌
+    - 비율은 `vruntime` 기반
+- Windows : 32 level 우선순위 + 선점
+- Solaris : 6개의 글로벌 우선순위 클래스 사용
+    - CPU-intensive의 우선순위가 낮고, I/O-bound thread가 높음
+- scheduling 알고리즘을 평가하는 법 : modeling, simulation
+  

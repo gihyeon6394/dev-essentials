@@ -20,4 +20,4 @@
 6. [Real-Time CPU Scheduling](6_Real_Time_CPU_Scheduling/README.md)
 7. [Operating-System Examples](7_Operating_System_Examples/README.md)
 8. [Algorithm Evaluation](8_Algorithm_Evaluation/README.md)
-9. Summary
+9. [Summary](9_Summary/README.md)
