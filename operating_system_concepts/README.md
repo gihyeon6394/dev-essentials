@@ -10,7 +10,7 @@
     - [Chapter 4 Threads & Concurrency](Chapter_4_Threads_and_Concurrency/README.md)
     - [Chapter 5 CPU Scheduling](Chapter_5_CPU_Scheduling/README.md)
 3. PART THREE PROCESS SYNCHRONIZATION
-    - Chapter 6 Synchronization Tools
+    - [Chapter 6 Synchronization Tools](Chapter_6_Synchronization_Tools/README.md)
     - Chapter 7 Synchronization Examples
     - Chapter 8 Deadlocks
 4. PART FOUR MEMORY MANAGEMENT
