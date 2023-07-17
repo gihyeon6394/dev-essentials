@@ -12,7 +12,7 @@ cooperating process (협력 프로세스) 란 실행 중인 프로세스가 다�
 
 ---
 
-1. Background
+1. [Background](1_Background/README.md)
 2. The Critical-Section Problem
 3. Peterson's Solution
 4. Hardware Support for Synchronization
