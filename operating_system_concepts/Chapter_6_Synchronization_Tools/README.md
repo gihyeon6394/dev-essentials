@@ -14,7 +14,7 @@ cooperating process (협력 프로세스) 란 실행 중인 프로세스가 다�
 
 1. [Background](1_Background/README.md)
 2. [The Critical-Section Problem](2_The_Critical_Section_Problem/README.md)
-3. Peterson's Solution
+3. [Peterson's Solution](3_Peterson's_Solution/README.md)
 4. Hardware Support for Synchronization
 5. Mutex Locks
 6. Semaphores

@@ -21,7 +21,7 @@
 
 - Mutual exclusion, 상호배제
     - 임계영역을 실행 중인 process는 동시에 하나만 존재
-- Progress, 진행
+- Progress, 진행 조건
     - 임계영역 실행 process가 없고, 임계영역에 들어가려는 process가 있으면
     - remainder section 실행 process가 다음 임계영역 실행 process를 결정
 - Bound waiting, 유한대기
