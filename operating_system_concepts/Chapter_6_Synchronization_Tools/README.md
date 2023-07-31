@@ -18,7 +18,7 @@ cooperating process (협력 프로세스) 란 실행 중인 프로세스가 다�
 4. [Hardware Support for Synchronization](4_Hardware_Support_for_Synchronization/README.md)
 5. [Mutex Locks](5_Mutex_Locks/README.md)
 6. [Semaphores](6_Semaphores/README.md)
-7. Monitors
+7. [Monitors](7_Monitors/README.md)
 8. Liveness
 9. Evaluation
 10. Summary
