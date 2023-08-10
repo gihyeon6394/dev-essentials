@@ -21,4 +21,4 @@ cooperating process (협력 프로세스) 란 실행 중인 프로세스가 다�
 7. [Monitors](7_Monitors/README.md)
 8. [Liveness](8_Liveness/README.md)
 9. [Evaluation](9_Evaluation/README.md)
-10. Summary
+10. [Summary](10_Summary/README.md)
