@@ -124,3 +124,99 @@ while(true){
 
 ## 3. The Dining-Philosophers Problem
 
+<img src="img.png"  width="50%"/>
+
+- 5명의 철학자가 원형 테이블에 앉아있음
+- 철학자는 생각을 하거나, 식사를 함
+- 철학자는 왼쪽과 오른쪽에 젓가락이 하나씩 있음
+- 철학자는 젓가락을 2개 모두 들어야 식사를 할 수 있음
+- 젓가락은 한 번에 한 명의 철학자만 사용 가능
+- 철학자는 식사를 마치면 젓가락을 내려놓음
+
+### 3.1 Semaphore Solution
+
+- 젓가락을 들려할 때 `wait()`을 호출하고, 내려놓을 때 `signal()`을 호출
+- Deadlock 가능성 : 모든 철학자가 동시에 왼쪽 젓가락을 들려서, 오른쪽 젓가락을 기다리는 상황
+
+#### Deadlock 해결방안
+
+- 최대 4명의 철학자만 앉게 함
+- 철학자는 양쪽의 젓가락이 모두 사용 가능할 때만 식사를 시작
+- 비대칭 전략
+    - 홀수 번호의 철학자 : 왼쪽 젓가락 집은 다음 오른쪽 젓가락 집음
+    - 짝수 번호의 철학자 : 오른쪽 젓가락 집은 다음 왼쪽 젓가락 집음
+
+````
+semaphore copstick[5];
+````
+
+````
+while(true){
+  wait(copstick[i]);
+  wait(copstick[(i+1) % 5]);
+    ...
+    /* eat */
+    ...
+  signal(copstick[i]);
+  signal(copstick[(i+1) % 5]);
+    ...
+    /* think */
+    ...
+}  
+````
+
+### 3.2 Monitor Solution
+
+- deadlock 발생하지 않음
+- 제한 사항 : 철학자는 양쪽 젓가락이 사용가능할때만 식사를 시작할 수 있음
+
+````
+enum {THINKING, HUNGRY, EATING} state[5];
+condition self[5];
+````
+
+- 철학자 i는 `state[i]`를 사용하여 상태를 표현
+    - `state[i] = EATING` : 이웃이 식사중이지 않을 때만 가능 (`state[(i+4) % 5] != EATING && state[(i+1) % 5] != EATING`)
+- `condition` :  철학자 i는 배고프지만, 젓가락이 이용불가능일 때 자신을 지연시킴
+
+````
+DiningPhilosophers.pickup(i);
+    ... 
+    /* eat */
+    ...
+DiningPhilosophers.putdown(i);
+````
+
+````
+monitor DiningPhilosophers {
+  enum {THINKING, HUNGRY, EATING} state[5];
+    condition self[5];
+    
+    void pickup(int i){
+        state[i] = HUNGRY;
+        test(i);
+        if(state[i] != EATING)
+          self[i].wait();
+    }
+    
+    void putdown(int i){
+          state[i] = THINKING;
+          test((i+4) % 5);
+          test((i+1) % 5);
+    }
+    
+    void test(int i){
+        if(state[(i+4) % 5] != EATING 
+            && state[i] == HUNGRY && state[(i+1) % 5] != EATING){
+            state[i] = EATING;
+            self[i].signal();
+        }
+    }
+    
+    initialization code(){
+        for(int i = 0; i < 5; i++)
+            state[i] = THINKING;
+    }
+
+}
+````
