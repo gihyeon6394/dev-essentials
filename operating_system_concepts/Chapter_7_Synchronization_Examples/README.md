@@ -11,7 +11,7 @@
 ---
 
 1. [Classic Problems of Synchronization](1_Classic_Problems_of_Synchronization/README.md)
-2. Synchronization within the Kernel
+2. [Synchronization within the Kernel](2_Synchronization_within_the_Kernel/README.md)
 3. POSIX Synchronization
 4. Synchronization in Java
 5. Alternative Approaches
