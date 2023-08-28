@@ -2,13 +2,23 @@
 
 ### Mutex Lock?
 
-<img src="png.png"  width="30%"/>
+````
+while(true){
+  acquire lock;
+    /* critical section */
+    
+  release lock;
+    /* remainder section */
+}
+````
 
 - high-level에서 임계영역 문제를 해결하기 위한 도구
+    - high-level : programmer level
+    - low-level : kernel level
 - mutex lock은 0 또는 1의 값을 가짐
     - 0 : lock이 해제된 상태
     - 1 : lock이 획득된 상태
-    - 임계영역을 종료할 때 lock을 해제
+    - 임계영역을 종료할 때 lock을 해제 (release)
 
 ### Mutex Lock의 구현
 
@@ -40,7 +50,7 @@ release(){
 }
 ````
 
-> ### LOCK CONTENTION
+> #### LOCK CONTENTION
 >
 > - Lock contention, 경합상태 : 두 개 이상의 프로세스가 lock을 획득하기 위해 경쟁하는 상황
 > - 높은 경합상태는 많은 thread가 lock을 획득하기 위해 기다리는 상황
@@ -52,12 +62,12 @@ release(){
     - single-core system에서 multiprogramming 시 문제됨
     - CPU를 점유하고있어, 다른 프로세스가 실행될 수 없음
 - spin lock
-    - process 가 lock을 획득하기 위해 "spin" 중
+    - process 가 lock을 획득하기 위해 _spin_ 중
     - lock을 기다리는 행위에서는 context switch가 일어나지 않는 장점
     - short duration : lock을 짧은 기간동안 보유함
     - 현대 multi-core system에서 많이 사용 중
 
-> ### SHORT DURATION SPIN LOCKS
+> #### SHORT DURATION SPIN LOCKS
 >
 > - multiprocessor system에서 lock이 짧은 기간동안 보유되어야할 떄
 > - 실행 순서 : context switch -> lock 획득 및 임계영역 실행 -> context switch
