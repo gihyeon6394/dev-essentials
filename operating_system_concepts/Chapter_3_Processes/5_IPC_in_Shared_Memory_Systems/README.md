@@ -17,7 +17,7 @@
 - producer는 buffer에 데이터를 쓰고, consumer는 buffer에서 데이터를 읽음
 - producer와 consumer를 동기화
     - produce되지 않은 데이터를 consume하지 못하게 함
-- unbounded buffer : 무세한 사이즈
+- unbounded buffer : 무한한 사이즈
     - consumer는 대기할 수 있지만, producer는 언제나 대기없이 쓰기 가능
 - bounded buffer : 유한한 사이즈
     - consumer는 buffer가 비었으면 대기, producer는 buffer가 꽉차면 대기
