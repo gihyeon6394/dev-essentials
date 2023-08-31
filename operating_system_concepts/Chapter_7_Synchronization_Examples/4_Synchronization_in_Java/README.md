@@ -122,4 +122,54 @@ finally {
 
 ## 3. Semaphores
 
+````
+Semaphore sem = new Semaphore(1);
+
+try {
+    sem.acquire();
+    /* critical section */
+}
+catch (InterruptedException ie) { }
+finally {
+    sem.release();
+}
+````
+
 ## 4. Condition Variables
+
+````
+int N = 10; // number of threads
+
+Lock key = new ReentrantLock();
+Condition[] condVars = new Condition[N];
+
+for (int i = 0; i < N; i++)
+    condVars[i] = key.newCondition(); 
+
+...
+
+
+public void doWork(int threadNumber){
+    lock.lock();
+    
+    try{
+      
+      if (threadNumber != turn)
+        condVars[threadNumber].await();
+        
+        /* critical section */
+        
+        turn = (turn + 1) % N;
+        condVars[turn].signal();
+        
+    } catch (InterruptedException ie) { }
+    finally {
+        lock.unlock();
+    }
+    
+}
+
+````
+
+- `doWork()`는 `syncronized` 키워드가 없음
+    - `ReentrantLock`이 상호 배제 제공
