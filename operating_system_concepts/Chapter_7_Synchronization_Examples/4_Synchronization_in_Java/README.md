@@ -98,6 +98,28 @@ public synchronized E remove() {
 
 ## 2. Reentrant Locks
 
+- 가장 단순한 lock 방식
+- single thread가 획득, 공유 자원에 대한 배타적 접근 제공
+- _fairness_ parameter : 가장 오래 기다린 thread에게 lock 제공 여부
+- `java.util.concurrent.locks.Lock`의 구현체
+- read thread만 있을 때는 비효율적
+    - `ReentrantReadWriteLock` 사용
+
+````
+Lock key = new ReentrantLock();
+
+key.lock();
+try {
+    /* critical section */
+}
+finally {
+    key.unlock();
+}
+````
+
+- `lock()` : lock 획득
+    - lock을 획득하지 못하면, blocking
+
 ## 3. Semaphores
 
 ## 4. Condition Variables
