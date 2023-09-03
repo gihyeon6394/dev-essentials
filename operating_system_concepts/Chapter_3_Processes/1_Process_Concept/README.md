@@ -24,7 +24,7 @@ job과 process 는 비슷한 의미로 사용되기도 함.
 
 ### Memory layout of a C program
 
-<img src="img_3.png"  width="30%"/>
+<img src="img_3.png"  width="90%"/>
 
 - initialized data : 초기화된 전역변수 `int y`
 - uninitialized data : 초기화되지 않은 전역변수 `int x`
@@ -33,32 +33,32 @@ job과 process 는 비슷한 의미로 사용되기도 함.
 
 ### Process 의 특징
 
-- 프로세스는 active entity, 메모리에 load하면 실행됨
+- 프로세스는 active entity, 메모리에 load 후에 실행됨
     - 프로그램은 passive entity
-- program counter : 다음에 실행할 명령어나 관련 리소스를 가리킴
+- program counter <sup>PC</sup> : 다음에 실행할 명령어나 관련 리소스를 가리킴
 - 실행파일을 메모리에 load하는 방법
     - 아이콘 더블클릭
     - 명령어로 실행파일 실행 `prog.exe`
 - 같은 프로그램을 2개의 프로세스로 실행하면 서로 분리된 실행으로 간주
 - 프로세스가 프로세스를 생성하기도 함
 
-### 프로세스 스스로가 실행환경 :  JVM
+### 프로세스 스스로가 실행환경 e.g. JVM
 
 - Java Virtual Machine <sup>JVM</sup> : Java 프로그램을 실행하기 위한 프로세스
 - `java Program` : `Program.class`를 실행하기 위한 java 명령어
 
 ## 2. Process State
 
-<img src="img_1.png"  width="60%"/>
+<img src="img_1.png"  width="80%"/>
 
 프로세스는 프로세스 최근의 활동에 따라 상태가 구분됨  
 **프로세서 코어는 한번에 하나의 프로세스만 실행 가능**
 
-- New : 프로세스가 생성됨
-- Running : 명령어 실행 중
-- Waiting : 프로세스가 어떤 이벤트가 일어나기를 기다림 <sub>I/O 완료 등</sub>
-- Ready : 프로세스가 프로세서에게 할당되기를 대기
-- Terminated : 프로세스가 종료됨
+- _New_ : 프로세스가 생성됨
+- _Running_ : 명령어 실행 중
+- _Waiting_ : 프로세스가 어떤 이벤트가 일어나기를 기다림 <sub>I/O 완료 등</sub>
+- _Ready_ : 프로세스가 프로세서에게 할당되기를 대기
+- _Terminated_ : 프로세스가 종료됨
 
 ## 3. Process Control Block <sup>PCB, task control block</sup>
 
