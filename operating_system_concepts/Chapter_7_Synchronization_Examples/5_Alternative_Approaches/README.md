@@ -36,3 +36,16 @@ voud update(int value) {
 - deadlock 발생 가능성
 
 ## 3. Functional Programming Languages
+
+- imperative(procedural) programming language
+    - 프로그램을 명령어의 목록으로 보는 관점
+    - 명령어들이 순차적으로 실행되는 것으로 보는 관점
+    - 상태 공유
+    - e.g. C, C++, Java
+- functional programming language
+    - 프로그램을 함수의 목록으로 보는 관점
+    - 함수들이 순차적으로 실행되는 것으로 보는 관점
+    - 상태 공유 X, 불변 객체
+    - e.g. Erlang, Scala
+- deadlock, race condition 발생 가능성 없음
+
