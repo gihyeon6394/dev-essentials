@@ -19,4 +19,20 @@
 
 ## 2. OpenMP
 
+````
+voud update(int value) {
+    #pragma omp critical
+    {
+        count += value;
+    }
+}
+
+````
+
+- `#pragma omp` : OpenMP directive
+- OpenMP 라이브러리에 의해 스레드가 생성되고 관리되는 장점
+- `#pragma omp critical` : critical section을 정의
+    - 임계영역에 하나의 thread만 진입
+- deadlock 발생 가능성
+
 ## 3. Functional Programming Languages
