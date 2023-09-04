@@ -15,6 +15,6 @@
 3. [POSIX Synchronization](3_POSIX_Synchronization/README.md)
 4. [Synchronization in Java](4_Synchronization_in_Java/README.md)
 5. [Alternative Approaches](5_Alternative_Approaches/README.md)
-6. Summary
+6. [Summary](6_Summary/README.md)
 
 
