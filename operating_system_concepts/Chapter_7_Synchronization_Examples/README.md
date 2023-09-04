@@ -14,7 +14,7 @@
 2. [Synchronization within the Kernel](2_Synchronization_within_the_Kernel/README.md)
 3. [POSIX Synchronization](3_POSIX_Synchronization/README.md)
 4. [Synchronization in Java](4_Synchronization_in_Java/README.md)
-5. Alternative Approaches
+5. [Alternative Approaches](5_Alternative_Approaches/README.md)
 6. Summary
 
 
