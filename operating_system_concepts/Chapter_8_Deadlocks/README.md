@@ -17,7 +17,7 @@
 
 --- 
 
-1. System Model
+1. [System Model](1_System_Model/README.md)
 2. Deadlock in Multithreaded Applications
 3. Deadlock Characterization
 4. methods for Handling Deadlocks
