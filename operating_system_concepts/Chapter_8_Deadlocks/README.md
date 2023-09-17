@@ -19,7 +19,7 @@
 
 1. [System Model](1_System_Model/README.md)
 2. [Deadlock in Multithreaded Applications](2_Deadlock_in_Multithreaded_Applications/README.md)
-3. Deadlock Characterization
+3. [Deadlock Characterization](3_Deadlock_Characterization/README.md)
 4. methods for Handling Deadlocks
 5. Deadlock Prevention
 6. Deadlock Avoidance
