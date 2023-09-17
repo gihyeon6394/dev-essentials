@@ -102,5 +102,3 @@ void *do_work_two(void *param) {
    }
 }
 ````
-
-````
