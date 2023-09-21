@@ -21,7 +21,7 @@
 2. [Deadlock in Multithreaded Applications](2_Deadlock_in_Multithreaded_Applications/README.md)
 3. [Deadlock Characterization](3_Deadlock_Characterization/README.md)
 4. [Methods for Handling Deadlocks](4_Methods_for_Handling_Deadlocks/README.md)
-5. Deadlock Prevention
+5. [Deadlock Prevention](5_Deadlock_Prevention/README.md)
 6. Deadlock Avoidance
 7. Deadlock Detection
 8. Recovery from Deadlock
