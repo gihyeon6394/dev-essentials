@@ -15,12 +15,12 @@
 
 <img src="img.png"  width="40%"/>
 
-|    구분    |                _safe_                 |      _unsafe_      |
-|:--------:|:-------------------------------------:|:------------------:|
-|    순서    | resource 할당 순서 존재 (**safe sequence**) | resource 할당 순서 없음  |
-| deadlock |              deadlock 없음              | deadlock **발생 가능** |
+|    구분    |                _safe_                 |     _unsafe_      |
+|:--------:|:-------------------------------------:|:-----------------:|
+|    순서    | resource 할당 순서 존재 (**safe sequence**) | resource 할당 순서 없음 |
+| deadlock |              deadlock 없음              |  deadlock **가능**  |
 
-- 단점 : resource가 사용가능해도, thread는 순서에 따라 기다려야함 (resource 사용률 낮음)
+단점 : resource가 사용가능해도, thread는 순서에 따라 기다려야함 (resource 사용률 낮음)
 
 ### sequence
 
@@ -42,9 +42,9 @@
 | _**unsafe**_ |  t1  | 5 (_holding_) | 2 (_holding_) | **3** (_holding_) |    2 (_free_)     |
 
 - t0 (_safe_) : _T1_ -> _T2_ -> _T0_ 순서로 실행
-- t1 (_unsafe_) : **_T2_ resource 1개 추가 할당**
-    - _T1_이 리소스를 모두 반환하면, 4 (_free_)
-    - _T0_, _T2_가 4개의 리소스를 요청하면, deadlock 발생
+- t1 (_unsafe_) : **_T2_ resource 1개 추가 할당** (순서 어김)
+    - _T1_ 이 리소스를 모두 반환하면, 4 (_free_)
+    - _T0_, _T2_ 가 4개의 리소스를 요청하면, deadlock 발생
 - 원인 : **T2**를 t1 시점에 _waiting_ 하지 않고 1개를 할당함
 
 ## 2. Resource-Allocation-Graph Algorithm
