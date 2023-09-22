@@ -47,6 +47,28 @@
     - _T0_, _T2_ 가 4개의 리소스를 요청하면, deadlock 발생
 - 원인 : **T2**를 t1 시점에 _waiting_ 하지 않고 1개를 할당함
 
-## 2. Resource-Allocation-Graph Algorithm
+## 2. Resource-Allocation-Graph Algorithm (자원 할당 그래프 알고리즘)
+
+<img src="img_1.png"  width="40%"/>  
+
+- 각 resource type당 하나의 instance만 존재할 경우 사용 가능
+- **claim edge** : _Ti -> Rj_ (Ti가 Rj를 미래 언젠가 요청 가능, 점선)
+    - thread가 자원을 요청하면 **claim edge**가 request edge로 변환
+- thread 실행 전 모든 claim edge가 그래프에 나타나야함
+- _Ti_ 가 _Rj_ 를 요청하면,
+    - _Ti -> Rj_ 가 cycle을 형성하지 않는 경우에만 할당
+    - cycle-detection algorithm 사용 (n<sup>2</sup> 시간 소요)
+    - cycle이 없으면, 할당
+    - cycle이 감지되면, _unsafe_ 상태로 두고, thread _waiting_
+
+### 예시
+
+<img src="img_1.png"  width="40%"/>  
+
+위 그림에서 _T2_ 가 _R2_ 를 요청하면, cycle이 형성되므로 할당하지 않음
+
+<img src="img_2.png"  width="40%"/>
+
+_R2_ 를 _T2_ 에게 할당하면, _T1_ 이 _R2_ 를 요청하는 순간 deadlock 발생
 
 ## 3. Banker's Algorithm
