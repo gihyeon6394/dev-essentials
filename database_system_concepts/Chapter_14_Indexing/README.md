@@ -35,7 +35,7 @@
 | 형태     | ordered        | ordered      |
 | 데이터 크기 | record의 일부     | 전체 책 내용의 일부  |
 
-#### _student_를 _ID_ 로 조회 시 index를 사용하는 경우
+#### _student_ 를 _ID_ 로 조회 시 index를 사용하는 경우
 
 1. index 조회
 2. index를 통해 disk block을 찾음
@@ -67,7 +67,7 @@
 #### search key
 
 - file의 record를 찾는데 사용되는 속성
-- _primary key_ㅡ _candidate key_ , _superkey_ 와 다름
+- _primary key_, _candidate key_ , _superkey_ 와 다름
 
 ## 2. Ordered Indices
 
