@@ -21,7 +21,7 @@
 5. PART FIVE STORAGE MANAGEMENT AND INDEXING
     - Chapter 12 Pysical Storage Systems
     - Chapter 13 Data Storage Structures
-    - Chapter 14 Indexing
+    - [Chapter 14 Indexing](Chapter_14_Indexing/README.md)
 6. PART SIX QUERY PROCESSING AND OPTIMIZATION
     - Chapter 15 Query Processing
     - Chapter 16 Query Optimization
