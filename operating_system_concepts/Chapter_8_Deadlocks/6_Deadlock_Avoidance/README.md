@@ -72,3 +72,83 @@
 _R2_ 를 _T2_ 에게 할당하면, _T1_ 이 _R2_ 를 요청하는 순간 deadlock 발생
 
 ## 3. Banker's Algorithm
+
+- resource type마다 instance가 여러개일 경우 사용 가능
+- Resource-Allocation-Graph Algorithm보다 덜 효율적
+- 은행에서 현금을 할당하는 것과 유사
+
+#### 동작
+
+- 새로운 thread가 생기면, resource type마다 필요한 최대 instance 수를 선언 (system의 총 resource instance 수보다 작아야함)
+- resource 요청시 system은 _safe_ state를 벗어나는지 판단
+    - _safe_ state를 벗어나면, thread _waiting_ (다른 thread가 release할 때까지)
+
+#### 자료구조 (thread 수 _n_, resource type 수 _m_)
+
+|    자료구조    |                             설명                              |                                  e.g.                                   |
+|:----------:|:-----------------------------------------------------------:|:-----------------------------------------------------------------------:|
+| Available  |      각 resource type마다 사용가능한 instance 수, vector 길이 _m_      |         _Available[j]_ = resource type _Rj_ 의 사용가능한 instance 수          |
+|    Max     | _n * m_ matrix, 각 thread가 resource type별로 필요한 최대 instance 수 |   _Max[i][j]_ = thread _Ti_ 가 resource type _Rj_ 를 요청할 최대 instance 수    |
+| Allocation |        _n * m_ matrix, 각 thread가 현재 할당받은 resource 수         | _Allocation[i][j]_ = thread _Ti_ 가 사용 중인 resource type _Rj_  instance 수 |
+|    Need    |          _n * m_ matrix, 각 thread가 필요한 resource 수           | _Need[i][j]_ = thread _Ti_ 가 요청해야하는 남은 resource type _Rj_ 의 instance 수  |
+
+### 3.1 Safety Algorithm
+
+1. vector **_Work_** 길이 _m_ , vector  **_Finish_** 길이 _n_ 선언
+    - **_Work_** = **_Available_**
+    - **_Finish[i]_** = _false_ (i=0, 1, ..., n-1)
+2. (**_Finish[i]_** = _false_) && (**_Need[i]_** <= **_Work_**) 인 _Ti_ 를 찾음
+    - 없으면 goto 4
+3. **_Work_** = **_Work_** + **_Allocation[i]_**
+    - **_Finish[i]_** = _true_
+    - goto 2
+4. (**_Finish[i]_** = _true_) 인 _i_ 가 존재하면, _safe_ state
+
+### 3.2 Resource-Request Algorithm
+
+- **_Request[i]_** = request vector
+    - _Requesti[J]_ = thread _Ti_ 가 resource type _Rj_ 를 요청하는 instance 수
+
+1. _Request<sub>i</sub> <= Need<sub>i</sub>_ 라면, go to 2
+    - 아니면, error (thread가 필요한 resource보다 많이 요청)
+2. _Request<sub>i</sub> <= Available_ 라면, go to 3
+    - 아니면, _Ti_ 는 _waiting_
+3. 다음처럼 가장해봄
+    - _Available_ = _Available_ - _Request<sub>i</sub>_
+    - _Allocation<sub>i</sub>_ = _Allocation<sub>i</sub>_ + _Request<sub>i</sub>_
+    - _Need<sub>i</sub>_ = _Need<sub>i</sub>_ - _Request<sub>i</sub>_
+4. _safe_ state인지 확인
+    - _safe_ state라면, _Request<sub>i</sub>_ 를 할당
+    - 아니면, _Ti_ 는 _waiting_ 상태로 둠
+
+### 3.3 An Illustrative Example
+
+| resource type | instance 수 |
+|:-------------:|:----------:|
+|       A       |     10     |
+|       B       |     5      |
+|       C       |     7      |
+
+| thread | _Allocation_ | _Max_ | _Available_ | _Need (Max - Allocation)_ |
+|:------:|:------------:|:-----:|:-----------:|:-------------------------:|
+|  _T0_  |    0 0 1     | 7 5 3 |    3 3 2    |           7 4 3           |
+|  _T1_  |    2 0 0     | 3 2 2 |             |           1 2 2           |
+|  _T2_  |    3 0 2     | 9 0 2 |             |           6 0 0           |
+|  _T3_  |    2 1 1     | 2 2 2 |             |           0 1 1           |
+|  _T4_  |    0 0 2     | 4 3 3 |             |           4 3 1           |
+
+- <_T1, T3, T4, T0, T2> 순서로 실행하면 _safe_ state
+- T1에게 request 할당
+- **_Request<sub>1</sub>_** = (1, 0, 2)라면,
+    - Resource-Request Algorithm 1번 check 통과
+
+| thread |          _Allocation_          | _Max_ |          _Available_          | _Need (Max - Allocation)_ |
+|:------:|:------------------------------:|:-----:|:-----------------------------:|:-------------------------:|
+|  _T0_  |             0 0 1              | 7 5 3 | **2 3 0 = (3 3 2) - (1 0 2)** |           7 4 3           |
+|  _T1_  | **3 0 2 =  (2 0 0) + (1 0 2)** | 3 2 2 |                               |           0 2 0           |
+|  _T2_  |             3 0 2              | 9 0 2 |                               |           6 0 0           |
+|  _T3_  |             2 1 1              | 2 2 2 |                               |           0 1 1           |
+|  _T4_  |             0 0 2              | 4 3 3 |                               |           4 3 1           |
+
+- <_T1, T3, T4, T0, T2> 순서로 실행하면 _safe_ state
+    - T1에게 request 할당
