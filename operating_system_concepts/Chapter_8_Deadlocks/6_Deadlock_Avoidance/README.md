@@ -85,12 +85,12 @@ _R2_ 를 _T2_ 에게 할당하면, _T1_ 이 _R2_ 를 요청하는 순간 deadloc
 
 #### 자료구조 (thread 수 _n_, resource type 수 _m_)
 
-|    자료구조    |                             설명                              |                                  e.g.                                   |
-|:----------:|:-----------------------------------------------------------:|:-----------------------------------------------------------------------:|
-| Available  |      각 resource type마다 사용가능한 instance 수, vector 길이 _m_      |         _Available[j]_ = resource type _Rj_ 의 사용가능한 instance 수          |
-|    Max     | _n * m_ matrix, 각 thread가 resource type별로 필요한 최대 instance 수 |   _Max[i][j]_ = thread _Ti_ 가 resource type _Rj_ 를 요청할 최대 instance 수    |
-| Allocation |        _n * m_ matrix, 각 thread가 현재 할당받은 resource 수         | _Allocation[i][j]_ = thread _Ti_ 가 사용 중인 resource type _Rj_  instance 수 |
-|    Need    |          _n * m_ matrix, 각 thread가 필요한 resource 수           | _Need[i][j]_ = thread _Ti_ 가 요청해야하는 남은 resource type _Rj_ 의 instance 수  |
+|    자료구조    |                                설명                                |                                  e.g.                                   |
+|:----------:|:----------------------------------------------------------------:|:-----------------------------------------------------------------------:|
+| Available  |        각 resource type마다 사용가능한 instance 수, vector 길이 _m_         |         _Available[j]_ = resource type _Rj_ 의 사용가능한 instance 수          |
+|    Max     | _n * m_ matrix,<br/> 각 thread가 resource type별로 필요한 최대 instance 수 |   _Max[i][j]_ = thread _Ti_ 가 resource type _Rj_ 를 요청할 최대 instance 수    |
+| Allocation |        _n * m_ matrix,<br/> 각 thread가 현재 할당받은 resource 수         | _Allocation[i][j]_ = thread _Ti_ 가 사용 중인 resource type _Rj_  instance 수 |
+|    Need    |          _n * m_ matrix,<br/> 각 thread가 필요한 resource 수           | _Need[i][j]_ = thread _Ti_ 가 요청해야하는 남은 resource type _Rj_ 의 instance 수  |
 
 ### 3.1 Safety Algorithm
 
@@ -98,10 +98,10 @@ _R2_ 를 _T2_ 에게 할당하면, _T1_ 이 _R2_ 를 요청하는 순간 deadloc
     - **_Work_** = **_Available_**
     - **_Finish[i]_** = _false_ (i=0, 1, ..., n-1)
 2. (**_Finish[i]_** = _false_) && (**_Need[i]_** <= **_Work_**) 인 _Ti_ 를 찾음
-    - 없으면 goto 4
+    - 없으면 go to 4
 3. **_Work_** = **_Work_** + **_Allocation[i]_**
     - **_Finish[i]_** = _true_
-    - goto 2
+    - go to 2
 4. (**_Finish[i]_** = _true_) 인 _i_ 가 존재하면, _safe_ state
 
 ### 3.2 Resource-Request Algorithm
@@ -119,7 +119,7 @@ _R2_ 를 _T2_ 에게 할당하면, _T1_ 이 _R2_ 를 요청하는 순간 deadloc
     - _Need<sub>i</sub>_ = _Need<sub>i</sub>_ - _Request<sub>i</sub>_
 4. _safe_ state인지 확인
     - _safe_ state라면, _Request<sub>i</sub>_ 를 할당
-    - 아니면, _Ti_ 는 _waiting_ 상태로 둠
+    - 아니면, _Ti_ 는 _waiting_
 
 ### 3.3 An Illustrative Example
 
@@ -137,7 +137,7 @@ _R2_ 를 _T2_ 에게 할당하면, _T1_ 이 _R2_ 를 요청하는 순간 deadloc
 |  _T3_  |    2 1 1     | 2 2 2 |             |           0 1 1           |
 |  _T4_  |    0 0 2     | 4 3 3 |             |           4 3 1           |
 
-- <_T1, T3, T4, T0, T2> 순서로 실행하면 _safe_ state
+- _<T1, T3, T4, T0, T2>_ 순서로 실행하면 _safe_ state
 - T1에게 request 할당
 - **_Request<sub>1</sub>_** = (1, 0, 2)라면,
     - Resource-Request Algorithm 1번 check 통과
@@ -150,5 +150,5 @@ _R2_ 를 _T2_ 에게 할당하면, _T1_ 이 _R2_ 를 요청하는 순간 deadloc
 |  _T3_  |             2 1 1              | 2 2 2 |                               |           0 1 1           |
 |  _T4_  |             0 0 2              | 4 3 3 |                               |           4 3 1           |
 
-- <_T1, T3, T4, T0, T2> 순서로 실행하면 _safe_ state
+- _<T1, T3, T4, T0, T2>_ 순서로 실행하면 _safe_ state
     - T1에게 request 할당
