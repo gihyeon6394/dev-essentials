@@ -67,6 +67,8 @@
 - file의 record를 찾는데 사용되는 속성
     - e.g. _Student_ file에서 탐색 시, _ID_, _name_ 등이 search key가 될 수 있음
 - _primary key_, _candidate key_ , _superkey_ 와 다름
+- **nonunique search key** : search key value에 대해 2개 이상의 record가 존재할 경우
+    - e.g. _Student_ file에서 _name_ 은 nonunique search key
 
 ## 2. Ordered Indices
 
@@ -184,6 +186,32 @@
         - 같은 search-key에 대한 다른 record가 존재하면, 해당 record를 가리키도록 수정
 
 ### 2.4 Secondary Indices
+
+<img src="img_8.png"  width="70%"/>
+
+- Dense index, 모든 record에 대한 pointer를 가짐
+- candidate key + secondary index = dense clustering index
+- file 수정 시 **모든** index 수정 필요
+
+#### 모든 record에 대한 pointer를 가지는 이유
+
+- not cadidate key + secondary index
+    - **첫 record pointer만 가지는 거로 부족함** (file에 순차적으로 저장이 안되어있음)
+- not candidate key + clustering index
+    - search key value는 첫번째 row pointer만 가지면 됨 (다음 record는 순차적으로 탐색하면 됨)
+
+#### nonunique search key 구현
+
+- 각 pointer가 file을 가리키는 pointer가 담긴 bucket을 가리킴
+- 단점
+    - index access가 느림 (level이 늘어남)
+    - search key value에 대한 중복이 적을수록 공간 낭비가 늘어남
+
+#### 다른 index와 비교
+
+- clustering index보다 query 성능이 우월
+- 수정이 있을떄 발생하는 overhead 단점
+- 수정, 쿼리 빈도에 따라 결정
 
 ### 2.5 Indices on Multiple Keys
 
