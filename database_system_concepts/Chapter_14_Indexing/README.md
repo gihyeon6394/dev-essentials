@@ -74,11 +74,15 @@
 - search key는 record와 대응
 - file은 1개 이상의 index를 가질 수 있음
 
-| 특징         | clustering index               | nonclustering index                 |
-|------------|--------------------------------|-------------------------------------|
-| file의 순서   | search key와 같음                 | search key와 다름                      |
-| 동의어        | primary index, clustered index | secondary index, nonclustered index |
-| search key | primary key일 수도 있음             | -                                   |
+<img src="img_6.png"  width="60%"/>
+
+<img src="img_7.png"  width="60%"/>
+
+| 특징              | clustering index               | nonclustering index                 |
+|-----------------|--------------------------------|-------------------------------------|
+| file의 데이터 저장 순서 | search key와 같음                 | search key와 다름                      |
+| 동의어             | primary index, clustered index | secondary index, nonclustered index |
+| search key      | primary key일 수도 있음             | -                                   |
 
 <img src="img_2.png"  width="70%"/>
 
@@ -123,11 +127,61 @@
 
 ### 2.2 Multilevel Indexing
 
+<img src="img_5.png"  width="70%"/>  
+
+- dense index는 원본 relation의 크기에 비례하여 커짐
+    - e.g. 1,000,,000 tuples = 100 index entry (임의), 10,000 blocks
+- index가 작을수록 search time은 줄어듦
+    - index가 크면 disk에 저장됨
+    - index가 크면 index block을 fetch 하는 추가 시간 필요
+- Binary search는 비용이 큼 (random access 포함)
+    - e.g. index가 _b_ blocks 을 차지할 때 _log<sub>2</sub>b_
+
+#### sparse outer index
+
+- original index에 대한 sparse outer index 생성
+    - original index = inner indexS
+- 동작 예시
+    1. outer index 에서 binary search 진행 (pointer가 inner index block을 가리킴)
+    2. search key를 기준으로 같거나 작은 value 중 가장 큰 value를 가진 inner index block을 찾음
+    3. value 찾음
+- **multilevel indecies** : 2개 이상 level을 가진 index
+
 ### 2.3 Index Update
+
+- 모든 index는 record가 생성/삭제 될 때 수정되어야 함
+- update 될 떄
+    - instructor realtion의 department가 변경되면, _dept_name_ index도 변경
+- 명시적으로 update하지 않아도 됨
 
 #### 2.3.1 Insertion
 
+- INSERT된 record에 나타난 search-key 를 사용해서 index 조회
+    - e.g. _instructor_ 에 _ID_ 가 101인 record가 추가되면, _ID_ 가 101인 index entry를 탐색
+- dense, sparse idnex에 따라 다름
+- Dense indices
+    - search-key 가 index에 없으면, index entry에 search key와 추가
+    - search-key 가 index에 있으면,
+        - index entry가 모든 record에 대한 pointer를 저장하는 경우, index entry에 새로운 record pointer 추가
+        - search-key에 대한 첫번째 record pointer만 있으면, 적절한 위치(정렬)에 record를 삽입
+- Sparse indices
+    - 새로운 block을 생성하는 경우, 새 block의 첫번째 search key값을 index에 삽입
+    - 해당 block의 가장 작은 search-key를 가지는 경우 해당 block에 대한 index entry 수정
+    - 모두 아니면, index 변경 없음
+
 #### 2.3.2 Deletion
+
+- 삭제할 record를 찾음
+- Dense indices
+    - search-key에 대한 record가 하나라면 index entry 제거
+    - search-key의 record가 여러개라면
+        - 모든 record에 대한 pointer를 저장 중이면, pointer에서 제거
+        - search-key에 대한 첫번째 record pointer만 있으면, 삭제된 record를 가리키고 있으면 pointer 수정 (다음 record를 가리키도록)
+- Sparse indices
+    - search-key에 대한 index 가 없으면 index 변경 없음
+    - search-key에 대한 index 가 있으면
+        - 삭제된 record가 search-key에 대한 유일한 record이면, 삭제 후 index record 재정렬
+        - 같은 search-key에 대한 다른 record가 존재하면, 해당 record를 가리키도록 수정
 
 ### 2.4 Secondary Indices
 
