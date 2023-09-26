@@ -215,6 +215,12 @@
 
 ### 2.5 Indices on Multiple Keys
 
+- **composite search key** : 2개 이상의 필드로 구성된 search key
+    - e.g. _takes_ 에서 (_course_id, semester, year_)로 조회
+    - (a<sub>1</sub>, a<sub>2</sub>) < (b<sub>1</sub>, b<sub>2</sub>)라면,
+        - (a<sub>1</sub> < b<sub>1</sub>) or (a<sub>1</sub> = b<sub>1</sub>)
+        - and (a<sub>2</sub> < b<sub>2</sub>)
+
 ## 3. B+ Tree Index Files
 
 ## 4. B+ Tree Index Extensions
