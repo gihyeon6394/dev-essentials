@@ -223,6 +223,13 @@
 
 ## 3. B+ Tree Index Files
 
+- Ordered idnex는 file이 커지면 성능이 저하됨
+    - 순차적으로 scan하기 때문
+    - file 재구성으로 해결할 수 있지만, 재구성 빈도가 많아지면 별로임
+- **B+-tree** index는 가장 널리 사용되는 삽입/삭제에도 효율성을 유지하는 인덱스 구조
+- **balanced tree** (이진트리)
+    - root에서 leaf로 가는 모든 경로의 길이가 같음
+
 ## 4. B+ Tree Index Extensions
 
 ## 5. Hash Indices
