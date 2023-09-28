@@ -273,7 +273,7 @@
     - 방법 2 : leaf node의 pointer가 record가 아닌 record list를 가리킴
         - pointer list가 크면, access time이 증가
 - 대부분의 Database 구현 방식
-    - search key attribute _a<sub>i</sub>_이 relation _r_ 에 대해 nonunique할 때,
+    - search key attribute _a<sub>i</sub>_ 이 relation _r_ 에 대해 nonunique할 때,
     - _A<sub>p</sub>_ 는 _r_ 의 primary key
     - unique composite search key (_a<sub>i</sub>_, _A<sub>p</sub>_)를 사용
     - e.g. user relation의 _name_ 필드 대신, (_name_, _user_id_)를 사용 (user_id는 primary key)
@@ -354,13 +354,13 @@ function findRange(lb, ub)
 2. _lb_ <= _K<sub>i</sub>_ <= _ub_ 인 모든 pointer를 수집
     - _K<sub>i</sub>_ > _ub_ 이면, stop
 
-#### cost
+#### cost (n = 200 일 때)
 
-| 구분         | size  (n = 200) |
-|------------|-----------------|
-| node       | 4KB             |
-| search-key | 12 bytes        |
-| pointer    | 8 bytes         |
+| 구분         | size     |
+|------------|----------|
+| node       | 4KB      |
+| search-key | 12 bytes |
+| pointer    | 8 bytes  |
 
 - _N_ 개의 record가 있을 때 최대 log<sub>(n/2)</sub>(N)
 - 더 보수적으로 search-key를 32bytes, _n_ = 100, log<sub>50</sub>(1,000,000) = 4
@@ -368,32 +368,28 @@ function findRange(lb, ub)
 
 #### in-memory tree (e.g. binary search tree)와 다른점
 
-- node의 크기
-- tree의 높이
-
-|                              | B+ tree                                     | in-memory tree (e.g. binary search tree)                    |
-|------------------------------|---------------------------------------------|-------------------------------------------------------------|
-| node의 크기                     | disk block 정도의 사이즈, 많은 pointer              | 사이즈가 작고, 최대 2개의 pointer                                     |
-| tree의 높이                     | 폭이 크고 height가 작음                            | 폭이 작고 height가 큼                                             |
-| 탐색속도(_N_ = 1,000,000 record) | log<sub>50</sub>(1,000,000) = 4 node access | log<sub>2</sub>(1,000,000) = 20 node access (balanced tree) |
-
+|                               | B+ tree                                     | in-memory tree (e.g. binary search tree)                    |
+|-------------------------------|---------------------------------------------|-------------------------------------------------------------|
+| node 크기                       | disk block 정도의 사이즈, 많은 pointer              | 사이즈가 작고, 최대 2개의 pointer                                     |
+| tree 높이                       | 폭이 크고 height 작음                             | 폭이 작고 height 큼                                              |
+| 탐색속도 (_N_ = 1,000,000 record) | log<sub>50</sub>(1,000,000) = 4 node access | log<sub>2</sub>(1,000,000) = 20 node access (balanced tree) |
 
 #### 추가 cost
 
 - leaf node를 찾은 후 random I/O operaion이 필요함
     - record를 fetch하기 위함
 - range queries
-  - _lb_ 와 _ub_ 사이의 record를 찾기 위해, _lb_ 와 _ub_ 사이의 모든 leaf node에 access (최대 _M(n/2)_ + 1 node)
-  - 2차 index의 경우 다른 block에 있음, 최악 _M_ random I/O operation이 필요함
-  - clustered indicies의 경우, 연속된 block에 있어 비용이 낮아짐
+    - _lb_ 와 _ub_ 사이의 record를 찾기 위해, _lb_ 와 _ub_ 사이의 모든 leaf node에 access (최대 _M(n/2)_ + 1 node)
+    - 2차 index의 경우 다른 block에 있음, 최악 _M_ random I/O operation이 필요함
+    - clustered indicies의 경우, 연속된 block에 있어 비용이 낮아짐
 
 #### nonunique key
 
 - search key에 중복이 있을 경우, 내부적으로 추가 attribute를 사용해서 중복을 피함
-  - e.g. _name_ 대신 (_name_, _user_id_)를 사용
-  - _a<sub>i</sub>_ 대신 (_a<sub>i</sub>_, _A<sub>p</sub>_)를 사용
+    - e.g. _name_ 대신 (_name_, _user_id_)를 사용
+    - _a<sub>i</sub>_ 대신 (_a<sub>i</sub>_, _A<sub>p</sub>_)를 사용
 - `findRange(lb, ub)` 의 경우, _lb = (v, -∞)_, _ub = (v, +∞)_ 로 사용
-  - _-∞_ 은 _A<sub>p</sub>_가 가능한 가장 작은 값, _+∞_ 는 _A<sub>p</sub>_ 가 가능한 가장 큰 값
+    - _-∞_ 은 _A<sub>p</sub>_ 가 가능한 가장 작은 값, _+∞_ 는 _A<sub>p</sub>_ 가 가능한 가장 큰 값
 
 ### 3.3 Updates on B+-Trees
 
