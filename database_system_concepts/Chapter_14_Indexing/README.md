@@ -229,6 +229,67 @@
 - **B+-tree** index는 가장 널리 사용되는 삽입/삭제에도 효율성을 유지하는 인덱스 구조
 - **balanced tree** (이진트리)
     - root에서 leaf로 가는 모든 경로의 길이가 같음
+    - lookup, insertion, deletion 성능 보장
+- File 수정 시 성능/공간 overhead가 존재하지만, file 재구성 비용을 피할 수 있어 효율적
+
+### 3.1 Structure of B+ Tree
+
+<img src="img_9.png"  width="60%"/>
+
+- multilevel index
+- 중복 search-key 없음
+- n-1 search key : _K<sub>1</sub>, K<sub>2</sub>, ..., K<sub>n-1</sub>_
+    - search-key는 정렬되어있음, _K<sub>i</sub> < K<sub>i+1</sub>,_  _(i < j)_
+- n pointer : _P<sub>1</sub>, P<sub>2</sub>, ..., P<sub>n</sub>_
+
+<img src="img_10.png"  width="80%"/>
+
+- **leaf node** : pointer _P<sub>i</sub>_는 search key _K<sub>i</sub>_의 record를 가리킴
+    - n개의 leaf noder가 있고, 마지막 P<sub>n</sub> record를 가리키지 않음
+    - 각 leaf는 _(n-1)/2_ ~ _n-1_ 개의 record를 가질 수 있음
+        - e.g. _n=4_ 이면, 2 ~ 3개의 record를 가질 수 있음
+        - _L<sub>i</sub>_, _L<sub>j</sub>_ 가 leaf node라면 _(i<j)_, _L<sub>i</sub>_ 의 모든 search key는 _L<sub>j</sub>_ 의 모든
+          search key보다 작음
+    - Dense index로 사용 시 leaf node는 모든 record를 가짐
+- **nonleaf node** (internal nodes) : 모든 pointer가 tree node를 가리킴
+    - _n_ pointer는 반드시 _n/2_ ~ _n_ 개의 pointer를 가짐
+    - _fanout_ : nonleaf node의 pointer 개수
+    - _P<sub>i</sub>_가 가리키는 subtree의 모든 search key는 _K<sub>i</sub>_ 보다 작고, _K<sub>i-1</sub>_ 보다 같거나 큼
+    - _P<sub>1</sub>가 가리리키는 subtree의 모든 search key는 _K<sub>1</sub>_ 보다 작음
+- **root node** : 2 ~ _n/2_  개의 pointer를 가짐
+
+<img src="img_11.png"  width="80%"/>
+
+- _n=4_인 B+ tree
+    - _n_ : leaf node의 pointer 수
+
+<img src="img_12.png"  width="80%"/>
+
+#### nonunique search key
+
+- 일반적으로 serach key는 중복 가능
+    - 방법 1 : leaf node의 search key에 대해 중복 허용
+        - insertion, deletion overhead가 증가 (트리 수정 필요)
+    - 방법 2 : leaf node의 pointer가 record가 아닌 record list를 가리킴
+        - pointer list가 크면, access time이 증가
+- 대부분의 Database 구현 방식
+    - search key attribute _a<sub>i</sub>_이 relation _r_ 에 대해 nonunique할 때,
+    - _A<sub>p</sub>_ 는 _r_의 primary key
+    - unique composite search key (_a<sub>i</sub>_, _A<sub>p</sub>_)를 사용
+    - e.g. user relation의 _name_ 필드 대신, (_name_, _user_id_)를 사용 (user_id는 primary key)
+    - 명시적이지 않아도, 대부분의 DB는 내부적으로 추가 attribute를 사용해서 중복을 피함
+
+### 3.2 Queries on B+-Trees
+
+### 3.3 Updates on B+-Trees
+
+#### 3.3.1 Insertion
+
+#### 3.3.2 Deletion
+
+### 3.4 Complexity of B+-Tree Updates
+
+### 3.5 Nonunique Search Keys
 
 ## 4. B+ Tree Index Extensions
 
