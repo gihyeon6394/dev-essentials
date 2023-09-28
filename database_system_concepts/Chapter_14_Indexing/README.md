@@ -281,6 +281,120 @@
 
 ### 3.2 Queries on B+-Trees
 
+````
+/* v is the search key value (unique search key) */
+function find(v)
+/* Assumes no duplicate keys, and returns pointer to the record with
+* search key value v if such a record exists, and null otherwise */
+    Set C = root node
+    while (C is not a leaf node) begin
+      Let i = smallest number such that v ≤ C.Ki
+      if there is no such number i then begin
+          Let Pm = last non-null pointer in the node
+          Set C = C.Pm
+      end
+      else if (v = C.Ki) then Set C = C.Pi+1
+      else Set C = C.Pi /* v < C.Ki */
+end
+/* C is a leaf node */
+if for some i, Ki = v
+    then return Pi
+    else return null ; /* No record with key value v exists*/
+````
+
+1. root node에서 시작, _v_ 를 가진 leaf node를 찾을 떄까지 2번 반복
+2. _v_ 보다 크거나 같은 가장 작은 _K<sub>i</sub>_ 를 찾음
+    - 존재하면
+        - _v_ 가 _K<sub>i</sub>_ 와 같으면, _P<sub>i+1</sub>_ 을 가리키는 subtree로 이동
+        - _v_ 가 _K<sub>i</sub>_ 보다 작으면, _P<sub>i</sub>_ 을 가리키는 subtree로 이동
+    - 없으면, 마지막 _P<sub>m</sub>_ 을 가리키는 subtree로 이동 (m은 가장 마지막 nonnull pointer)
+3. 찾은 leafnode에서 _K<sub>i</sub>_ 와 _v_ 가 같으면, _P<sub>i</sub>_ 을 반환
+    - 같지 않으면, _null_ 반환
+
+##### range queries
+
+- _salary_ 속성이 [50000, 100000] 범위에 있는 record를 찾는 경우
+- _find(lb, ub)_
+
+````
+function findRange(lb, ub)
+/* Returns all records with search key value V such that lb ≤ V ≤ ub. */
+    Set resultSet = {};
+    Set C = root node
+    while (C is not a leaf node) begin
+        Let i = smallest number such that lb ≤ C.Ki
+        if there is no such number i then begin
+            Let Pm = last non-null pointer in the node
+            Set C = C.Pm
+        end
+        else if (lb = C.Ki) then Set C = C.Pi+1
+        else Set C = C.Pi /* lb < C.Ki */
+    end
+    /* C is a leaf node */
+    Let i be the least value such that Ki ≥ lb
+    if there is no such i
+        then Set i = 1 + number of keys in C; /* To force move to next leaf */
+    Set done = false;
+    while (not done) begin
+        Let n = number of keys in C.
+        if ( i ≤ n and C.Ki ≤ ub) then begin
+            Add C.Pi to resultSet
+            Set i = i + 1
+        end
+        else if (i ≤ n and C.Ki > ub)
+            then Set done = true;
+        else if (i > n and C.Pn+1 is not null)
+            then Set C = C.Pn+1, and i = 1 /* Move to next leaf */
+        else Set done = true; /* No more leaves to the right */
+    end
+    return resultSet;
+````
+
+1. _find(lb)_ 와 동일하게 _lb_ 를 가진 leaf node를 찾음
+2. _lb_ <= _K<sub>i</sub>_ <= _ub_ 인 모든 pointer를 수집
+    - _K<sub>i</sub>_ > _ub_ 이면, stop
+
+#### cost
+
+| 구분         | size  (n = 200) |
+|------------|-----------------|
+| node       | 4KB             |
+| search-key | 12 bytes        |
+| pointer    | 8 bytes         |
+
+- _N_ 개의 record가 있을 때 최대 log<sub>(n/2)</sub>(N)
+- 더 보수적으로 search-key를 32bytes, _n_ = 100, log<sub>50</sub>(1,000,000) = 4
+    - 최대 4개의 node에 access해서 record를 찾음
+
+#### in-memory tree (e.g. binary search tree)와 다른점
+
+- node의 크기
+- tree의 높이
+
+|                              | B+ tree                                     | in-memory tree (e.g. binary search tree)                    |
+|------------------------------|---------------------------------------------|-------------------------------------------------------------|
+| node의 크기                     | disk block 정도의 사이즈, 많은 pointer              | 사이즈가 작고, 최대 2개의 pointer                                     |
+| tree의 높이                     | 폭이 크고 height가 작음                            | 폭이 작고 height가 큼                                             |
+| 탐색속도(_N_ = 1,000,000 record) | log<sub>50</sub>(1,000,000) = 4 node access | log<sub>2</sub>(1,000,000) = 20 node access (balanced tree) |
+
+
+#### 추가 cost
+
+- leaf node를 찾은 후 random I/O operaion이 필요함
+    - record를 fetch하기 위함
+- range queries
+  - _lb_ 와 _ub_ 사이의 record를 찾기 위해, _lb_ 와 _ub_ 사이의 모든 leaf node에 access (최대 _M(n/2)_ + 1 node)
+  - 2차 index의 경우 다른 block에 있음, 최악 _M_ random I/O operation이 필요함
+  - clustered indicies의 경우, 연속된 block에 있어 비용이 낮아짐
+
+#### nonunique key
+
+- search key에 중복이 있을 경우, 내부적으로 추가 attribute를 사용해서 중복을 피함
+  - e.g. _name_ 대신 (_name_, _user_id_)를 사용
+  - _a<sub>i</sub>_ 대신 (_a<sub>i</sub>_, _A<sub>p</sub>_)를 사용
+- `findRange(lb, ub)` 의 경우, _lb = (v, -∞)_, _ub = (v, +∞)_ 로 사용
+  - _-∞_ 은 _A<sub>p</sub>_가 가능한 가장 작은 값, _+∞_ 는 _A<sub>p</sub>_ 가 가능한 가장 큰 값
+
 ### 3.3 Updates on B+-Trees
 
 #### 3.3.1 Insertion
