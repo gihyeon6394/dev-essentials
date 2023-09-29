@@ -395,7 +395,7 @@ function findRange(lb, ub)
 
 - update = delete + insert (동시에 수행)
 - update 시 delete, insert를 수행하므로, delete, isnert만 고민
-- **split** : insertion 결과 result가 크기 때문에 node 분할
+- **split** : insertion 결과가 node 최대 크기를 넘어서면 split
 - **coalesce** : node가 너무 작을 때
 - **Insertion** : `find()`와 동일하게 작동
     1. search key를 가진 leaf node 찾음
@@ -411,7 +411,7 @@ function findRange(lb, ub)
 #### 3.3.1 Insertion
 
 - 삽입이 발생해야하는 leaf node _l_ 을 결정해야함
-- 삽입이 split을 발생시키면, 재귀적으로 tree 부모를 올라가서 split이 일어나지 않을때까지 ㅅ반복
+- 삽입이 split을 발생시키면, 재귀적으로 tree 부모를 탐색해가며 split이 일어나지 않을때까지 반복
 
 <img src="img_14.png"  width="70%"/>
 
@@ -425,7 +425,7 @@ function findRange(lb, ub)
 
 <img src="img_16.png"  width="70%"/>
 
-- nonleaf node를 split할 경우 ("Lamport"를 insert 시)
+- nonleaf node를 split할 경우 (e.g. "Lamport"를 insert 시)
     1. 새로운 right hand side node 생성 ("Kim", "Lamport")
     2. parent node 생성 ("Kim", n1), n1은 새로운 right hand side node를 가리킴
         - parent node가 비어있으면 생성하지 않고, 연결
@@ -470,9 +470,91 @@ procedure insert_in_parent(node N, value K′, node N′)
 - _insert_in_parent_
     - _N_ : _N_, _N′_ 를 포함하는 node, _K′_ : _N′_ 의 search key, _N′_ : 새로운 right hand side node
 - _T_ : 임시 메모리 영역
-    - splitㄷ= 된 node를 저장하기 위함
+    - split된 node를 저장하기 위함
 
 #### 3.3.2 Deletion
+
+````
+procedure delete(value K, pointer P)
+    find the leaf node L that contains (K, P)
+    delete entry(L, K, P)
+    
+procedure delete entry(node N, value K, pointer P)
+    delete (K, P) from N
+    if (N is the root and N has only one remaining child)
+    then make the child of N the new root of the tree and delete N
+    else if (N has too few values/pointers) then begin
+        Let N′ be the previous or next child of parent(N)
+        Let K′ be the value between pointers N and N′ in parent(N)
+        if (entries in N and N′ can fit in a single node)
+            then begin /* Coalesce nodes */
+                if (N is a predecessor of N′) then swap variables(N, N′)
+                if (N is not a leaf)
+                    then append K′ and all pointers and values in N to N′
+                    else append all (Ki, Pi) pairs in N to N′; set N′.Pn = N.Pn
+                delete entry(parent(N), K′, N); delete node N
+            end
+        else begin /* Redistribution: borrow an entry from N′ */
+            if (N′ is a predecessor of N) then begin
+                if (N is a nonleaf node) then begin
+                    let m be such that N′.Pm is the last pointer in N′
+                    remove (N′.Km−1, N′.Pm) from N′
+                    insert (N′.Pm, K′) as the first pointer and value in N,
+                        by shifting other pointers and values right
+                    replace K′ in parent(N) by N′.Km−1
+                end
+                else begin
+                    let m be such that (N′.Pm, N′.Km) is the last pointer/value
+                        pair in N′
+                    remove (N′.Pm, N′.Km) from N′
+                    insert (N′.Pm, N′.Km) as the first pointer and value in N,
+                        by shifting other pointers and values right
+                    replace K′ in parent(N) by N′.Km
+                end
+            end
+            else … symmetric to the then case …
+        end
+    end
+````
+
+<img src="img_15.png"  width="70%"/>
+
+<img src="img_17.png"  width="70%"/>
+
+- "Srinivasan" 을 제거하는 경우
+- lookup 알고리즘으로 "Srinivasan" 을 가진 leaf node를 찾음
+    - 위에서 "Srinivasan" 을 제거하면, leaf node에 "Wu" 만 남음
+    - 각 node를 재 분배하여 node의 반 이상이 차있도록 유지시켜야함
+    - "Wu" leaf node 는 다른 형제 node와 합쳐져야함
+    - node가 삭제되면, node를 가리키는 parent의 pointer도 제거해야함
+- 제거대상 : ("Srinivasan", _n3_), _n3_ 는 "Srinivasan" 이 있는 leafnode를 가리키는 pointer
+    - entry를 제거하면, node에는 가장 왼쪽 pointer만 남음
+    - parent node는 **underfull**
+- sibling node “Califieri”, “Einstein”, and “Gold
+    - 가능하다면 합침
+    - 위에선 가능하지 않음 (size 넘침)
+- **redistribute** (재분배) : 각 node가 n/2 개의 child pointer를 갖도록
+    - "Gold"를 가리키는 pointer를 오른쪽 sibling으로 이동
+    - 오른쪽 sibling은 이동해온 pointer, 기존 pointer만 존재 (search key value는 없음)
+    - "Gold" searchkey를 올리고, root node의 "Mozart" search key를 내림
+
+<img src="img_17.png"  width="70%"/>
+
+<img src="img_18.png"  width="70%"/>
+
+- "Singh", "Wu"를 제거하는 경우
+    - 2가지를 다 제거하면 leaf node에 underfull 발생
+    - search-key value "Kim" 을 올리고 parent node의 "Mozart" 를 내림
+
+<img src="img_19.png"  width="70%"/>
+
+- "Gold"를 제거하는 경우
+    - underfull leaf 발생, sibling과 merge 가능
+    - parent node underfull 발생, sibling과 merge 가능
+    - root node search-key value "Gold"가 내려옴
+    - root node에 pointer 하나 남음 (root node는 최소 2개의 children)
+    - root node 제거 (tree depth 1 감소)
+- nonleaf node에도 "Gold"가 여전히 존재
 
 ### 3.4 Complexity of B+-Tree Updates
 
