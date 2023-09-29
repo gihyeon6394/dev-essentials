@@ -393,7 +393,84 @@ function findRange(lb, ub)
 
 ### 3.3 Updates on B+-Trees
 
+- update = delete + insert (동시에 수행)
+- update 시 delete, insert를 수행하므로, delete, isnert만 고민
+- **split** : insertion 결과 result가 크기 때문에 node 분할
+- **coalesce** : node가 너무 작을 때
+- **Insertion** : `find()`와 동일하게 작동
+    1. search key를 가진 leaf node 찾음
+    2. insert entry (search key 순서 유지)
+- **Deletion**
+    1. 삭제되어야할 search key를 가진 leaf node 찾음
+    2. search-key에 entry가 1개 이상이면, record를 찾을때까지 반복
+        - leaf node에서 entry 제거
+    3. leaf node 왼쪽으로 이동
+
+<img src="img_13.png"  width="70%"/>
+
 #### 3.3.1 Insertion
+
+- 삽입이 발생해야하는 leaf node _l_ 을 결정해야함
+- 삽입이 split을 발생시키면, 재귀적으로 tree 부모를 올라가서 split이 일어나지 않을때까지 ㅅ반복
+
+<img src="img_14.png"  width="70%"/>
+
+<img src="img_15.png"  width="70%"/>
+
+- _instructor_ relation에 _name_ 이 _Adams_ 인 record를 추가하는 경우
+    1. "Brandt", "Califieri", "Crick" leafnode 찾음
+    2. node가 가득차서 split
+- node에 공간이 있으면, insert
+- 최악의 경우 root까지 이르는 모든 node를 나누고, tree의 height이 1 증가
+
+<img src="img_16.png"  width="70%"/>
+
+- nonleaf node를 split할 경우 ("Lamport"를 insert 시)
+    1. 새로운 right hand side node 생성 ("Kim", "Lamport")
+    2. parent node 생성 ("Kim", n1), n1은 새로운 right hand side node를 가리킴
+        - parent node가 비어있으면 생성하지 않고, 연결
+- pointer는 각자 child node를 가리킴
+- search-key
+    - "Kim"은 pointer와 함께 이동
+    - "Califieri", "Einstein"은 그대로 남음
+    - "Gold"는 자신의 parent node에 추가
+
+````
+procedure insert_in_leaf (node L, value K, pointer P)
+    if (K < L.K1)
+        then insert P, K into L just before L.P1
+        else begin
+        Let Ki be the highest value in L that is less than or equal to K
+        Insert P, K into L just after L.Ki
+    end
+procedure insert_in_parent(node N, value K′, node N′)
+    if (N is the root of the tree)
+        then begin
+            Create a new node R containing N, K′, N′ /* N and N′ are pointers */
+            Make R the root of the tree
+            return
+        end
+    Let P = parent (N)
+    if (P has less than n pointers)
+        then insert (K′, N′) in P just after N
+        else begin /* Split P */
+            Copy P to a block of memory T that can hold P and (K′, N′)
+            Insert (K′, N′) into T just after N
+            Erase all entries from P; Create node P′
+            Copy T.P1 …T.P⌈(n+1)∕2⌉ into P
+            Let K′′ = T.K⌈(n+1)∕2⌉
+            Copy T.P⌈(n+1)∕2⌉+1 …T.Pn+1 into P′
+            insert in parent(P, K′′, P′)
+        end
+````
+
+- _insert_in_leaf_
+    - _L_ : leaf node, _K_ : search key, _P_ : pointer
+    - _parent(N)_ : node _N_ 의 parent node를 찾음
+- _insert_in_parent_
+    - _N_ : _N_, _N′_ 를 포함하는 node, _K′_ : _N′_ 의 search key, _N′_ : 새로운 right hand side node
+- _T_ : 임시 메모리 영역
+    - splitㄷ= 된 node를 저장하기 위함
 
 #### 3.3.2 Deletion
 
