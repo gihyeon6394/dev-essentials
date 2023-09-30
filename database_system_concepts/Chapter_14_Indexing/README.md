@@ -558,6 +558,17 @@ procedure delete entry(node N, value K, pointer P)
 
 ### 3.4 Complexity of B+-Tree Updates
 
+- log<sub>(n/2)</sub>(N) : _n_ 은 node의 최대 pointer 수, _N_ 은 indexing 된 record 수
+- deletion procedure 최악 복잡도 log<sub>(n/2)</sub>(N) (unique search key)
+- 성능이 treee 높이에 비례
+- 실제로는 최악보다 성능이 좋은 I/O Operation을 보임
+    - 매우 큰 relation이어도, 대부분의 nonleaf node가 메모리 버퍼에 있을 가능성이 높음
+    - 따라서, 일반적인 조회는 1~2 개의 I/O Operation으로 수행됨
+    - update의 경우 split 발생 확률이 적음, 평균적으로 1개의 I/O Operation으로 수행됨
+- underfull
+    - node가 기본적으로 반 이상 차있는 것을 보장
+    - 대부분의 node가 2/3 이상 차있음
+
 ### 3.5 Nonunique Search Keys
 
 ## 4. B+ Tree Index Extensions
