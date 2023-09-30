@@ -571,6 +571,28 @@ procedure delete entry(node N, value K, pointer P)
 
 ### 3.5 Nonunique Search Keys
 
+- unique하지 않은 attribute에 대해서 unique attribute를 붙여서 composite search key를 만듦
+    - **uniquifier attribute** :  record-id, primary key, unique 속성을 가진 필드 사용
+
+#### B+ tree에서 중복 search-key를 그대로 사용하는 방법
+
+- search key를 각각 tree에 한번만 저장, pointer bucket(or list)을 유지
+    - 공간 효율 : search key를 한번만 저장
+    - 구현 복잡 : 동적인 bucket size를 유지하기 위한 구현 코드 필요
+    - 공간 차지
+        - bucket이 leaf node에 위치할 경우, leaf node보다 bucket size가 더 커질 수 있음
+        - bucket이 별도 block에 있을 경우, I/O operation 필요 (fetch)
+- record마다 search key를 저장
+    - insert 작업 시에, leaf node가 차면 split 가능
+    - split handling 필요, 구현 복잡
+    - 공간 차지 : search key를 record마다 저장해야함
+- 단점
+    - unique search key에 비해 deletion 성능이 떨어짐 (lookup, insertion 복잡도는 같음)
+    - 특정 search-key value가 여러번 중복이고, 그 중 한 record를 삭제해야할 때
+    - unique search key는 nonunique 보다 효율적
+        - composite search key를 사용, root node에서 한번의 lookup으로 leaf node 찾음
+    - deletion 성능 때문에 대부분의 DB는 자동으로 attribute를 추가해 unique search key를 만듦
+
 ## 4. B+ Tree Index Extensions
 
 ## 5. Hash Indices
