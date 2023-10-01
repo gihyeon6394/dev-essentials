@@ -223,12 +223,12 @@
 
 ## 3. B+ Tree Index Files
 
-- Ordered idnex는 file이 커지면 성능이 저하됨
-    - 순차적으로 scan하기 때문
-    - file 재구성으로 해결할 수 있지만, 재구성 빈도가 많아지면 별로임
-- **B+-tree** index는 가장 널리 사용되는 삽입/삭제에도 효율성을 유지하는 인덱스 구조
+- Ordered idnex는 file이 커지면 성능 저하
+    - 순차적으로 scan
+    - file 재구성으로 해결할 수 있지만, 재구성 빈도가 많아지면 전체 성능 저하
+- **B+-tree** index는 삽입/삭제에도 효율성을 유지하는 가장 널리 사용되는 인덱스
 - **balanced tree** (이진트리)
-    - root에서 leaf로 가는 모든 경로의 길이가 같음
+    - root에서 leaf node로 가는 모든 경로의 길이가 같음
     - lookup, insertion, deletion 성능 보장
 - File 수정 시 성능/공간 overhead가 존재하지만, file 재구성 비용을 피할 수 있어 효율적
 
@@ -238,9 +238,11 @@
 
 - multilevel index
 - 중복 search-key 없음
+- _n_ = node의 최대 pointer 수
 - n-1 search key : _K<sub>1</sub>, K<sub>2</sub>, ..., K<sub>n-1</sub>_
     - search-key는 정렬되어있음, _K<sub>i</sub> < K<sub>i+1</sub>,_  _(i < j)_
 - n pointer : _P<sub>1</sub>, P<sub>2</sub>, ..., P<sub>n</sub>_
+    - 다음 search key node의 pointer
 
 <img src="img_10.png"  width="80%"/>
 
@@ -269,13 +271,12 @@
 
 - 일반적으로 serach key는 중복 가능
     - 방법 1 : leaf node의 search key에 대해 중복 허용
-        - insertion, deletion overhead가 증가 (트리 수정 필요)
+        - insertion, deletion overhead 증가 (트리 수정 필요)
     - 방법 2 : leaf node의 pointer가 record가 아닌 record list를 가리킴
-        - pointer list가 크면, access time이 증가
-- 대부분의 Database 구현 방식
-    - search key attribute _a<sub>i</sub>_ 이 relation _r_ 에 대해 nonunique할 때,
-    - _A<sub>p</sub>_ 는 _r_ 의 primary key
-    - unique composite search key (_a<sub>i</sub>_, _A<sub>p</sub>_)를 사용
+        - pointer list가 크면, access time 증가
+- 대부분의 Database 구현 방식은?
+    - search key attribute _a<sub>i</sub>_ 이 relation _r_ 에 대해 nonunique할 때, (_A<sub>p</sub>_ 는 _r_ 의 primary key)
+    - unique composite search key (_a<sub>i</sub>_, _A<sub>p</sub>_) 구성
     - e.g. user relation의 _name_ 필드 대신, (_name_, _user_id_)를 사용 (user_id는 primary key)
     - 명시적이지 않아도, 대부분의 DB는 내부적으로 추가 attribute를 사용해서 중복을 피함
 
@@ -313,7 +314,7 @@ if for some i, Ki = v
 
 ##### range queries
 
-- _salary_ 속성이 [50000, 100000] 범위에 있는 record를 찾는 경우
+- _salary_ 속성이 _[50000, 100000]_ 범위에 있는 record를 찾는 경우
 - _find(lb, ub)_
 
 ````
@@ -393,7 +394,7 @@ function findRange(lb, ub)
 
 ### 3.3 Updates on B+-Trees
 
-- update = delete + insert (동시에 수행)
+- update = delete & insert
 - update 시 delete, insert를 수행하므로, delete, isnert만 고민
 - **split** : insertion 결과가 node 최대 크기를 넘어서면 split
 - **coalesce** : node가 너무 작을 때
