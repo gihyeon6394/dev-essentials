@@ -46,6 +46,16 @@
 
 ## 2. Secondary Indices and Record Relocation
 
+- leaf node의 분할은 수십~수백개의 I/O operation 발생 가능
+- split 후 레코드를 가리키는 보조 index (= leaf node) 들이 update 되어야함
+    - record의 value 변경이 아닌, record의 위치 변경으로 인해
+- 해결 방법
+    - 보조 index 에 pointer 대신, primary index search key value를 저장
+        - e.g. _dept_name_ 보조 index에 _ID_ 의 key value 목록을 저장
+    - split으로 인한 relocation 필요 없음 (pointer가 아니기 때문)
+    - access 비용이 높아짐
+        - 보조 index -> primary index -> record (primary index를 거쳐야함)
+
 ## 3. Indexing Strings
 
 ## 4. Bulk Loading of B+-Trees Indices
