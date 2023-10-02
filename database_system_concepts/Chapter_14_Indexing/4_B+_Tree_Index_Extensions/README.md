@@ -58,6 +58,15 @@
 
 ## 3. Indexing Strings
 
+- 문자열 attribute에 B+-tree index 문제점
+    - 크기 가변
+    - 길이가 크면, 적은 fanout, 높은 height을 초래
+- node마다 fanout이 다를 수 있음
+- fanout을 증가시키는 방법 : prefix compression
+    - 전체 serach key value를 저장하지 않고, prefix만 저장
+    - prefix만으로 key value를 구분할 수 있어야함
+    - e.g. _student_name_ 의 경우, "Minzi" 대신 "Minz" 저장, "Karina" 대신 "Kari" 저장
+
 ## 4. Bulk Loading of B+-Trees Indices
 
 ## 5. B-Tree Index Files
