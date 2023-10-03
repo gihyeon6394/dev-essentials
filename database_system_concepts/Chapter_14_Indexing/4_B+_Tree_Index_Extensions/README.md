@@ -98,6 +98,53 @@
 
 ## 5. B-Tree Index Files
 
+<img src="img_1.png"  width="80%"/>
+
+<img src="img_11.png"  width="80%"/>
+
+|                        |               B+-tree               |                            B-tree                            |
+|:----------------------:|:-----------------------------------:|:------------------------------------------------------------:|
+| search key value 저장 위치 |      leaf node, unleaf node 중복      |                       전체 tree에 걸쳐 한번만                        |
+|     전체 tree node 수     |              상대적으로 많음               |                           상대적으로 적음                           |
+|         access         |          root -> leaf node          | 특정 Serach key value에 한해서만 성능이 우수<br/> leaf node에 도달 전 완료가 가능 |
+|  deletion, insertion   | 상대적으로 간단       <br/>leaf node에서만 삭제 |                           상대적으로 복잡                           |
+|       insertion        |              상대적으로 간단               |                           상대적으로 복잡                           |
+|         실제 구현          |  대부분의 DBMS에서 B-tree는 이 B+-tree를 의미  |                           거의 사용 안함                           |
+
+- B+-tree index의 변형
+- search key가 unique라면, 전체 tree에 걸쳐 한번만 저장
+- search key의 pointer를 강제로 가져야함
+    - pointer는 실제 record나 search key와 관련된 bucket을 가리킴
+- 많은 DB에서 B-tree는 B+-tree를 의미
+    - 정의는 서로 다르나, 실제 DB 구현에서는 B-tree는 B+-tree를 의미 (동의어)
+
+### tree 구조
+
+<img src="img_2.png"  width="70%"/>
+
+- leaf node는 B+-tree와 동일
+    - _n -1_ 개의 serach key value
+- unleaf node
+    - _P<sub>i</sub>_ : B+-tree의 _i_ 번째 leaf node를 가리키는 pointer
+    - _B<sub>i</sub>_ : bucket, file-record pointer
+    - _m -1_ 개의 serach key value
+
+### access
+
+- access 성능은 탐색하려는 search key value의 위치에 따라 달라짐
+- leaf node 도달하지 않아도 완료 가능
+- 특정 Serach key value에 한해서만 성능이 우수
+    - 나머지는 B+-tree보다 느림
+
+### deletion, insertion
+
+- Deletion : B+-tree보다 복잡
+    - B+-tree는 leaf node에서만 Deletion이 일어남
+    - subtree로 부터 대체할 적절한 entry를 찾아야함
+        - _K<sub>i</sub>_ 가 삭제되면, _P<sub>i+1</sub>_ 의 subtree에서 가장 작은 serach key value를 찾아 _K<sub>i</sub>_ 로 대체
+        - leaf node에 underfull 발생 시 추가 조치 필요
+- Insertion : B+-tree보다 복잡
+
 ## 6. Indexing on Flash Storage
 
 ## 7. Indexing in Main Memory
