@@ -69,6 +69,33 @@
 
 ## 4. Bulk Loading of B+-Trees Indices
 
+- main memory보다 큰 relation에 대한 index, nonclustered index
+- leaf node는 db buffer에 없을 가능성이 큼
+    - insertion 작업마다 block을 disk에서 읽어와야함
+    - e.g. 1억개 record를 가지고, I/O 작업이 10ms 걸릴 떄, index 생성 시 최소 100만초 소요
+- **bulk loading** of index : index에 대량의 entry를 한번에 insertion
+
+### bulk loading을 효과적으로 하는 방법
+
+1. 임시 파일 생성 : relation의 index entry 포함
+2. search key 기준으로 sorting
+    - sorting하는 이유
+        - insertion 시, leaf node에 sequential하게 insert 가능
+        - 각 leaf node 마다 1번의 I/O operation만 필요
+        - e.g. index build 시 1,000,00 secs -> 1,000 secs 로 줄일 수 있음
+3. 임시 파일을 읽어 index에 entry insertion
+
+### bottom-up B+-tree construction : leaf level에서 부터 index를 생성
+
+- 비어있는 B+-tree에 insertion 작업에 효과적
+- 임시 파일을 읽어, 정렬한 뒤 block 사이즈에 맞게 block에 저장
+
+### 실제 DBMS에서의 bulk loading
+
+- bottom-up 구조, entry 정렬을 위한 기술이 구현되어 있음
+- 몇 DB는 큰 숫자의 tuple이 insertion 될 때,
+    - realtion의 index를 drop 하고, insert 뒤 다시 생성
+
 ## 5. B-Tree Index Files
 
 ## 6. Indexing on Flash Storage
