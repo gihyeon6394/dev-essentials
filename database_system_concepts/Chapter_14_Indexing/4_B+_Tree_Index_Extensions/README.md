@@ -82,7 +82,7 @@
     - sorting하는 이유
         - insertion 시, leaf node에 sequential하게 insert 가능
         - 각 leaf node 마다 1번의 I/O operation만 필요
-        - e.g. index build 시 1,000,00 secs -> 1,000 secs 로 줄일 수 있음
+        - e.g. index build 시 1,000,00 sec -> 1,000 sec 로 줄일 수 있음
 3. 임시 파일을 읽어 index에 entry insertion
 
 ### bottom-up B+-tree construction : leaf level에서 부터 index를 생성
@@ -146,5 +146,32 @@
 - Insertion : B+-tree보다 복잡
 
 ## 6. Indexing on Flash Storage
+
+- flash storage (e.g. SSD) 비용이 저렴해지고 있음
+- 표준 B+-tree는 SSD에도 적용 가능 (magnetic disk보다 성능 우수)
+
+### lookup
+
+- SSD는 더 빠른 random I/O operation 제공
+    - SSD는 page 구조
+    - 20 ~ 100 μs 의 random pate read (magnetic disk는 5 ~ 10 ms)
+
+### write
+
+- magnetic disk 보다 복잡
+- 모든 update에 전체 flash-storage page의 copy + write가 필요
+    - 20 ~ 100 ms
+
+### 최적화
+
+- node size 는 magnetic disk 보다 작아야함
+    - flash page 가 disk block보다 작기 떄문
+- bulk loading 은 효율적
+- bottom-up B+-tree construction 은 효율적
+    - page wirte 수를 줄임
+- page rewrite 수를 줄이는 방법
+    - 방법 1 : buffer를 추가하여 update 시 buffer에 기록 후 lazy하게 write
+        - 다른 update 작업들과 함께 반영되어 전체 page rewirte 수를 줄임
+    - 방법 2 : tree를 여러개 생성, merge
 
 ## 7. Indexing in Main Memory
