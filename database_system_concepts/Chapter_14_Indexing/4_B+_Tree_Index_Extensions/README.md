@@ -175,3 +175,26 @@
     - 방법 2 : tree를 여러개 생성, merge
 
 ## 7. Indexing in Main Memory
+
+- main memory 는 더 커지고 비용이 저렴해짐
+- B+-tree를 in-memory data로 구현 가능
+
+### 최적화
+
+- 공간 효율을 높여야함
+- 상대적으로 height이 높을 수 있음 (disk 기반 B+-tree에 비해)
+
+### cache memory
+
+- _cache-line_ 을 통해 cache memory에서 main memory로 전송 (일반적으로 64 bytes)
+- CPU에 cache 되어있다면 1 ~ 2 ns 소요
+- caching 안되어있으면 50 ~ 100 ns 소요 (cache miss)
+- _cache-line_ 에 딱 맞는 node를 제공하면 성능 우수
+    - node가 크면, lookup 시 여러 _cache-line_ 에 걸쳐 이진 탐색 수행, cache miss 발생 가능성 높음
+
+### in-memory지만, 메모리보다 큰 데이터
+
+- 큰 node 는 disk-based access
+- node 내부 데이터를 하나의 큰 key 배열로 다루지 않고,
+    - 작은 node로 구조화 (node 데이터 크기를 _cache-line_ 에 맞춤)
+- node 내 데이터를 선형, 이진 탐색하지 않고, 최소한의 cache miss들을 감수하며 tree를 탐색 
