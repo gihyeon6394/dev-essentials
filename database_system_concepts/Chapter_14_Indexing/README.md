@@ -16,7 +16,7 @@
 3. [B+ Tree Index Files](3_B+_Tree_Index_Files/README.md)
 4. [B+ Tree Index Extensions](4_B+_Tree_Index_Extensions/README.md)
 5. [Hash Indices](5_Hash_Indices/README.md)
-6. Multiple-Key Access
+6. [Multiple-Key Access](6_Multiple-Key_Access/README.md)
 7. Creation of Indices
 8. Write-Optimized Index Structures
 9. Bitmap Indices
