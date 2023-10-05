@@ -22,8 +22,8 @@ where group_name = 'AESPA'
 
 ### 전략
 
-- 전략 1 : _group_name_ index를 사용하여 _AESPA_인 tuple을 찾고, _age_를 검사
-- 전략 2 : _age_ index를 사용하여 _23_인 tuple을 찾고, _group_name_을 검사
+- 전략 1 : _group_name_ index를 사용하여 _AESPA_ 인 tuple을 찾고, _age_ 를 검사
+- 전략 2 : _age_ index를 사용하여 _23_ 인 tuple을 찾고, _group_name_ 을 검사
 - 전략 3 : bitmap index 에서 효율적
     - _group_name_ index를 사용하여 _AESPA_ 인 record의 _pointer_ 찾음
     - _age_ index를 사용하여 _23_ 인 record의 _pointer_ 찾음
@@ -33,7 +33,7 @@ where group_name = 'AESPA'
 
 - _AESPA_ record 비율이 많음
 - _23_ record 비율이 많음
-- _AESPA_와 _23_ record의 교집합이 적음
+- _AESPA_ 와 _23_ record의 교집합이 적음
 - 위 세가지를 모두 만족하면, 많은 수의 pointer를 탐색하여 아주 적은 수의 record를 도출하게됨
 
 ## 2. Indices on Multiple Keys
