@@ -110,3 +110,16 @@
     - e.g. 1시간에 1번, CPU 활용도가 40% 이하일 때마다
 - deadlock을 일으킨 thread 특정 불가
 
+---
+
+## Managing Deadlock in Databases
+
+- DB는 open source, 상업 software가 deadlock을 다루는 방법에 좋은 교본
+- **_transaction_** : database의 udpate 작업
+    - 데이터 통합 (integrity)를 위해 lock 사용
+- 여러 동시성 transaction이 활동하면 deadlock 발생 가능
+- DB system은 deadlock을 감지, 복구 매커니즘을 가짐
+    - 감지 : server가 주기적으로 wait-for graph를 탐색
+    - 복구 : 희생할 transaction을 선정, 작업 취소 & rollback
+        - 해당 transaction은 lock을 해제하고, 다른 transaction은 deadlock으로부터 자동 복구
+    - e.g. MySQL은가장 작은 Row를 대상으로 DML을 일으킨 Transaction을 희생자로 선정
