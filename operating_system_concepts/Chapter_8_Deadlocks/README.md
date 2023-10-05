@@ -25,4 +25,4 @@
 6. [Deadlock Avoidance](6_Deadlock_Avoidance/README.md)
 7. [Deadlock Detection](7_Deadlock_Detection/README.md)
 8. [Recovery from Deadlock](8_Recovery_from_Deadlock/README.md)
-9. Summary
+9. [Summary](9_Summary/README.md)
