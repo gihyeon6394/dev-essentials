@@ -14,7 +14,7 @@
     - [Chapter 7 Synchronization Examples](Chapter_7_Synchronization_Examples/README.md)
     - [Chapter 8 Deadlocks](Chapter_8_Deadlocks/README.md)
 4. PART FOUR MEMORY MANAGEMENT
-    - Chapter 9 Main Memory
+    - [Chapter 9 Main Memory](Chapter_9_Main_Memory/README.md)
     - Chapter 10 Virtual Memory
 5. PART FIVE STORAGE MANAGEMENT
     - Chapter 11 Mass-Storage Structure
