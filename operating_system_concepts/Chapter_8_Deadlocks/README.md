@@ -23,6 +23,6 @@
 4. [Methods for Handling Deadlocks](4_Methods_for_Handling_Deadlocks/README.md)
 5. [Deadlock Prevention](5_Deadlock_Prevention/README.md)
 6. [Deadlock Avoidance](6_Deadlock_Avoidance/README.md)
-7. Deadlock Detection
+7. [Deadlock Detection](7_Deadlock_Detection/README.md)
 8. Recovery from Deadlock
 9. Summary
