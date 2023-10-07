@@ -77,6 +77,28 @@
 
 ## 2. Address Binding
 
+1. 실행 파일로 disk에 높인 프로그램을 실행하기 위해
+    - 프로그램을 memory로 가져와 load해야함
+2. process가 실행되면, memory의 명령어, 데이터에 접근
+3. process가 종료되면, 다른 process가 memory를 가져감
+
+### 명령어, data를 memory에 binding 하는 방법
+
+<img src="img_2.png"  width="60%"/>
+
+- Compile time : compile time에 process가 memory에 놓일 위치를 알 수 있으면,
+    - **absolute code** : memory의 특정 위치에 위치하는 코드
+    - e.g. user process가 location _R_에 놓일 것이라면,
+        - compile time에 _R_에 접근하는 코드 생성
+        - 나중에 _R_이 변경되면, 코드 재compile 필요
+- Load time : compile time에 process가 memory에 놓일 위치를 알 수 없으면,
+    - **relocatable code** : process가 memory에 놓일 위치를 알 수 없는 코드
+    - relocatable code 생성
+    - starting address가 변경되면, code를 reload 필요
+- Execution time : 실행 중에 memory의 다른 segment로 이동하는 process
+    - binding이 runtime까지 미루어짐
+    - 대부분의 OS는 이 방법을 사용
+
 ## 3. Logical vs Physical Address Space
 
 ## 4. Dynamic Loading
