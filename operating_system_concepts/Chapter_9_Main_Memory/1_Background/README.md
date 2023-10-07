@@ -133,4 +133,24 @@
 
 ## 4. Dynamic Loading
 
+- data의 크기가 memory 사이즈보다 크면, 프로그램을 실행할 수 없음
+- **Dynamic Loading** : 루틴을 호출하기 전까지 메모리에 load하지 않음
+    - memory 효율 올림
+- user가 dydnamic loading을 사용할 수있도록 program 개발
+    - program 에서 OS가 제공하는 라이브러리 루틴 호출
+
+### 동작
+
+1. 모든 루틴은 relocatable load 형태로 disk에 저장
+2. main program을 memory에 load, 실행
+3. 루틴이 필요해지면 memory에 루틴이 load 되었는지 확인
+    - load 되지 않았다면, relocatable linking loader를 호출
+    - 루틴을 memory에 load, program address table 업데이트
+
+### 이점
+
+- 루틴이 필요할 때만 loadl
+- 대량의 code가 특정 조건에만 필요한 경우 유용
+    - e.g. error 루틴
+
 ## 5. Dynamic Linking and Shared Libraries
