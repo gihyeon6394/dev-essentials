@@ -17,7 +17,7 @@
 ---
 
 1. [Background](1_Background/README.md)
-2. Contiguous Memory Allocation
+2. [Contiguous Memory Allocation](2_Contiguous_Memory_Allocation/README.md)
 3. Paging
 4. Structure of the Page Table
 5. Swapping
