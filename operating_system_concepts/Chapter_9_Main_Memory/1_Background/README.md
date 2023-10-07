@@ -101,6 +101,36 @@
 
 ## 3. Logical vs Physical Address Space
 
+- **logical address** (virtual address) : CPU가 참조하는 주소
+- **physical address** : memory에 실제로 존재하는 주소
+    - memory가 참조하는 주소
+- compile-time, load-time 바인딩은 logical address와 physical address가 같음
+- execution-time 바인딩은 logical address와 physical address가 다름
+    - logical address를 가상 주소로서 사용
+    - **logical address space** : program이 생산한 logical address 집합
+    - **physical address space** : logical address space의 각 주소가 memory에 mapping되는 physical address 집합ㅣ
+
+### memory-management unit (MMU)
+
+<img src="img_3.png"  width="70%"/>
+
+<img src="img_4.png"  width="70%"/>
+
+- logical address <-> physical address 매핑하는 하드웨어 장치 (device)
+- 매핑하는 방식은 여러가지
+- 가장 간단한 방법 : base register (relocation register) 사용
+    - logical address _x_ 를 physical address _y_ 로 변환
+    - _y_ = _x_ + base register
+    - e.g. base register = 300040, logical address = 120900
+        - physical address = 300040 + 120900 = 421940
+
+#### user program은 logical address만 사용
+
+- program은 120900 주소에 접근할 pointer 생성, 120900에만 접근 가능
+- pointer가 사용될 때 logical address를 physical address로 변환
+- base value _R_ 에 대해서 user process는 logical address _0 ~ max_ 에만 접근
+    - 실제 physical address _0+R ~ max+R_ 에 접근
+
 ## 4. Dynamic Loading
 
 ## 5. Dynamic Linking and Shared Libraries
