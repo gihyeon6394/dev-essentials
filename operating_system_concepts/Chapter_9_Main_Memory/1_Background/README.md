@@ -154,3 +154,36 @@
     - e.g. error 루틴
 
 ## 5. Dynamic Linking and Shared Libraries
+
+### Dynamically linked libraries (DLLs)
+
+<img src="img_2.png"  width="60%"/>
+
+- system libraries
+- program 실행 시 user program에 linking
+- dynamic loading과 비슷
+    - linking을 execution time에 수행
+    - e.g. C 표준 system library
+
+#### static linking
+
+- system libraries가 lodader에 의해 binary program image에 linking
+- program 실행 시 system libraries가 program image에 포함
+- system library를 다른 object module처럼 취급
+
+### 이점
+
+- dynamic linking이 없으면 executable image에 language library 복사본이 포함되어야함
+    - executable image가 커짐
+    - main memory 사용량 증가
+- library를 다른 process들과 공유 가능
+    - main meomory에 DDL의 한 instance만 있으면 됨
+    - DDL은 **shared library**라고도 불림
+
+### DDL 확장 : library udpate 시 (e.g. bug fix)
+
+- DDL을 참조하는 모든 프로그램이 새로운 버전을 참조하게됨
+    - DDL이 아니라면, 다시 linking하는 작업이 필요
+- 자동으로 참조하여 버전호환이 안되는 경우를 방지
+    - 프로그램, library 양쪽에 version number를 지정
+    - 새로운 version number를 지정하여 compile한 프로그램은 새로운 version의 library를 참조
