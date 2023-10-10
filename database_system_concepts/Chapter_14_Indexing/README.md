@@ -18,7 +18,7 @@
 5. [Hash Indices](5_Hash_Indices/README.md)
 6. [Multiple-Key Access](6_Multiple-Key_Access/README.md)
 7. [Creation of Indices](7_Creation_of_Indices/README.md)
-8. Write-Optimized Index Structures
+8. [Write-Optimized Index Structures](8_Write-Optimized_Index_Structures/README.md)
 9. Bitmap Indices
 10. Indexing of Spatial and Temporal Data
 11. Summary
