@@ -1,6 +1,6 @@
-# 3. B+ Tree Index Files
+# 3. B+-Tree Index Files
 
-1. Structure of B+ Tree
+1. Structure of B+-Tree
 2. Queries on B+-Trees
 3. Updates on B+-Trees
 4. Complexity of B+-Tree Updates
@@ -9,7 +9,7 @@
 - Ordered idnex는 file이 커지면 성능 저하
     - 순차적으로 scan
     - file 재구성으로 해결할 수 있지만, 재구성 빈도가 많아지면 전체 성능 저하
-- **B+-tree** index는 삽입/삭제에도 효율성을 유지하는 가장 널리 사용되는 인덱스
+- **B+-Tree** index는 삽입/삭제에도 효율성을 유지하는 가장 널리 사용되는 인덱스
 - **balanced tree** (이진트리)
     - root에서 leaf node로 가는 모든 경로의 길이가 같음
     - lookup, insertion, deletion 성능 보장
@@ -17,7 +17,7 @@
 
 ---
 
-## 1 Structure of B+ Tree
+## 1 Structure of B+-Tree
 
 <img src="img_9.png"  width="60%"/>
 
@@ -47,7 +47,7 @@
 
 <img src="img_11.png"  width="80%"/>
 
-- _n=4_ 인 B+ tree
+- _n=4_ 인 B+-Tree
     - _n_ : leaf node의 pointer 수
 
 <img src="img_12.png"  width="80%"/>
@@ -154,7 +154,7 @@ function findRange(lb, ub)
 
 ### in-memory tree (e.g. binary search tree)와 다른점
 
-|                               | B+ tree                                     | in-memory tree (e.g. binary search tree)                    |
+|                               | B+-Tree                                     | in-memory tree (e.g. binary search tree)                    |
 |-------------------------------|---------------------------------------------|-------------------------------------------------------------|
 | node 크기                       | disk block 정도의 사이즈, 많은 pointer              | 사이즈가 작고, 최대 2개의 pointer                                     |
 | tree 높이                       | 폭이 크고 height 작음                             | 폭이 작고 height 큼                                              |
@@ -360,7 +360,7 @@ procedure delete entry(node N, value K, pointer P)
 - unique하지 않은 attribute에 대해서 unique attribute를 붙여서 composite search key를 만듦
     - **uniquifier attribute** :  record-id, primary key, unique 속성을 가진 필드 사용
 
-### B+ tree에서 중복 search-key를 그대로 사용하는 방법
+### B+-Tree에서 중복 search-key를 그대로 사용하는 방법
 
 - search key를 각각 tree에 한번만 저장, pointer bucket(or list)을 유지
     - 공간 효율 : search key를 한번만 저장

@@ -39,7 +39,7 @@ where group_name = 'AESPA'
 ## 2. Indices on Multiple Keys
 
 - composite search key index 생성 (_group_name_, _age_)
-- ordered B+-tree index 사용
+- ordered B+-Tree index 사용
 - range query 가능
 - 하나의 attribute로 조회 가능 (e.g. _group_name_)
 

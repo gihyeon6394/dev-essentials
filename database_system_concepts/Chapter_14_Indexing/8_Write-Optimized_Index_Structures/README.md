@@ -5,9 +5,9 @@
 
 ---
 
-### 거대한 B+ Tree의 쓰기 성능은 떨어짐
+### 거대한 B+-Tree의 쓰기 성능은 떨어짐
 
-- B+ Tree는 read-optimized index structure
+- B+-Tree는 read-optimized index structure
     - random wirte 성능 떨어짐
 - leaf level의 저장 공간이 클 때, index 순서와 무관한 쓰기가 일어나면,
     - 각 write/insert 마다 다른 leaf node에 접근
@@ -21,14 +21,14 @@
 
 <img src="img.png"  width="50%"/>
 
-- 하나의 LSM Tree는 몇개의 B+ Tree로 구성
-- _L<sub>0</sub>_ : in-memory B+ Tree (시작점)
-- _L<sub>1<sub>, L<sub>2</sub>, ..., L<sub>k</sub>_ : on-disk B+ Tree
+- 하나의 LSM Tree는 _n_ 개의 B+-Tree로 구성
+- _L<sub>0</sub>_ : in-memory B+-Tree (시작점)
+- _L<sub>1</sub>, L<sub>2</sub>, ..., L<sub>k</sub>_ : on-disk B+-Tree
     - _k_ : LSM Tree의 레벨
 
 ### Insertion
 
-- insert 시 제일 먼저 in-memory B+ Tree에 insert
+- insert 시 제일 먼저 in-memory B+-Tree에 insert
 - in-memory treee가 차면 data를 disk tree로 이동
     - _L<sub>1</sub>_ 비었으면, _L<sub>1</sub>_ 초기화, 전체 _L<sub>0</sub>_ 복사
     - _L<sub>1</sub>_ 안비었으면, leaf level 탐색해서 맞는 부분에 merge
@@ -56,7 +56,7 @@
 
 - LSM Tree의 변형을 사용
 - 분산 파일 시스템에 구축 (기존 file을 수정하지 않고, append)
-- 외에도 ApAche AsterixDB, Apache Cassandra, MongoDB 등이 LSM Teee 지원
+- 외에도 Apache AsterixDB, Apache Cassandra, MongoDB 등이 LSM Teee 지원
     - 대부분 각 level마다 multiple tree를 가지는 식으로 구현
     - MySQL, SQLite4, LevelDB 도 지원
 
@@ -65,7 +65,7 @@
 - **deletion entry**를 insert함
     - deletion entry : 삭제될 index entry를 가리킴
 
-### lookup
+### Lookup
 
 - 모든 tree를 retrieve하고, 결과를 key 순서대로 merge
 
@@ -76,7 +76,7 @@
     - deletion entry와 매치되는 entry 모두 제거
     - 매치 기준 : deletion entry의 search key가 동일한 entry
 
-### update
+### Update
 
 - delete와 비슷하게 동작, update entry를 insert
 - lookup 시 entry 중 가장 최신 value를 가진 entry를 찾아서 반환
@@ -91,10 +91,10 @@
 
 ## 2. Buffer Tree
 
-<img src="img_1.png.png"  width="70%"/>
+<img src="img_1.png"  width="70%"/>
 
 - LSM 의 대안
-- B+-tree의 내부 node마다 buffer를 연결
+- B+-Tree의 내부 node마다 buffer를 연결
 
 ### Insertion
 
@@ -109,7 +109,7 @@
 
 ### Lookup
 
-- B+-tree의 lookup과 동일
+- B+-Tree의 lookup과 동일
 - record를 가진 leaf node를 search key 기준으로 탐색
 - 추가 작업
     - internal node 탐색 시에 search key와 매치되는 record가 있는지 검사
@@ -119,7 +119,7 @@
 
 - LSM tree와 비슷하나
     - deletion entry, update entry를 insert하는 대신
-    - 일반적인 B+-tree의 deletion, update를 수행
+    - 일반적인 B+-Tree의 deletion, update를 수행
 
 ### 이점, LSM tree와 비교
 

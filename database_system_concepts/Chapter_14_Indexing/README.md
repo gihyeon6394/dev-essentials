@@ -13,8 +13,8 @@
 
 1. [Basic Concepts](1_Basic_Concepts/README.md)
 2. [Ordered Indices](2_Ordered_Indices/README.md)
-3. [B+ Tree Index Files](3_B+_Tree_Index_Files/README.md)
-4. [B+ Tree Index Extensions](4_B+_Tree_Index_Extensions/README.md)
+3. [B+-Tree Index Files](3_B+_Tree_Index_Files/README.md)
+4. [B+-Tree Index Extensions](4_B+_Tree_Index_Extensions/README.md)
 5. [Hash Indices](5_Hash_Indices/README.md)
 6. [Multiple-Key Access](6_Multiple-Key_Access/README.md)
 7. [Creation of Indices](7_Creation_of_Indices/README.md)

@@ -1,4 +1,4 @@
-# 4. B+ Tree Index Extensions
+# 4. B+-Tree Index Extensions
 
 1. B+-Tree File Organization
 2. Secondary Indices and Record Relocation
@@ -15,14 +15,14 @@
 <img src="img.png"  width="80%"/>
 
 - index-sequentioal file의 degradation 문제 : file이 커지면, index의 크기가 커져, overflow block 발생
-- overflow block을 해결하기 위해, B+-tree를 사용
-- **B+-Tree File Organization** : B+-tree index 말고, 실제 file 구조도 B+-tree 구조로 구성 가능
+- overflow block을 해결하기 위해, B+-Tree를 사용
+- **B+-Tree File Organization** : B+-Tree index 말고, 실제 file 구조도 B+-Tree 구조로 구성 가능
     - leaf node에 실제 rocord 저장 (record pointer 저장 X)
     - half full
 
 ### insertion, deletion
 
-- B+-tree index와 동일
+- B+-Tree index와 동일
 - key value _v_ record insert 시
     - _v_ 보다 같거나 작은 key value를 가진 leaf node 중 가장 큰 node의 block에 insert
     - 공간이 충분하면 insert, 아니면 split
@@ -41,7 +41,7 @@
 ### 대용량 데이터 저장 e.g. clobk, blob
 
 - disk block보다 큰 데이터를 저장 가능 (거의 수 gigabyte)
-- 더 작은 reocrd로 순서대로 쪼개어 B+-tree에 저장
+- 더 작은 reocrd로 순서대로 쪼개어 B+-Tree에 저장
 - record number : 쪼개진 reocord에 순서대로 체번, key로 활용
 
 ## 2. Secondary Indices and Record Relocation
@@ -58,7 +58,7 @@
 
 ## 3. Indexing Strings
 
-- 문자열 attribute에 B+-tree index 문제점
+- 문자열 attribute에 B+-Tree index 문제점
     - 크기 가변
     - 길이가 크면, 적은 fanout, 높은 height을 초래
 - node마다 fanout이 다를 수 있음
@@ -85,9 +85,9 @@
         - e.g. index build 시 1,000,00 sec -> 1,000 sec 로 줄일 수 있음
 3. 임시 파일을 읽어 index에 entry insertion
 
-### bottom-up B+-tree construction : leaf level에서 부터 index를 생성
+### bottom-up B+-Tree construction : leaf level에서 부터 index를 생성
 
-- 비어있는 B+-tree에 insertion 작업에 효과적
+- 비어있는 B+-Tree에 insertion 작업에 효과적
 - 임시 파일을 읽어, 정렬한 뒤 block 사이즈에 맞게 block에 저장
 
 ### 실제 DBMS에서의 bulk loading
@@ -102,30 +102,30 @@
 
 <img src="img_11.png"  width="80%"/>
 
-|                        |               B+-tree               |                            B-tree                            |
+|                        |               B+-Tree               |                            B-tree                            |
 |:----------------------:|:-----------------------------------:|:------------------------------------------------------------:|
 | search key value 저장 위치 |      leaf node, unleaf node 중복      |                       전체 tree에 걸쳐 한번만                        |
 |     전체 tree node 수     |              상대적으로 많음               |                           상대적으로 적음                           |
 |         access         |          root -> leaf node          | 특정 Serach key value에 한해서만 성능이 우수<br/> leaf node에 도달 전 완료가 가능 |
 |  deletion, insertion   | 상대적으로 간단       <br/>leaf node에서만 삭제 |                           상대적으로 복잡                           |
 |       insertion        |              상대적으로 간단               |                           상대적으로 복잡                           |
-|         실제 구현          |  대부분의 DBMS에서 B-tree는 이 B+-tree를 의미  |                           거의 사용 안함                           |
+|         실제 구현          |  대부분의 DBMS에서 B-tree는 이 B+-Tree를 의미  |                           거의 사용 안함                           |
 
-- B+-tree index의 변형
+- B+-Tree index의 변형
 - search key가 unique라면, 전체 tree에 걸쳐 한번만 저장
 - search key의 pointer를 강제로 가져야함
     - pointer는 실제 record나 search key와 관련된 bucket을 가리킴
-- 많은 DB에서 B-tree는 B+-tree를 의미
-    - 정의는 서로 다르나, 실제 DB 구현에서는 B-tree는 B+-tree를 의미 (동의어)
+- 많은 DB에서 B-tree는 B+-Tree를 의미
+    - 정의는 서로 다르나, 실제 DB 구현에서는 B-tree는 B+-Tree를 의미 (동의어)
 
 ### tree 구조
 
 <img src="img_2.png"  width="70%"/>
 
-- leaf node는 B+-tree와 동일
+- leaf node는 B+-Tree와 동일
     - _n -1_ 개의 serach key value
 - unleaf node
-    - _P<sub>i</sub>_ : B+-tree의 _i_ 번째 leaf node를 가리키는 pointer
+    - _P<sub>i</sub>_ : B+-Tree의 _i_ 번째 leaf node를 가리키는 pointer
     - _B<sub>i</sub>_ : bucket, file-record pointer
     - _m -1_ 개의 serach key value
 
@@ -134,21 +134,21 @@
 - access 성능은 탐색하려는 search key value의 위치에 따라 달라짐
 - leaf node 도달하지 않아도 완료 가능
 - 특정 Serach key value에 한해서만 성능이 우수
-    - 나머지는 B+-tree보다 느림
+    - 나머지는 B+-Tree보다 느림
 
 ### deletion, insertion
 
-- Deletion : B+-tree보다 복잡
-    - B+-tree는 leaf node에서만 Deletion이 일어남
+- Deletion : B+-Tree보다 복잡
+    - B+-Tree는 leaf node에서만 Deletion이 일어남
     - subtree로 부터 대체할 적절한 entry를 찾아야함
         - _K<sub>i</sub>_ 가 삭제되면, _P<sub>i+1</sub>_ 의 subtree에서 가장 작은 serach key value를 찾아 _K<sub>i</sub>_ 로 대체
         - leaf node에 underfull 발생 시 추가 조치 필요
-- Insertion : B+-tree보다 복잡
+- Insertion : B+-Tree보다 복잡
 
 ## 6. Indexing on Flash Storage
 
 - flash storage (e.g. SSD) 비용이 저렴해지고 있음
-- 표준 B+-tree는 SSD에도 적용 가능 (magnetic disk보다 성능 우수)
+- 표준 B+-Tree는 SSD에도 적용 가능 (magnetic disk보다 성능 우수)
 
 ### lookup
 
@@ -167,7 +167,7 @@
 - node size 는 magnetic disk 보다 작아야함
     - flash page 가 disk block보다 작기 떄문
 - bulk loading 은 효율적
-- bottom-up B+-tree construction 은 효율적
+- bottom-up B+-Tree construction 은 효율적
     - page wirte 수를 줄임
 - page rewrite 수를 줄이는 방법
     - 방법 1 : buffer를 추가하여 update 시 buffer에 기록 후 lazy하게 write
@@ -177,12 +177,12 @@
 ## 7. Indexing in Main Memory
 
 - main memory 는 더 커지고 비용이 저렴해짐
-- B+-tree를 in-memory data로 구현 가능
+- B+-Tree를 in-memory data로 구현 가능
 
 ### 최적화
 
 - 공간 효율을 높여야함
-- 상대적으로 height이 높을 수 있음 (disk 기반 B+-tree에 비해)
+- 상대적으로 height이 높을 수 있음 (disk 기반 B+-Tree에 비해)
 
 ### cache memory
 
