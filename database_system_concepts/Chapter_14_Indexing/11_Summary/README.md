@@ -1,0 +1,37 @@
+# 11. Summary
+
+- 대부분의 query는 일부 record만 접근
+    - _index_ 를 구성하여 record에 접근하는 overhead를 줄일 수 있음
+- index의 2가지 유형 : dense index, sparse index
+    - dense index : 모든 search-key value에 대해 index entry를 생성
+    - sparse index : 일부 search-key value에 대해서만 index entry를 생성
+- _clustering index, non-clustering index (secondary index)_
+    - _clustering index_ : search key의 정렬이 realtion의 정렬과 같을 때
+        - e.g. relation _student_ 에서 _studentID_ 가 clustering index
+    - _non-clustering index_ : search key의 정렬이 relation의 정렬과 다를 때
+        - e.g. relation _student_ 에서 _name_ 이 non-clustering index
+- index-sequential file : serach-key 순서대로 file을 저장
+- index-sequential file의 단점 : file이 커질수록 index 성능 저하
+    - 극복방안 : B+-tree index
+- B+-Tree index
+    - _balanced_ tree : root-leaf node의 모든 경로의 길이가 같음
+    - 내부노드가 _N_ 개의 pointer 저장
+    - 높이는 _log<sub>N</sub>(R)_ 에 비례
+- B+-Tree의 lookup은 효율적
+    - Insertion, deletion은 복잡하지만 효율적
+    - _log<sub>N</sub>(R)_ (_N=내부노드의 pointer 수_)
+- B+-Tree구조로 파일을 저장할 수도 있음
+- B-Tree : B+-Tree와 비슷
+    - 이점 : search-key value의 중복 허용 안함
+    - 단점 : 전체 복잡성이 높아지고, fanout 감소
+    - 실무에선 B+-Tree가 더 많이 사용됨
+- Hashing : main memory에 index를 설계할 때 쓰이는 방법
+- single attribute로 `=` select 시 B+-Tree 효율적
+    - multiple attribute select 시 여러 index의 논리곱 연산 필요
+- B+-Tree의 기본구조는 큰 수의 random wirte/insert 에 적합하지 않음
+    - 대안 : LSM tree, buffer tree
+- Bitmap index : 고유값의 수가 적을 때 유용
+    - bitmap 간의 논리곱 연산이 빨라 multiple attribute select에 유용
+- R-tree : 다차원을 위한 B-Tree의 확장
+    - 변형 :  R+-tree, R*-tree
+- 시계열 데이터 : spatial index, interval B+-tree specialized index
