@@ -20,5 +20,5 @@
 7. [Creation of Indices](7_Creation_of_Indices/README.md)
 8. [Write-Optimized Index Structures](8_Write-Optimized_Index_Structures/README.md)
 9. [Bitmap Indices](9_Bitmap_Indices/README.md)
-10. Indexing of Spatial and Temporal Data
+10. [Indexing of Spatial and Temporal Data](10_Indexing_of_Spatial_and_Temporal_Data/README.md)
 11. Summary
