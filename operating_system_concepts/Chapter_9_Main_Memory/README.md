@@ -24,4 +24,3 @@
 6. Example : Intel 32 and 64-bit Architectures
 7. Example : ARMv8 Architecture
 8. Summary
-``
