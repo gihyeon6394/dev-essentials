@@ -108,6 +108,19 @@
 
 ## 2. Hardware Support
 
+- 페이지 테이블은 프로세스 별로 가지는 자료구조
+- PCB에 다른 register value들과 함께 페이지 테이블 pointer를 저장
+- CPU 스케줄러가 실행할 프로세스를 선택하면,
+    - 적절한 하드웨어 page table 을 읽어야함
+- 하드웨어 page table 구현 방법
+    - 방법 1 : page table 전용 고속 하드웨어 레지스터 집합으로 구현
+        - page address 변환은 빠르지만, context switch 비용 증가
+        - 페이지 테이블이 작은 경우 적합
+    - 방법 2 : **page-table base register (PTBR)** 사용
+        - 페이지 테이블을 main memory에 저장
+        - PTBR이 페이지 테이블을 가리키는 pointer
+        - context switch 시 PTBR만 swtich
+
 ## 3. Protection
 
 ## 4. Shared Pages
