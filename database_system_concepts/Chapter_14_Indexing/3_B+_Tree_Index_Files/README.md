@@ -68,24 +68,33 @@
 ## 2 Queries on B+-Trees
 
 ````
-/* v is the search key value (unique search key) */
+/* search key v를 가진 단말노드를 찾는 함수 (unique search key) */
+
+/* 중복 search key는 없다고 가정 and returns pointer to the record with
+* 찾으려는 record의 pointer를 return (없으면, return null)*/
 function find(v)
-/* Assumes no duplicate keys, and returns pointer to the record with
-* search key value v if such a record exists, and null otherwise */
+
+	/* 루트 노드 찾음 */	
     Set C = root node
+    /* 단말노드를 찾을 때까지 반복 */	
     while (C is not a leaf node) begin
+      /* v보다 큰 search key 중 가장 작은 search key */
       Let i = smallest number such that v ≤ C.Ki
+      
+      /* 없으면, 해당 노드의 가장 마지막 not null pointer로 이동*/
       if there is no such number i then begin
           Let Pm = last non-null pointer in the node
           Set C = C.Pm
       end
+      /* 있고, 찾으려는 search key이면, i+1 pointer로 이동 */
       else if (v = C.Ki) then Set C = C.Pi+1
-      else Set C = C.Pi /* v < C.Ki */
+      /* 아니면, i pointer로 이동 */
+      else Set C = C.Pi 
 end
-/* C is a leaf node */
+
 if for some i, Ki = v
-    then return Pi
-    else return null ; /* No record with key value v exists*/
+    then return Pi /* return pointer */
+    else return null ; /* return null, record 없음*/
 ````
 
 1. root node에서 시작, _v_ 를 가진 leaf node를 찾을 떄까지 2번 반복
@@ -103,10 +112,13 @@ if for some i, Ki = v
 - _find(lb, ub)_
 
 ````
+/* search key lb ≤ V ≤ ub 를 만족하는 모든 V 에 대한 pointer 반환 */
 function findRange(lb, ub)
-/* Returns all records with search key value V such that lb ≤ V ≤ ub. */
+
     Set resultSet = {};
     Set C = root node
+    
+    /* search key에 해당하는 최솟값 leaf node 탐색 */
     while (C is not a leaf node) begin
         Let i = smallest number such that lb ≤ C.Ki
         if there is no such number i then begin
@@ -114,13 +126,17 @@ function findRange(lb, ub)
             Set C = C.Pm
         end
         else if (lb = C.Ki) then Set C = C.Pi+1
-        else Set C = C.Pi /* lb < C.Ki */
+        else Set C = C.Pi
     end
-    /* C is a leaf node */
+    
+    /* 최솟값 leaf node가 없으면,  */
     Let i be the least value such that Ki ≥ lb
     if there is no such i
-        then Set i = 1 + number of keys in C; /* To force move to next leaf */
+        then Set i = 1 + number of keys in C; 
+        
     Set done = false;
+    
+    /* 최솟값 leaf node 부터 범위에 해당하는 모든 pointer 수집 */
     while (not done) begin
         Let n = number of keys in C.
         if ( i ≤ n and C.Ki ≤ ub) then begin
@@ -129,9 +145,11 @@ function findRange(lb, ub)
         end
         else if (i ≤ n and C.Ki > ub)
             then Set done = true;
+        /* 다음 leaf로 이동 */
         else if (i > n and C.Pn+1 is not null)
-            then Set C = C.Pn+1, and i = 1 /* Move to next leaf */
-        else Set done = true; /* No more leaves to the right */
+            then Set C = C.Pn+1, and i = 1 
+        /* 종료 */
+        else Set done = true; 
     end
     return resultSet;
 ````
