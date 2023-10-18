@@ -108,7 +108,7 @@
 
 ## 2. Hardware Support
 
-- 페이지 테이블은 프로세스 별로 가지는 자료구조
+- 페이지 테이블은 프로세스 별로 가지는 자료구조ㅣ
 - PCB에 다른 register value들과 함께 페이지 테이블 pointer를 저장
 - CPU 스케줄러가 실행할 프로세스를 선택하면,
     - 적절한 하드웨어 page table 을 읽어야함
@@ -118,8 +118,59 @@
         - 페이지 테이블이 작은 경우 적합
     - 방법 2 : **page-table base register (PTBR)** 사용
         - 페이지 테이블을 main memory에 저장
-        - PTBR이 페이지 테이블을 가리키는 pointer
+        - PTBR은 페이지 테이블을 가리키는 pointer
         - context switch 시 PTBR만 swtich
+
+### 2.1 Translation Look-aside Buffer (TLB)
+
+<img src="img_6.png"  width="70%"/>
+
+- 접근 성능 저하 : 2번의 memory access가 필요
+    - 1번째 : PTBR을 통해 page table 접근
+    - 2번째 : page table entry를 통해 frame number를 찾아 physical address에 접근
+- 극복방안 : **translation look-aside buffer (TLB)** 사용
+    - search 속도가 매우 빠른 하드웨어 cache
+    - TLB의 entry는 key-value 쌍으로 구성
+        - key : page number
+        - value : frame number
+    - 32 ~ 1,024 개의 entry를 가질 수 있음
+
+#### 동작 방식
+
+- TLB에 몇몇의 page-table entry를 저장
+- CPU가 logical address를 생성하면,
+    - MMU가 먼저 TLB를 검색
+        - 있으면, TLB의 frame number를 사용
+        - TLB에 해당 page number가 없으면, page table을 검색 (**TLB miss**)
+            - page table에서 frame number를 찾아 TLB에 저장 (다음 접근을 위해)
+- TLB가 꽉차면 entry 교체
+    - CPU가 LRU (least recently used) 정책에 따라 교체
+    - 몇 CPU는 OS가 직접 교체에 관여할 수 있음
+    - 몇 TLB는 제거대상에서 제외되기도 함 (e.g. kernel code)
+
+#### address-space identifier (ASID)
+
+- 몇 TLB는 각 entry에 **address-space identifier (ASID)** 를 가짐
+- ASID : process 식별값
+- 다중 프로세스 환경에서 process의 주소공간을 보호하기 위한 목적
+    - ASID를 저장하지 않는다면, context switch마다 TLB를 **flush** 해야함
+- ASID를 통해 process 일치 여부를 먼저 검사하고, 맞지 않으면 **TLB miss**로 처리
+
+| TLB 여부 | ASID | logical address | physical address |
+|:------:|:----:|:---------------:|:----------------:|
+|   O    |  1   |   0x1000 (중복)   |      0x2000      |
+|   O    |  1   |     0x1004      |      0x2004      |
+|   O    |  2   |   0x1000 (중복)   |      0x2008      |
+
+- 위와 같이 logical address가 중복되어도 ASID가 다르면,
+    - 같은 TLB 안에서 데이터를 유지할 수 있음
+
+#### hit ratio
+
+- TLB에서 찾고자 하는 page number가 맞은 비율
+- e.g. hit ratio = 80%, 80% 비율로 page number가 TLB에 있었음
+- TLB, memory 접근에 각각 10ns가 소요된다고 할 때,
+    - 메모리 접근 시간 = 0.8 * 10 + 0.2 * 20 = (hit ratio) + (TLB miss ratio) = 12ns
 
 ## 3. Protection
 
