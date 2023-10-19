@@ -279,26 +279,39 @@ procedure insert_in_parent(node N, value K′, node N′)
 ### 2 Deletion
 
 ````
+/* k : search key, P : pointer */
 procedure delete(value K, pointer P)
     find the leaf node L that contains (K, P)
     delete entry(L, K, P)
-    
+
+/* N : node k : search key, P : pointer
+* 특정 노드 N의 search key k와 pointer P를 제거하는 함수*/
 procedure delete entry(node N, value K, pointer P)
+
+	/* search key, pointer 제거 */
     delete (K, P) from N
+    
+    /* 루트노드이고, pointer가 1개이면, 루트노드를 제거하고, child를 루트노드로*/
     if (N is the root and N has only one remaining child)
     then make the child of N the new root of the tree and delete N
+    
+    /* 노드가 underfull이라면, 노드를 형제로 병합, search key는 이전노드와 병합 노드 사이를 구분*/
     else if (N has too few values/pointers) then begin
-        Let N′ be the previous or next child of parent(N)
-        Let K′ be the value between pointers N and N′ in parent(N)
+        Let N′ be the previous or next child of parent(N) /* N′은 N의 형제 노드 */
+        Let K′ be the value between pointers N and N′ in parent(N) /* K′는 N과 N′ 사이의 search key */
+        
+        /* 병합 : 병합해도 노드 크기를 넘지 않을 때 */
         if (entries in N and N′ can fit in a single node)
             then begin /* Coalesce nodes */
-                if (N is a predecessor of N′) then swap variables(N, N′)
+                if (N is a predecessor of N′) then swap_variables(N, N′)
                 if (N is not a leaf)
                     then append K′ and all pointers and values in N to N′
                     else append all (Ki, Pi) pairs in N to N′; set N′.Pn = N.Pn
                 delete entry(parent(N), K′, N); delete node N
             end
-        else begin /* Redistribution: borrow an entry from N′ */
+            
+        /* 재분배 : 이웃노드 N′로부터 search key를 가져옴 */
+        else begin 
             if (N′ is a predecessor of N) then begin
                 if (N is a nonleaf node) then begin
                     let m be such that N′.Pm is the last pointer in N′
