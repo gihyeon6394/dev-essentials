@@ -174,4 +174,38 @@
 
 ## 3. Protection
 
+- 페이징 환경에서 메모리 보호는 각 frame 별 보호 비트로 구현
+- page table에 보호 비트 보관
+- 비트가 page의 read-write or read-only 정의
+    - physical address에 접근할 때, CPU가 비트를 검사
+    - read-only page에 write 시도 시, **trap to OS** 발생
+    - read-only, read-write, execute-only로 세분화 가능
+
+### valid-invalid bit
+
+<img src="img_7.png"  width="70%"/>  
+
+- page table에 추가적인 비트
+- _valid_ : 해당 page가 logical address 공간에 있고, legal
+- _invalid_ : 해당 page가 logical address 공간에 없음
+- 잘못된 주소는 valid-invalid bit를 통해 판단 가능
+- OS가 각 page 별로 valid-invalid bit를 설정해 access를 제어
+
+#### internal fragmentation 발생
+
+- page 크기가 2KB일 때, page 5 이상은 무효
+- 12,288 ~ 16,383 bytes의 메모리가 낭비됨
+
+### page-table length register (PTLR)
+
+- page table의 크기를 저장하는 register
+- page table에 logical address 모든 범위에 대한 entry를 저장하는건 낭비
+- PTLR에 프로세스의 유효 범위인지만 체크
+
+| process | 주소 범위 (KB) | PTLR (KB) |
+|:-------:|:----------:|:---------:|
+|    A    |  0 ~ 4095  |   4095    |
+|    B    |  0 ~ 8191  |   8191    |
+|    C    | 0 ~ 16383  |   16383   |
+
 ## 4. Shared Pages
