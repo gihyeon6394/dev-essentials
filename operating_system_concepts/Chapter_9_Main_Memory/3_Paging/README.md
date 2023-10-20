@@ -209,3 +209,20 @@
 |    C    | 0 ~ 16383  |   16383   |
 
 ## 4. Shared Pages
+
+<img src="img_8.png"  width="70%"/>  
+
+- 프로세스간의 공통 코드를 공유하는 것
+- 스레드 간의 주소 공간을 공유하는 것과 유사 (**공유 메모리**)
+    - 몇 OS는 공유 메모리를 Shared page로 구현
+- e.g. C 언어에서 `libc`를 사용하는 프로세스들은 `libc`를 공유
+- physical memory에는 `libc` 하나만 존재 (frame 1, 3, 4, 6)
+- 각 프로세스는 page table에 동일한 physical address를 가리키는 entry를 가짐
+- run-time library 외에도 무거운 프로그램들도 공유 가능
+    - e.g. compiler, window systems, database systems
+- 반드시 reentrant code여야 함
+
+### reentrant code
+
+- 실행 중 상태가 변하지 않는 코드
+- 따라서 여러 프로세스가 동시에 접근해도 문제가 없는 코드
