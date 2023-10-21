@@ -29,7 +29,7 @@ where group_name = 'AESPA'
     - _age_ index를 사용하여 _23_ 인 record의 _pointer_ 찾음
     - 두 pointer 집합의 **교집합**을 찾음
 
-#### 전략 3은 다음을 모두 만족하면 성능이 별로
+#### 전략 3은 다음을 모두 만족하면 성능 저하
 
 - _AESPA_ record 비율이 많음
 - _23_ record 비율이 많음
@@ -69,9 +69,9 @@ where group_name < 'AESPA'
   and age < 23;
 ```
 
-- 조건에 맞는 record를 찾았으나, 각 record들이 서로 다른 disk block에 존재할 수 있음
+- 첫번째 조건에 맞는 인덱스 엔트리 범위를 찾은 후, 각 엔트리들은 서로 다른 disk block에 존재
     - 많은 I/O Operation 필요
-- 대안 : _bitmap indices_ , _R-trees_ 같은 다른 index 구조 사용
+- 대안 : _bitmap indices_ , _R-trees_ 같은 다른 index 구조 사용으로 극복
 
 ## 3. Covering Indices
 
@@ -82,7 +82,7 @@ where group_name < 'AESPA'
     - record pointer와 함께 _age_ attribute의 value를 저장해두면,
     - _age_ attribute를 조회하는 query에서 index만 조회하면 됨
 
-### vs composite search key index
+### composite search key index 와의 비교
 
 - (_id, age_) index를 사용할 수 있지만,
 - covering index는 search key의 크기를 줄여,
