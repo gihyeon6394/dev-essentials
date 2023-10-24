@@ -90,7 +90,7 @@
     - **absolute code** : memory의 특정 위치에 위치하는 코드
     - e.g. user process가 location _R_에 놓일 것이라면,
         - compile time에 _R_에 접근하는 코드 생성
-        - 나중에 _R_이 변경되면, 코드 재compile 필요
+        - 나중에 _R_ 이 변경되면, 코드 재compile 필요
 - Load time : compile time에 process가 memory에 놓일 위치를 알 수 없으면,
     - **relocatable code** : process가 memory에 놓일 위치를 알 수 없는 코드
     - relocatable code 생성

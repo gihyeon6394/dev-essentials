@@ -55,6 +55,28 @@
 
 ## 2. Hashed Page Tables (해시 테이블)
 
+<img src="img_5.png"  width="70%"/>
+
+- hash 결과 값 : 가상 page number
+- hash table 구조 : linked list
+    - 가상 page number
+    - 매핑될 page frame number
+    - linked list의 다음 entry를 가리키는 pointer
+
+### 동작
+
+1. hash function을 사용해 가상 page number를 hash value로 변환
+2. linked list의 field 1 (가상 page number)과 비교
+    - field 1이 매치되면, field 2 (page frame number)를 사용해 physical address 생성
+    - field 1이랑 매치되지 않으면, 다음 entry로 이동
+
+### clustered page tables
+
+- 64-bit logical address space를 위한 Hashed page table 변형
+- page table의 entry가 1개 이상의 frame을 가리키도록 함
+- **sparse** address space 적합
+    - **sparse** address space : 주소 공간에서 메모리 참조가 연속적이지 않고, 흩어져 있음
+
 ## 3. Inverted Page Tables (역 테이블)
 
 ## 4. Oracle SPARC Architecture (오라클 SPARC 아키텍쳐)
