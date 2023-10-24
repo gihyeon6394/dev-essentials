@@ -79,4 +79,46 @@
 
 ## 3. Inverted Page Tables (역 테이블)
 
+### 프로세스마다 페이지 테이블의 단점
+
+<img src="img_7.png"  width="60%"/>
+
+- 각 프로세스마다 page table을 memory에 load 해야함
+- 페이지 테이블의 physical address들을 계속 추적하고 있어야함
+
+### 해결책 : Inverted Page Table
+
+<img src="img_6.png"  width="70%"/>
+
+- 전체 시스템에서 하나의 page table을 사용
+- pysical memory의 페이지마다 하나의 page table entry를 가짐
+    - page table에 memory의 실제 page (or frame)을 참조하는 entry 하나만 가짐
+- entry에 실제 memory의 가상 주소, page를 가진 프로세스 정보 저장
+- address-space 식별자 : 각 entry에 저장하는 주소 공간 식별자
+    - 서로 다른 physical memory에 매핑될 경우 필요
+
+### 예시 : IBM RT
+
+- IBM은 가장 먼저 inverted page table을 사용한 메이저 회사
+- 가상 주소 구성 : _<process-id, page-number, offset>_
+- page table entry 구성 : _<process-id, page-number>_ 쌍
+- 주소 변환 방법
+    - CPU가 가상 주소 생성
+    - 가상 주소에서 process-id, page-number 추출
+    - process-id, page-number 쌍을 inverted page table에서 검색
+    - page table entry에서 physical page frame number 추출
+
+### hash table과 조합
+
+- page table entry를 검색하는데 많은 시간 소요
+    - 매치하는 entry를 찾을 때까지 모든 entry를 검색해야함
+- 해결책 : Hash table과 조합
+    - 검색 범위를 줄임
+
+### 이슈 : shared memory
+
+- 기본적인 paging table은 프로세스마다 page table을 가지므로, 2개 이상의 가상 주소가 같은 physical address를 가질 수 있음
+- Inverted page table은 하나의 물리 주소에 하나의 가상 주소만 가능
+- **한계 : shared memory를 지원하지 않음**
+
 ## 4. Oracle SPARC Architecture (오라클 SPARC 아키텍쳐)
