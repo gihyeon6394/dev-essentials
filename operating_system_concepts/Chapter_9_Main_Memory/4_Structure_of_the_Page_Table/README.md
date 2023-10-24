@@ -122,3 +122,32 @@
 - **한계 : shared memory를 지원하지 않음**
 
 ## 4. Oracle SPARC Architecture (오라클 SPARC 아키텍쳐)
+
+- **SPARC** CPU에서 운용되는 **Solaris**
+    - 64-bit OS
+    - 모든 physical memory를 사용 않고,
+    - multi-level page table 사용
+- hash table 사용
+
+### 구조
+
+- 2개의 hash table
+    - kernel을 위한 table
+    - user process를 위한 table
+- 각 table은 가상 주소와 pyhsical address를 매핑하는 entry를 가짐
+- 각 entry는 매핑된 가상 주소의 연속된 영역을 가리킴
+    - page마다 entry를 가지는 hash-table 보다 효율적
+- 각 entry에 base address, 가리키는 page 수 저장
+    - base address : 가상 주소의 시작 주소
+
+### 변환방법 : TLB WALK
+
+- CPU가 TLB를 구현
+    - TLB가 TTE를 보유 (TTE : translation table entry)
+    - 최근의 TTE는 TSB(tag store buffer)에 저장
+- 가상 주소가 생성되면, CPU가 TLB를 먼저 검색
+    - 없으면, in-momort의 TSB를 검색
+        - TSB에 일치하는 항목이 있으면, TLB에 복사
+        - 없으면, interrupt 발생 -> hash table 검색
+            - hash table에서 TTE를 생성해 TSB에 저장
+                - CPU MMU가 TTE를 TLB에 복사
