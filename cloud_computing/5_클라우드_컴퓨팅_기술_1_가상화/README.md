@@ -41,6 +41,8 @@
     - 하이퍼바이저 가상화
     - 컨테이너 가상화
 
+<img src="img_5.png"  width="80%"/>
+
 ### 호스트 가상화 방식
 
 <img src="img_1.png"  width="60%"/>
