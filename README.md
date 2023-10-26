@@ -34,6 +34,12 @@
 
 <img src="img_3.png"  width="30%"/>
 
+## [Kafka The Definitive Guide](Kafka_The_Definitive_Guide/README.md)
+
+Real-Time Data and Stream Processing at Scale
+
+<img src="img_8.png"  width="30%"/>
+
 ## [데이터 중심 어플리케이션 설계](ddia)
 
 <img src="img_1.png"  width="30%"/>
