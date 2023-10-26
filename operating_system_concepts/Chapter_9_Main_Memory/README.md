@@ -23,4 +23,4 @@
 5. [Swapping](5_Swapping/README.md)
 6. [Example : Intel 32 and 64-bit Architectures](6_Example_Intel_32_and_64-bit_Architectures/README.md)
 7. Example : ARMv8 Architecture
-8. Summary
+8. [Summary](8_Summary/README.md)

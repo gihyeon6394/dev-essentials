@@ -1,0 +1,25 @@
+# 8. Summary
+
+- 메모리는 현대 컴퓨터의 연산의 중심, 고유 주소를 가진 byte 배열로 구성됨
+- 프로세스에 메모리 주소 할당 방법 : base, limit register 사용
+    - base register : physical address의 시작주소
+    - limit register : 메모리 공간의 크기
+- 주소 변환 과정은 compile, load, execution time 모두에서 발생 가능
+- logical address : CPU가 생성한 메모리 주소
+    - MMU가 physical address로 변환
+- 연속적으로 메모리를 할당하는 방법
+    - first fit, best fit, worst fit
+- 현대 OS는 paging을 통해 메모리를 관리
+    - frame : physical memroy를 고정된 block으로 나눔
+    - page : logical memory를 동일한 사이즈의 block으로 나눔
+- logical address는 page number, offset으로 구성
+    - page number : process 마다 page table에 접근 시 index로 사용
+    - offset : frame 안의 주소를 특정
+- translation look-aside buffer (TLB) : page table을 캐시하는 하드웨어
+    - 각 TLB entry에 page number, frame을 저장
+- logical address를 생성후 TLB를 먼저 확인 후 없으면 page table을 검색
+- 계층형 페이징 : page table을 여러 level로 나눔
+    - 32bit가 넘어가면 level이 커짐
+        - hashed talbe, inverted page table 등의 방법으로 해결
+- Swapping : process의 page를 disk로 이동
+    - multi-programming 활용 증가
