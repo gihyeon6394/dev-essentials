@@ -21,6 +21,6 @@
 3. [Paging](3_Paging/README.md)
 4. [Structure of the Page Table](4_Structure_of_the_Page_Table/README.md)
 5. [Swapping](5_Swapping/README.md)
-6. Example : Intel 32 and 64-bit Architectures
+6. [Example : Intel 32 and 64-bit Architectures](6_Example_Intel_32_and_64-bit_Architectures/README.md)
 7. Example : ARMv8 Architecture
 8. Summary
