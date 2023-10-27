@@ -48,6 +48,139 @@
 
 ## Enter Kafka
 
+- "distributed commit log", "distributed streaming platform"이라고도 불림
+- Kafka 내의 데이터
+    - 연속적, 순서대로 저장, 읽기 가능
+    - 분산 저장 성능 향상, 장애 보호
+
+### Messages and Batches
+
+#### _message_ : Kafka 내의 데이터 unit
+
+- Database의 _row_, _record_ 와 비슷
+- bytes array로 구성
+- _key_ : message를 파티션해서 다룰 때 사용
+    - key를 해시해서 파티션에 접근
+
+#### _batch_ : message의 컬렉션
+
+- topic, partition에 저장한 메시지 컬렉션
+- batch 단위로 메시지를 읽을 수 있음
+
+### Schemas
+
+- message 자체에 구조, 스키마를 정의해서 메시지 가독성을 높일 수 있음
+- 사용자 application 요구사항에 따라 _schema_ 정의 옵션이 있음
+    - e.g. JSON, XML, ...
+
+### Topics and Partitions
+
+<img src="img_3.png"  width="70%"/>
+
+#### _topic_ : message category
+
+- DB의 테이블, 파일 시스템의 폴더
+
+#### _partition_ : topic을 분리 (구성)
+
+- 여러개의 partition으로 구성됨
+- 각 partition의 마지막에 메시지 삽입
+- 각 partition을 서로 다른 서버에 호스팅 가능
+- 한 partitno을 다른 서버에 복제 가능
+
+#### _stream_
+
+- Kafka와 같은 시스템 안의 데이터
+- partition 수에 관계없이 하나으 _topic_ 을 뜻함
+- 실시간 메시지 처리에 사용 e.g. Kafka Streams, Apache Samza, Storm
+
+### Producers and Consumers
+
+- kafka client의 2가지 타입 : producer, consumerl
+    - 그 외 : Kafka Connect (data integration), Kafka Streams (stream processing)
+
+#### _producer_ : message 생성
+
+- 다른 pub/sub 시스템에서는 _publisher_ , _writer_ 라고 불림
+- message는 특정 topic에 생성됨
+    - 기본적으로 해당 topic의 partition에 고르게 분배
+    - 특정 partition에 다이렉트로 생성 가능
+        - hash key를 이용해서 특정 partition에 생성
+
+#### _consumer_ : message 읽음
+
+- 다른 pub/sub 시스템에서는 _subscriber_ , _reader_ 라고 불림
+- 1개 이상의 topic을 subscribe
+- 각 partition에 들어온 순서대로 read (FIFO)
+- _offset_ : 시퀀스 값, metadata
+    - message 별로 가지고 있는 채번값
+    - message가 생산되면 offset이 증가
+    - 각 메시지는 partition안에서 unique한 offset을 가짐
+    - 다음 메시지가 더 큰 offset을 가짐
+    - Kafka가 스스로 다음 offset을 관리
+    - **consumer가 offset을 통해 읽을 위치를 결정**
+
+#### _consumer group_ : 1개 이상의 consumer로 구성
+
+<img src="img_4.png"  width="70%"/>
+
+- group 내에서 동일한 topic을 읽음
+- _ownership_ : consumer를 parition에 매핑하는 것 (소유권)
+    - partition은 오직 1개의 consumer만 읽을 수 있음 (소유)
+- consumer 한명이 메시지 읽기를 실패하면,
+    - group 내에서 대기중인 다른 consumer가 해당 partition을 읽음
+
+### Brokers and Clusters
+
+#### _broker_ : single Kafka server
+
+<img src="img_5.png"  width="70%"/>
+
+- producer의 message를 받음
+- message에 offset을 부여
+- consumer의 partition 요청에 message와 함께 응답
+- 하드웨어 퍼포먼스에 따라
+    - 하나의 broker가 1초에 수천개의 partition, 수만개의 message를 다룰 수 있음
+
+#### _cluster_ : broker의 집합
+
+- 하나의 broker가 cluster _controller_ 기능
+    - cluster 중 하나를 자동으로 선정
+- controller는 operation 관리자
+    - partition을 broker에 할당
+    - broker 장애 모니터링
+- _leader_ of partition : partition을 소유한 한개의 broker
+- _followers_ : partition 복제본의 주인 broker
+    - leader가 장애가 나면 follower 중 하나가 leader가 됨
+- 모든 producer는 leader와 통신
+    - leader에게 message를 전송
+- consumer는 leader 혹은 follower와 통신
+
+#### _retention_ : message 보존 기간
+
+- broker가 topic의 보유기간 default 값을 가짐 e.g. 7일
+    - partition 사이즈로 정할 수 있음 e.g. 1GB
+- 보유 기간이 다되면, message가 만료되고 삭제됨
+- topic 별로 지정 가능
+- _log compacted_ : 특정 key의 가장 마지막 생산 message만 저장
+    - changelog 유형의 데이터에 유용 e.g. 마지막 업데이트
+
+### Multiple Clusters
+
+<img src="img_6.png"  width="70%"/>
+
+
+> #### 두개 이상 Cluster의 장점
+>
+> - 데이터 타입 별로 분리
+> - 보안 요구에 따른 고립
+> - 장애 복구 - Data Center가 분산되어 있을 때
+
+- Kafka 복제 매커니즘은 cluster 내에서만 구현되어있음
+- _MirrorMaker_ : 다른 cluster로 데이터를 복제하는 Kafka tool
+    - Kafka consumer, producer 구조로 서로 queue로 연결되어있음
+    - 한 cluster의 message가 다른 cluster로 복제됨
+
 ## Why Kafka?
 
 ## The Data Ecosystem
