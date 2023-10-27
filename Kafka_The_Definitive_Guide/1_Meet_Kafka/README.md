@@ -280,4 +280,43 @@
 
 ## Kafka's Origins
 
+- LinkedIn에서 data pipeline 문제를 해결하기위해 개발됨
+- 고성능 메시징 시스템 (다양한 데이터 타입을 다루고 제공)을 제공하기위한 목적
+    - 메시지 : 실시간 user activity, system metrics
+
+### LinkedIn's Problem
+
+- system metric : CPU 사용률, application 성능
+- system metric, user activity 추적을 위한 시스템이 있었으나, 여러 결함
+    - 여러 서비스 공유 문제
+- 데이터 파이프라인을 위한 사용자 정의 인프라를 개발하기로 함
+
+### The Birth of Kafka
+
+> #### 목표
+>
+> - push-pull 모델 기반으로 producer, consumer 를 분리
+> - 메시지 시스템의 지속적인 message data를 1개 이상의 consumer에게 전달
+> - 대용량 메시지 생산 최적화
+> - data stream이 커지면 수평 확장 가능
+
+- 2020년 기준 LinkedIn에서 하루 7조개의 message 생성, 일일 소비량 5PB 이상
+
+### Open Source
+
+- Kafka는 오픈소스 프로젝트
+- 2011년 Apache Software Foundation
+- Netflix, Uber 등 큰 데이터 파이프라인에서 사용
+- LinkedIn, Confluent 등의 기업이 프로젝트 유지, 관리
+
+### Commercial Engagement
+
+- 2014년 Kafka 창시자들이 LinkedIn을 떠나 Confluent 설립
+- Confluent는 Google cloud, AWS, AZURE에서 kafka 클러스터 관리 서비스 제공
+
+### The Name
+
+- 프랑코-체코 작가 Franz Kafka에서 유래
+- 별 관계는 없다고 Jay Kreps가 말함
+
 ## Getting Started with Kafka
