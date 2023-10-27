@@ -183,6 +183,46 @@
 
 ## Why Kafka?
 
+- pub/sub system 중 Kafka 차별점
+
+### Multiple Producers
+
+- Kafka는 끊임없이 많은 producer를 다룰 수 있음
+    - 클라이언트가 동일 topic을 다루던, 다른 topic을 다루던
+- 많은 frontend 시스템으로부터 지속적으로 생산되는 데이터를 일관성있게 처리
+- 예를들어, 하나의 웹사이트, 여러개의 마이크로서비스가 있는경우
+    - 다양한 마이크로서비스로부터 생산되는 페이지 조회정보를 Kafka로 전송
+    - 하나의 Kafka Data Stream으로 처리
+
+### Multiple Consumers
+
+- 하나의 message stream에 대해 여러 consumer를 지원
+    - 다른 시스템은 메시지가 소비되면 다른 client는 해당 메시지를 읽을 수 없음
+- Kafka의 Consumer는 group에 속해, stream을 공유할 수 있음
+
+### Disk-Based Retention
+
+- consumer가 항상 실시간으로 message를 읽지 않아도 됨
+- 설정한 보존 규칙에 맞춰 disk에 저장
+- consumer가 실패해도 data 유실없음
+    - 실패한 지점부터 다시 시작 가능
+
+### Scalable
+
+- 유연한 확장성
+- 1개의 broker -> 몇개의 borker와 작은 cluster -> 수천개의 broker와 큰 cluster
+- cluster가 online 상태에서 확장 가능
+
+### High Performance
+
+- 매우 큰 message stream을 다루기 위해 쉽게 scale-out 가능
+- 1초 이내의 latency가 발생하면서 scale-out 가능
+
+### Platform Features
+
+- Kafka Connect : 데이터를 Kafka로 가져오고 내보내는 표준 API
+- Kafka Streams : Kafka에서 stream processing을 위한 client library
+
 ## The Data Ecosystem
 
 ## Kafka's Origins
