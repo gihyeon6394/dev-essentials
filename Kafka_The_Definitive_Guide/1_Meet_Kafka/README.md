@@ -225,6 +225,59 @@
 
 ## The Data Ecosystem
 
+<img src="img_7.png"  width="70%"/>
+
+- 여러 infrastructure 간의 message를 이동
+- 클라이언트에게 일관된 인터페이스를 제공
+- producer와 consumer의 약결합
+- producer는 데이터를 어떤 consuemr가 사용하는지 몰라도 됨
+
+### Use Cases
+
+#### Activity Tracking
+
+- LinkedIn에서 사용자 활동을 추적하기위해 개발됨
+- 유저가 frontend application과 상호작용할 때마다 message를 생성
+    - e.g. 페이지 조회, 클릭, 프로필 수정 등
+- message는 backend가 소비
+- 리포트 생성, ML 시스템, 사용자 경험을 위한 계산 등
+
+#### Messaging
+
+- application이 message를 공지하고 싶을 때 (e.g. 이메일)
+- message 의 포맷, 전송 방법을 고민하지 않고 생성
+- single applcation 이 모든 meesage를 읽고 전송
+    - message 포맷팅, _decorating_
+    - message 통합
+    - message 전송 (사용자의 선호에 맞게)
+
+#### Metrics and logging
+
+- application(시스템) 메트릭, 로그 수집
+- 여러 application이 같은 타입의 message를 생성할 때 유용
+- applicaton이 메트릭을 Kafka topic 기반으로 생성
+    - 모니터링 시스템이 message를 소비
+- Hadoop같은 오프라인 시스템이서 사용 (longer-term analysis)
+- Log message를 생성하고 분산된 log search system (e.g. Elasticsearch)으로 전송
+- Destination system이 변경될 때, producer를 변경할 필요 없음
+
+#### Commit log
+
+- changelog stream
+    - changelog에 대한 buffer로 사용
+- 데이터베이스 업데이트를 Kafka로 publish
+    - application이 데이터베이스 업데이트 사항을 consume
+- 데이터베이스 복제, 동기화
+- 2개 이상의 application으로부터 하나의 데이터베이스를 업데이트할 때
+- log-compacted topic을 사용해서 더 긴 보존기간 확보 가능
+    - key마다 하나의 변동 사항만 저장
+
+#### Stream processing
+
+- Hadoop 의 map/reduce와 유사한 처리
+    - Hadoop은 몇시간~며칠 간의 데이터를 집계 후 처리
+- Kafka를 활용한 stream processing은 실시간으로 처리 가능
+
 ## Kafka's Origins
 
 ## Getting Started with Kafka
