@@ -49,7 +49,7 @@
 6. `JAVA_HOME` 환경변수 설정
 7. `zkServer.sh` 실행
 
-```Bash
+```Shell
 # wget https://archive.apache.org/dist/zookeeper/zookeeper-3.5.9/apache-zookeeper-3.5.9-bin.tar.gz
 # tar -zxf apache-zookeeper-3.5.9-bin.tar.gz
 # mv apache-zookeeper-3.5.9-bin /usr/local/zookeeper
@@ -76,7 +76,7 @@ Starting zookeeper ... STARTED
     - _myid_ 파일 : 각 서버의 고유 ID를 저장하는 파일
     - e.g. zoo1.example.com, zoo2.example.com, zoo3.example.com
 
-```Bash
+```Shell
 tickTime=2000
 dataDir=/var/lib/zookeeper
 clientPort=2181
@@ -94,7 +94,7 @@ server.3=zoo3.example.com:2888:3888
     - `tickTime`의 배수
     - 5 = 2000ms * 5 = 10 sec
 
-````
+```Text
 ## ensemble 인스턴스 설정
 server.X=hostname:peerPort:leaderPort 
 ````
@@ -110,6 +110,58 @@ server.X=hostname:peerPort:leaderPort
     - 인스턴스마다 `zoo.cfg` 파일을 생성
 
 ## Installing a kafka Broker
+
+- ZooKeeper가 설치되어 있어야 함
+
+1. 설치
+2. topic "test" 생성
+3. topic "test"에 메시지 전송
+4. topic "test"에서 메시지 읽기
+
+
+1. 설치
+
+```Shell
+# wget https://archive.apache.org/dist/kafka/2.7.0/kafka_2.13-2.7.0.tgz
+# tar -zxf kafka_2.13-2.7.0.tgz
+# mv kafka_2.13-2.7.0 /usr/local/kafka
+# mkdir /tmp/kafka-logs
+# export JAVA_HOME=/usr/java/jdk-11.0.10
+# /usr/local/kafka/bin/kafka-server-start.sh /usr/local/kafka/config/server.properties
+
+```
+
+2. topic "test" 생성
+
+```Shell
+# /usr/local/kafka/bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 3 --topic test
+Created topic "test".
+# /usr/local/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --describe --topic test
+Topic: test     PartitionCount: 3       ReplicationFactor: 1    Configs: segment.bytes=1073741824
+        Topic: test     Partition: 0    Leader: 0       Replicas: 0     Isr: 0
+        Topic: test     Partition: 1    Leader: 0       Replicas: 0     Isr: 0
+        Topic: test     Partition: 2    Leader: 0       Replicas: 0     Isr: 0
+
+```
+
+3. topic "test"에 메시지 전송
+
+```Shell
+# /usr/local/kafka/bin/kafka-console-producer.sh --bootstrap-server localhost:9092 --topic test
+>Karina is Best   
+>Karina is Aespa
+>^C
+```
+
+4. topic "test"에서 메시지 읽기
+
+```Shell
+# /usr/local/kafka/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning
+Karina is Best
+Karina is Aespa
+Processed a total of 2 messages
+^C
+````
 
 ## Configuring the Broker
 
