@@ -367,6 +367,61 @@ Processed a total of 2 messages
 
 ## Selecting hardware
 
+- 전체 성능에 bottleneck이 될만한 부분
+- Disk throughput, capacity(용량), memory, networking, CPU
+- Kafka를 매우 크게 확장할 때, metadata 업데이트 양이 많아짐
+
+### Disk Throughput (처리량)
+
+- broker disk : producer 성능이 가장 영향을 많이 받는 요소
+- message가 발행되면 local storage에 커밋됨
+    - 대부분의 producer 클라이언트가 최소 1개의 broker가 message 정상 발행여부를 확인해줄 떄까지 block
+    - 쓰기 속도가 빠를수록 produce latency가 낮아짐
+- HDD? SSD?
+- SSD : 탐색속도가 빨라 성능을 높임
+- HDD : SSD에 비해 경제적이고, 용량이 큼
+    - HDD 성능 향상 방법 : 데이터 디렉터리 여러개 사용, RAID 구성
+- HDD : 용량이 크지만, 자주 사용되지 않는 데이터를 저장하기에 적합
+- SSD : 매우 많은 client connection을 처리할 때 적합
+
+### Disk Capacity (용량)
+
+- 얼마나 많은 message가 retain되어야 하는가?
+- broker가 하루마다 1TB 트래픽을 받고, retention이 7일이라면
+    - log segment에 최소 7TB의 disk가 필요, 10% 오버헤드 추가 고려
+- Kafka scaling 시 주요한 고려요소
+    - topic의 여러 partition
+    - broker 증설
+    - 복제 전략
+
+### Memory
+
+- Kafka consumer는 partition 마지막부터 message를 읽음
+- system의 page chace 용량
+    - consumer가 읽고있는 message는 시스템 page cache에 저장됨
+- JVM 의 많은 heap memory를 필요로하지 않음
+    - broker가 150,000 message를 1초마다 다루고, 200mb/s 데이터전송 시 5GB heap memory 필요
+- **Kafka를 다른 application과 동일한 시스템에서 구축하기를 권장하지 않음**
+    - 메모리 영역을 page cache, Kafka log segment cache 등에 사용해야함
+    - 안그러면 consumer client의 성능 감소
+
+### Networking
+
+- Kafka가 다룰수 있는 트래픽의 최대량 결정
+- disk storage, cluster size와 함께 고려
+- inbound / outbound 불균형 문제
+    - proucer는 초마다 1MB를 topic에 씀 (inbound)
+    - 다수의 consumber가 topic에서 1MB를 읽음 (outbound)
+- 최소 10GB NIC 사용 권장
+
+### CPU
+
+- borker의 전체 성능에 미미하게 영향을 줄 수 있음
+- client가 network, disk 최적화를 위해 메시지 압축, 압축 해제
+- Kafka가 CPU 성능이 필요할 때
+    - broker가 모든 메시지를 압축 해제 -> `checksum`으로 메시지 검증 -> 다시 압축 -> disk에 쓰기
+- cluster가 매우 커지면 (수백개 cluster, 한 cluster에 수만개의 partition) 고려
+
 ## Kafka in the Cloud
 
 ## Configuring Kafka Clusters
