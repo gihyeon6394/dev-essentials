@@ -424,6 +424,32 @@ Processed a total of 2 messages
 
 ## Kafka in the Cloud
 
+- Confluent vender사, AWS, Azure, Google Cloud Platform 등에서 Kafka를 제공
+- 각 CSP에서 제공하는 적절한 compute instance 선택
+
+### Microsoft Azure
+
+- VM으로부터 별도로 disk 운용 가능
+- low latency가 문제된다면, I/O 최적화 인스턴스 사용 (SSD)
+- 아니면, Azure Blob Storage, Azure Managed Disks 사용
+- 실제로 Standard D16s v3 인스턴스 타입 적합
+    - 작은 clsuter
+- 더 높은 성능 D64s v3 인스턴스 타입 적합
+    - 큰 cluster
+- Azure Managed Disks 권장
+- HDD Managed Disks는 저렴하나 SLA 없음
+- premium SSD, ultra SSD는 SLA 있음
+- latency에 민감하지 않다면 Microsoft Blob Storage 사용
+
+### Amazon Web Services
+
+- latency에 민감하다면 I/O 최적화 인스턴스 사용 (local SSD Storage)
+- 아니면, Amazon Elastic Block Store (EBS) 사용
+- 일반적으로 m4, r3 인스턴스 타입 사용
+    - m4 ; retention 기간 보장하나, disk throughput이 낮음 (EBS 사용)
+    - r3 : disk throughput이 높음 (local SSD 사용), retention 기간이 짧음
+- i2, d2 인스턴스 타입은 비싸지만 retention 기간이 길고, disk throughput이 높음
+
 ## Configuring Kafka Clusters
 
 ## Production Concerns
