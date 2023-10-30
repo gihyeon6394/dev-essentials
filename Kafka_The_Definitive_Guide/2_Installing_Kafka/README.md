@@ -329,9 +329,41 @@ Processed a total of 2 messages
 
 #### log.roll.ms
 
+- log segment 가 닫혀야하는 시간 간격
+- `log.segment.bytes` 설정과 병행 가능
+- 아무거나 한 조건이 만족하면 log segment가 닫힘
+
+> #### Disk Performance When Using Time-Based Segments
+>
+> - 시간 기반으로 segment를 제한할 경우
+> - 2개 이상의 log segment가 동시에 닫힐때의 Disk 성능을 고려해야함
+> - 비슷한 시각에 시간이 시작되어 비슷한 시각에 닫히는 segment가 많을 경우
+
 #### min.insync.replicas
 
+- `min.insync.replicas=2` : 최소 2개의 replica가 producer와 "in sync"(동기화)
+- producer의 ack "all" 요청과 함께 사용
+- 최소 2개의 replica에 쓰기 성공을 보장
+- leader에 쓰기작업이 실패된 뒤 follower를 leader로 승격한 경우
+    - 실패했던 쓰기작업의 데이터가 없을 수 있음
+    - 이 떄 `min.insync.replicas` 설정이 없다면, 데이터 손실이 발생할 수 있음
+- 오버헤드를 고려해서 메시지 손실이 허용되는 경우 `1` 추천
+
 #### message.max.bytes
+
+- message의 최대 사이즈
+- default : `1MB`
+- producer가 message를 publish할 때, message의 사이즈가 `message.max.bytes`를 초과하면 에러 발생
+- 메시지 사이즈는 성능에 큰 영향을 줌
+    - borker thread의 request별 network connection이 길어짐
+    - disk 크기를 많이 차지
+    - 해결책 : blob store, 계층형 저장소 등으로 해소
+
+> #### Coordinating Message Size Configurations
+>
+> - 클라이언트의 `fetch.message.max.bytes` 설정을 고려해야함
+> - `fetch.message.max.bytes`이 더 작으면 producer가 publish한 message를 읽을 수 없음
+> - `replica.fetch.max.bytes` 설정도 동일한 이유로 고려해야함
 
 ## Selecting hardware
 
