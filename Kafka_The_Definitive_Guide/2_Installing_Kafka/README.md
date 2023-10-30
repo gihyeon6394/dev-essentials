@@ -242,15 +242,90 @@ Processed a total of 2 messages
 
 ### Topic Defaults
 
+- 토픽마다 설정을 지정할 수 있음
+    - parition 수, message retention 등
+- 부가적인 관리 툴로 설정해야함
+
 #### num.partitions
+
+- 토픽 생성시 생성할 파티션 수
+- default : `1`
+- **토픽의 파티션수는 증가만 가능 (감소 불가)**
+- 특정 topic이 `num.partition` 보다 작은 파티션이 필요한 경우 수동으로 topic 생성해야함
+- 일반적으로 topic 의 partition 수 = cluster 내 broker 수 (e.g. 3개의 broker = 3개의 partition)
+    - 혹은 borker 수의 배수 (e.g. 3개의 broker = 6개의 partition)
+- partition 수 설정 예시
+    - topic에서 1GBPS의 I/O처리를 원하고, consumer가 50MBps 성능일 경우 20개의 partition 필요
+    - 50MBps * 20 = 1GBps
+- 추천 방법 : partition 크기를 6GB 미만으로 제한해서 점차 확장
+
+> #### How to Choose the Number of Partitions
+>
+> - topic에게 필요한 성능? write 100KB/sec, 1GB/sec?
+> - 단일 partition에서 consumer의 최대 처리량
+> - 단일 partition에 대한 producer 최대 처리량 (producer는 대게의 경우 consumer보다 빠르므로 skip해도 됨)
+> - key 기반의 메시지 작성인 경우, 나중에 partition 추가는 매우 어려움
+> - broker 별 공간 예측 (disk, network 대역폭)
+> - 과소평가해야함 - broker가 메모리, 기타 리소스 사용 and 메타 데이터 업데이트, leadership 이전 시간 등이 추가됨
+> - 미러링 데이터 환경에서 많은 partition은 bottleneck이 될 수 있음
+> - VM, cloud 환경에서 IOPS 제한이 있을 경우 고려해야함
 
 #### default.replication.factor
 
+- `auto.create.topics.enable` 설정이 `true`일 경우, 토픽의 복제본 수
+- 권장사항
+    - `min.insync.replicas` 보다 1 이상 (하드웨어 설정이 매우 좋을 경우 2 이상)
+- 일반적인 cluster
+    - 최소 3개 이상의 partition 복제품이 있음
+    - 각각 disk failure, broker failure, data center failure, rolling 배포 등을 대비
+
 #### log.retention.ms
+
+- message를 저장할 시간
+- `log.retention.hours` 값이 default
+    - `168` (7일)일
+- `log.retention.minutes`, `log.retention.ms`로 설정 가능
+- 추천 파라미터 `log.retention.ms`
+- 중복으로 선언되어있으면 가장 작은 사이즈의 파라미터가 적용됨
+
+> #### Retention by Time and Last Modified Times
+>
+> - disk의 각 log segment file이 마지막으로 수정된 시간 기반으로 삭제됨
+> - e.g. log segment가 닫힌 시간 = file의 마지막 message timestamp
 
 #### log.retention.bytes
 
+- message 의 총 byte 수로 제한하는 방법
+- partition마다 적용됨
+- topic이 8개 partition을 가지고, `log.retention.bytes`가 1GB라면
+    - topic에 최대 8GB의 데이터가 저장됨
+- `-1` : 제한 없음
+
+> #### Configuring Retention by Size and Time
+>  `log.retention.bytes`, `log.retention.ms` 둘다 설정되어있는 경우
+> 둘 중 하나가 충족되면 삭제됨
+> e.g. `log.retention.bytes=1GB`, `log.retention.ms=1day`이면, 둘 중 하나가 충족되면 삭제됨
+
 #### log.segment.bytes
+
+- log retention 설정은 log segment에 적용됨 (message 단위 X)
+- message가 publish되면 partition의 가장 최근 log segment에 저장
+- default : `1GB`
+- log segment 사이즈가 `log.segment.bytes` 에 도달하면, log segment가 닫히고, 새로운 log segment 오픈
+- log segment가 너무 작으면 잦은 logsegment 열림/닫힘으로 전체적인 성능 저하
+- topic의 produce 률이 낮을 경우 (예를 들어 하루에 100MB 생산)
+    - default `log.segment.bytes=1GB`이기 때문에, 1개의 segment를 10일간 유지
+    - `log.retention.ms=1week`인 경우, 최대 17일간 message가 보존됨
+
+    1. log.segment.bytes=1GB`를 채우기 위해 10일간 유지되고 log segment가 닫힘
+    2. `log.retention.ms=1week` 로 인해 닫히고 7일간 유지
+
+> #### Retrieving Offsets by Timestamp
+>
+> - 특정 timestamp에서 partition offset 요청 시,
+> - 해당 timesttamp에서 쓰기 중이던 log segment file을 찾음
+> - 지정된 timestamp 이전에 생성된 file 중 가장 최근에 수정된 file을 찾음
+> - 해당 file의 시작부분에 있는 offset 반환
 
 #### log.roll.ms
 

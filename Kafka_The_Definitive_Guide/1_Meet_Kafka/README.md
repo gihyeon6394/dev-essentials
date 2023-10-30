@@ -86,7 +86,7 @@
 - 여러개의 partition으로 구성됨
 - 각 partition의 마지막에 메시지 삽입
 - 각 partition을 서로 다른 서버에 호스팅 가능
-- 한 partitno을 다른 서버에 복제 가능
+- 한 partition을 다른 서버에 복제 가능
 
 #### _stream_
 
