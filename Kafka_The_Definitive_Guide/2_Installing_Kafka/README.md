@@ -165,6 +165,99 @@ Processed a total of 2 messages
 
 ## Configuring the Broker
 
+<img src="img_1.png"  width="60%"/>
+
+### General Broker Parameters
+
+- 단일 서버에 standalone broker 구축환경이 아니라면 적절히 설정 필요
+
+#### broker.id
+
+- 모든 borker는 고유한 ID (숫자)를 가져야함
+    - 동일한 kafka cluster 내에서 unique
+- default : `0`
+- 추천 방법
+    - host name이 `host1.example.com`이라면 `1`로 설정
+    - host name이 `host2.example.com`이라면 `2`로 설정
+
+#### listeners
+
+- example 설정 파일에 TCP port `9092`로 설정되어있음
+- `<protocol>://<hostname>:<port>` 형식으로 설정, 콤마로 구분
+    - e.g. `PLAINTEXT://localhost:9092,SSL://:9091`
+- port 번호가 1024 미만이라면 root 권한 필요
+- Kafka를 root로 실행하는건 비추
+
+#### zookeeper.connect
+
+- ZooKeeper 포트
+- `hostnanme` : ZooKeeper가 실행되는 호스트 이름
+- `port` : ZooKeeper 클라이언트 포트
+- `/path` : chroot 환경일 경우 설정
+
+> #### Kafka Cluster는 Chroot 환경 권장
+>
+> - Kafka Cluster가 chroot 환경에서 실행되는 것을 권장
+> - ZooKeeper ensemble이 다른 application과 충돌 없이 공유
+> - 동일한 ensemble의 여러 ZooKeeper 서버 지정 : 서버 장애시 다른 ZooKeeper 서버로 연결 가능
+
+#### log.dirs
+
+- Kafka 는 모든 메시지를 disk에 씀
+- `log.dirs` : Kafka가 log segment를 저장할 디렉터리
+- 쉼표로 구분
+- 여러 경로가 지정되면, 가장 적게 사용된 디렉터리에 저장
+- 하나의 파티션의 log segment는 동일한 디렉터리에 저장
+
+#### num.recovery.threads.per.data.dir
+
+- log segment를 다루는 thread pool
+- thread pool 사용
+    - 시작 시 각 파티션의 log segment 열기
+    - failure 후 시작 시 각 파티션의 log segment check and truncate
+    - shut down시 log segment 닫기
+- default로 각 log 디렉터리에 1개의 thread 사용
+    - 시작/종료 시에만 사용됨
+- 병렬 실행을 위해 thread 수를 늘릴 수 있음
+    - `log.dirs` 가 3개, `num.recovery.threads.per.data.dir`가 4라면
+        - 12개의 thread가 생성됨
+
+#### auto.create.topics.enable
+
+- default 로 자동으로 topic을 생성
+    - 프로듀서가 토픽에 메시지를 작성할 때
+    - 컨슈머가 토픽에서 메시지를 읽을 때
+    - 클라이언트가 토픽의 메타데이터를 요청할 때
+- `false`로 설정하면, 토픽을 명시적으로 생성하게 강제
+
+#### auto.leader.rebalance.enable
+
+- 하나의 borker에 모든 leader가 할당되는 것을 방지
+- background thread가 `leader.imbalance.check.interval.seconds` 마다 실행
+
+#### delete.topic.enable
+
+- `false` : 토픽 삭제 불가
+- topic을 임의로 삭제하는 것을 방지
+
+### Topic Defaults
+
+#### num.partitions
+
+#### default.replication.factor
+
+#### log.retention.ms
+
+#### log.retention.bytes
+
+#### log.segment.bytes
+
+#### log.roll.ms
+
+#### min.insync.replicas
+
+#### message.max.bytes
+
 ## Selecting hardware
 
 ## Kafka in the Cloud

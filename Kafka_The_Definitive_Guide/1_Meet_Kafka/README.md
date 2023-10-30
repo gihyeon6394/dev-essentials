@@ -149,7 +149,7 @@
 - controller는 operation 관리자
     - partition을 broker에 할당
     - broker 장애 모니터링
-- _leader_ of partition : partition을 소유한 한개의 broker
+- _leader_ of partition : 여러 partition 중 하나의 리더
 - _followers_ : partition 복제본의 주인 broker
     - leader가 장애가 나면 follower 중 하나가 leader가 됨
 - 모든 producer는 leader와 통신
