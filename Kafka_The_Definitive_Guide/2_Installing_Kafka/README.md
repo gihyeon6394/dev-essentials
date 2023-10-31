@@ -452,6 +452,66 @@ Processed a total of 2 messages
 
 ## Configuring Kafka Clusters
 
+<img src="img_2.png"  width="70%"/>
+
+- Single Broker는 로컬 개발, 검증용까지만 적합
+- Kafka cluster는 3개 이상의 broker로 구성
+- Broker server간에 부하 분산 가능
+- Replication : 데이터 손실 방지
+
+### How Many Brokers?
+
+- Disk 용량
+- borker마다 replication 용량
+- CPU 성능
+- Network 성능
+
+#### Disk 용량
+
+- retaining 메시지 수, single broker의 storage 용량
+- cluster가 10TB를 저장해야하고, 각 Broker가 2TB가 가능하면, 총 5개의 broker 필요
+    - 추가로 replication이 늘어남에 따라 최소 100%의 용량이 필요
+
+#### Cluster의 request 수용량
+
+- 한 cluster에 10개의 broker, 100만개 이상의 replica, 50만개의 partition (replication factor 2)
+    - 각 broker는 대략 10만개의 partition을 다룸
+    - 병목 현상 초래
+- 권장 사항 (과거)
+    - 각 broker마다 4천개 이하의 partition replica를 다루도록함
+    - cluster에 총 20만개의 parition replica
+- 권장사항 (최근)
+    - broker에 1만 4천개 이하의 parittion replica
+    - cluster에 1백만개 이하의 replica
+
+#### CPU
+
+- 대부분 use case에서 bottlneck 원인이 아님
+- 극단적으로 client connecttion, rquest가 늘어나는 경우 문제
+- 모니터링 요소 : unique한 client, consumer group 수
+
+### Network 성능
+
+- 네트워크 인터페이스 용량
+- data retention 기간 동안 트래픽이 일정하지 않은 경우 (e.g. 피크 시간 트래픽 폭증)에 대비
+- single borker가 피크시간에 80% 가 사용되고, 동일한 데이터의 consumer가 둘일 때 2개의 broker가 필요
+
+### Broker Configuration
+
+- broker내에서 cluster 설정 파라미터 2개
+- `zookeeper.connect` : ZooKeeper ensemble의 호스트 이름과 포트
+    - cluster가 메타데이터를 저장하는 zookkeeper ensemble에 연결
+- `broker.id` : broker의 고유 ID
+    - cluster 내에서 고유해야함
+
+### OS Tuning
+
+#### Virtual memory
+
+#### Disk
+
+#### Networking
+
 ## Production Concerns
 
 ## Summary
