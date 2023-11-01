@@ -506,11 +506,72 @@ Processed a total of 2 messages
 
 ### OS Tuning
 
+- Kafka 성능을 향상시킬 수 있는 kernel 매개변수
+- Virtual Memory, Network 하위 시스템, log segment를 저장할 disk mount 지점
+- 세부적인건 Linux 배포판 참조
+
 #### Virtual memory
+
+- swap space 처리 방식, dirty memory page 조정
+- swap을 피하는 것이 좋음
+    - memory page를 Disk로 swap하는 비용이 큼
+    - Kafka는 system page cache를 주로 사용
+- Swap 최소화하기 `vm.swappiness`
+    - VM 서브시스템이 page cache를 삭제하는 대신 swap할 확률
+    - `1` : swap을 최소화
+    - `0`으로 설정하면 swap을 사용하지 않음 (out-of-memory error가 발생 가능)
+    - swap의 이점 : 메모리 부족시 시스템이 죽지 않음
+
+> #### `vm.swappiness=0` 안하는 이유 : out-of-memory error
+>
+> - 예전에는 `0`을 추천했음
+> - Linux kernel version 3.5-rcl 이후에는 `0`을 추천하지 않음
+> - 3.5-rcl 이전 : out-of-memory error가 발생하지 않는 한 swap을 사용하지 않음
+> - 3.5-rcl 이후 : `0`으로 설정하면 out-of-memory error가 나도 swap 없음
+
+- dirty page 조정
+- Kafka의 producer의 응답시간은 Disk I/O 성능에 의존
+    - 따라서 log segment는 SSD, RAID와 같이 빠른 disk에 저장함
+- `vm.dirty_background_ratio` 를 10보다 낮게 설정
+    - system memory 총량의 백분율
+    - `5`로 설정하는 것이 적합
+    - `0`은 안됨. kernel이 page를 계속 flush하려고 함
+- `/proc/vmstat` 에서 현재 운용중인 dirty page 수 확인 가능
+
+```Bash
+# cat /proc/vmstat | egrep "dirty|writeback"
+nr_dirty 21845
+nr_writeback 0
+nr_writeback_temp 0
+nr_dirty_threshold 32715981
+nr_dirty_background_threshold 2726331
+#
+```
 
 #### Disk
 
+- 파일 시스템 선택하기 Ext4, XFS
+- XFS는 추가 조정 필요, 성능이 Ext4보다 좋음
+- `noatime` 을 설정해 디스크 쓰기 줄이기
+- `largeio` 을 설정해 대용량 쓰기 효율성 증가
+- 추천 : XFS를 고려하고, `noatime` 옵션을 설정할 것
+
 #### Networking
+
+- Kafka 튜닝은 다른 웹서버와 비슷
+- Socket의 송수신 Buffer 기본, 최대 량 조정
+    - 대규모 전송 시 성능 향상
+    - `net.core.wmen_default` : 기본 송수신 buffer 크기 (128KiB 추천)
+    - `net.core.wmen_max` : 최대 송수신 buffer 크기 (2 MiB 추천)
+- TCP Socket 송수신 버퍼 크기 설정
+    - `net.ipv4.tcp.wmem` , `net.ipv4.tcp.rmem`
+    - 최소, 기본, 최대 크기 설정 (공백으로 구분)
+    - e.g. `4096 65536 2048000` (최소 4KiB, 기본 64KiB, 최대 2MiB)
+- `net.ipv4.tcp_window_scaling=1` : TCP window scaling 활성화
+- `net,ipv4.tcp_max_syn_backlog`를 기본값 (1024)보다 크게 허용
+    - 동시 접속 수 더 많이 수락
+- `net.core.netdev_max_backlog` 를 기본값(1000)보다 크게 허용
+    - multigigabit network connection에서 성능 향상
 
 ## Production Concerns
 
