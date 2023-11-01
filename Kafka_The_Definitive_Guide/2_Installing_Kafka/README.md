@@ -623,3 +623,7 @@ nr_dirty_background_threshold 2726331
     - broker의 connection이 끊어지면 offline partition 발생
 
 ## Summary
+
+- Kafka를 구동하는 방법
+- borker의 적절한 하드웨어
+- 운영 환경 설정
