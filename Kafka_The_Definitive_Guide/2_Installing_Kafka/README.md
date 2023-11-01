@@ -575,4 +575,51 @@ nr_dirty_background_threshold 2726331
 
 ## Production Concerns
 
+- Kafka 환경을 상용환경에 구축 시 확인할 것
+
+### Garbage Collector Options
+
+- applicaiton의 메모리 사용량, 에러 등 분석
+- Java 7 부터 Garbage-First GC (G1GC) 도입
+- JDK 8, JDK 11에서 G1GC 안정성 업그레이드
+- Kafka에 G1GC를 default GC로 사용하기를 권장
+- `MaxGCPauseMillis` : GC cycle마다의 pause time 설정
+    - 고정 값 아님
+    - default : 200ms (G1GC의 최대 일시정지 시간 200ms)
+- `InitiatingHeapOccupancyPercent` : G1GC cycle이 발동되는 전체 heap의 백분율
+    - default : 45 (45%를 사용하지 않으면 G1GC 시작 안됨)
+
+### 튜닝 예시 (64GB 메모리, Kafka Heap 5GB)
+
+````Bash
+# export KAFKA_JVM_PERFORMANCE_OPTS="-server -Xmx6g -Xms6g
+-XX:MetaspaceSize=96m -XX:+UseG1GC
+-XX:MaxGCPauseMillis=20 -XX:InitiatingHeapOccupancyPercent=35
+-XX:G1HeapRegionSize=16M -XX:MinMetaspaceFreeRatio=50
+-XX:MaxMetaspaceFreeRatio=80 -XX:+ExplicitGCInvokesConcurrent"
+# /usr/local/kafka/bin/kafka-server-start.sh -daemon
+/usr/local/kafka/config/server.properties
+#
+````
+
+### Datacenter Layout
+
+- 운영 환경에서 downtime은 치명적
+- 렉의 물리적 위치, replication 설정이 중요
+- `broker.rack` 설정으로 각 broker가 동일한 rack에 위치하는 것을 방지
+
+### Colocating Applications on ZooKeeper
+
+- ZooKeeper 용도 : Kfka Broker, topic, partition에 대한 메타 데이터 정보 저장
+- 쓰기 이벤트 : consumer group 변동, Kfafka cluster 변동이 있을 떄
+- 주로 1개 이상의 Kafka cluster가 하나의 ZooKeper ensemble 사용
+    - 쓰기 traffic이 많지 않으므로 single kafka cluster에 대한 전용 Zookeeper ensemble 비추
+- consumer가 ZooKeeper, Kafka 둘 중에 offset을 commit할 곳을 정할 수 있음 (deprecated)
+    - ZooKeeper로 사용한다면 commit interval을 지정하여 interval마다 쓰기작업 발생
+    - 최신 Kafka library를 사용하여 Kafka에만 commit하도록 해야함
+- ensemble을 다른 application과 가능한 공유하지 말것
+    - 여러 cluster와 signle ensemble 공유 하는 경우 제외
+    - Kafka는 ZooKeeper latency, timeout에 민감
+    - broker의 connection이 끊어지면 offline partition 발생
+
 ## Summary
