@@ -6,7 +6,7 @@ Real-Time Data and Stream Processing at Scale
 
 1. [Meet Kafka](1_Meet_Kafka/README.md)
 2. [Installing Kafka](2_Installing_Kafka/README.md)
-3. Kafka Producers: Writing Messages to Kafka
+3. [Kafka Producers: Writing Messages to Kafka](3_Kafka_Producers_Writing_Messages_to_Kafka/README.md)
 4. Kafka Consumers: Reading Data from Kafka
 5. Managing Apache Kafka Programmatically
 6. Kafka Internals
