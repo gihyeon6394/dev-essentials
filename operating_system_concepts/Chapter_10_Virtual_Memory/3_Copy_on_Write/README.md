@@ -2,7 +2,9 @@
 
 ### copy-on-write
 
-<img src="img.png"  width="70%"/>
+<img src="img.png"  width="70%"/>  
+
+<img src="img_1.png"  width="70%"/>
 
 - parent와 child process가 초기에 같은 page를 공유하는것
     - 공유 page에 쓰기가 발생하면, page 사본이 생성됨
