@@ -17,7 +17,7 @@
 ---
 
 1. [Background](1_Background/README.md)
-2. Demand Paging
+2. [Demand Paging](2_Demand_Paging/README.md)
 3. Copy-on-Write
 4. Page Replacement
 5. Allocation of Frames
