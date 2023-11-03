@@ -97,6 +97,103 @@ propsKafka.put("value.serializer", "org.apache.kafka.common.serialization.String
 
 ## Sending a Message to Kafka
 
+````
+ProducerRecord<String, String> record =
+    // 1.
+    new ProducerRecord<>("CustomerCountry", "Precision Products","France");
+try {
+    // 2.
+    producer.send(record);
+} catch (Exception e) {
+    // 3.
+    e.printStackTrace();
+}
+````
+
+1. `ProducerRecord` 객체 생성
+    - 생성자에 topic 이름 (string), key, value
+    - key, value는 각각 `key serializer`, `value serializer`에 의해 직렬화
+2. `send()` : `ProducerRecord` 발송
+    - message가 buffer에 저장된 후 별도의 thread에서 broker에게 전송
+    - return `Future<RecordMetadata>`
+    - message 전송 성공 여부 확인 안함
+    - **production 에서는 적합하지 않음**
+3. 여러 예외 발생 가능
+    - `SerializationException` : 직렬화 실패
+    - `BufferExhaustedException` : buffer가 꽉 참
+    - `TimeoutException` : 발송 thread가 interrupt 됨ㅣ
+
+### Sending a Message Synchronously
+
+- kafka가 에러를 응답하면 예외를 catch
+    - 에러 응답, 발송 재시도 횟수 초과 등
+- trade-off : performance
+    - Kafka broker의 상태에 따라 2ms ~ 수 초까지 걸림
+- 응답할때까지 발송 thread는 대기
+- **production 환경에서는 적합하지 않음**
+
+````
+ProducerRecord<String, String> record =
+    new ProducerRecord<>("CustomerCountry", "Precision Products", "France");
+try {
+    // 1.
+    producer.send(record).get();
+} catch (Exception e) {
+    // 2.
+    e.printStackTrace();
+}
+````
+
+1. `Future.get()` : blocking
+    - record 전송이 실패하면 exception 발생
+    - 성공하면 `RecordMetadata` 반환
+2. 발송 도중 에러가 발생했으면 exception 발생
+
+### Kafka 의 에러 타입 2가지 : _Retriable_ , _Non-Retriable_
+
+- _Retriable_ : 재시도 가능
+    - e.g. connnection error는 connection을 다시 맺으면 해결
+    - `KafkaProucer`에 재시도 여부 설정 가능
+- _Non-Retriable_ : 재시도 불가능
+    - e.g. message size가 너무 크면 재시도해도 실패
+
+### Sending a Message Asynchronously
+
+- 대부분의 경우 Kafka의 응답이 필요 없음
+- 메시지 발송 실패 여부는 알아야함 (error 파일 등)
+
+````
+// 1.
+private class DemoProducerCallback implements Callback {
+    @Override
+    public void onCompletion(RecordMetadata recordMetadata, Exception e) {
+        if (e != null) {
+            // 2.
+            e.printStackTrace();
+        }
+    }
+}
+
+// 3.
+ProducerRecord<String, String> record =
+    new ProducerRecord<>("CustomerCountry", "Biomedical Materials", "USA");
+// 4.    
+producer.send(record, new DemoProducerCallback()); 
+````
+
+1. `org.apache.kafka.clients.producer.Callback` 구현체 생성
+2. `onCompletion()` : callback method
+    - Kafka가 error 응답했으면 `e`가 nonnull
+3. record 생성
+4. `send()` : callback 전달
+
+#### callback
+
+- callback은 Producer의 main thread에서 실행됨
+- 2개의 메시지를 서로 다른 partition에 보내도, callback은 main thread에서 순서대로 실행
+- callback 안에서 blocking 연산 비추
+- blocking 연산은 별도의 thread에서 concurrent하게 실행할 것
+
 ## Configuring Producers
 
 ## Serializers
