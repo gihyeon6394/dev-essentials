@@ -196,6 +196,51 @@ producer.send(record, new DemoProducerCallback());
 
 ## Configuring Producers
 
+- producer에 매우 많은 설정 파라미터들이 있음
+- [Apache Kafka Docs](https://kafka.apache.org/documentation.html#producerconfigs) 참고
+- 몇 설정은 memory, 성능, reliability에 영향을 미침
+
+### client.id
+
+- client (application) 에 대한 논리적 식별자
+- 문자열
+- Kafka broker가 어떤 client로부터 온 message인지 확인할 때 사용
+- e.g. IP 104.27.155.134, Order Validation Service 등...
+
+### acks
+
+- producer가 write가 성공적으로 끝났다고 간주하기 위해
+    - record를 수신해야하는 partition replicas의 수
+- Default, leader가 record를 받으면 성공으로 간주 (since Kafka 3.0)
+- 메시지 작성의 durability에 직결되는 설정
+
+#### `acks=0`
+
+- producer는 broker로부터 message 전송 성공 여부를 기다리지 않음
+- message 전송 성공 여부를 알 수 없음
+- message 유실 가능성
+- message 전송 속도 빠름
+
+#### `acks=1`
+
+- leader replica가 message를 받으면 성공으로 간주
+- leader replica에 message가 쓰이지 않으면, producer는 error를 받음
+    - 이후 재시도 가능
+- message 유실 가능성 : 최근 메시지가 새로운 leader에게 복제되기 전에 leader replica가 죽으면 유실
+
+#### `acks=all`
+
+- 모든 replica가 message를 받으면 성공으로 간주
+- 가장 안전한 모드 : 하나 이상의 broker가 message를 받았다는 보장
+- latency가 높음
+
+> #### trade-off : producer latency vs. durability
+>
+> - `acks` 설정값이 낮을 수록 producer latency 낮음
+> - `acks` 설정값이 높을 수록 durability 높음
+> - _end-to-end latency_ : producer가 message를 보내고, consumer가 message를 받는데 걸리는 시간
+> - `acks` 가 높을수록 end-to-end latency가 높음 (replica들에게 쓰이기 전까지 Kafka가 consumer에게 consume을 허용하지 않음)
+
 ## Serializers
 
 ## Partitions
