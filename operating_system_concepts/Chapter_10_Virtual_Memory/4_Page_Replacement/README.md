@@ -98,7 +98,16 @@
 - 3개의 frame을 사용할 때, page fault가 9번 발생
     - frame이 많으면 많을수록 page fault가 더 많이 발생
 
-## 3. Optimal Page Replacement
+## 3. Optimal Page Replacement (OPT, MIN)
+
+<img src="img_4.png"  width="80%"/>
+
+- 알고리즘 중 가장 낮은 page fault rate를 가짐
+- Belady’s anomaly 해소
+- 가장 오랜 시간동안 사용되지 않은 page를 교체
+- 구현이 어려움
+    - SJF CPU scheduling과 유사
+- 다른 알고리들의 성능을 측정하거나 비교할 때 사용
 
 ## 4. LRU Page Replacement
 
