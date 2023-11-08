@@ -62,7 +62,6 @@
 
 - multi-programming시, 각 process에 몇개의 frame을 할당할 것인가?
 
-
 ### page-replacement algorithm
 
 - page replacement시, 어떤 page를 victim으로 할 것인가?
@@ -76,6 +75,28 @@
 - 문자열, 난수 숫자 등의 페이지 참조를 연속으로 일으켜, page fault를 발생시키고 알고리즘을 테스트
 
 ## 2. FIFO Page Replacement
+
+<img src="img_2.png"  width="80%"/>
+
+- 가장 먼저 memory에 올라온 page를 victim으로 선택
+- FIFO queue 사용
+    - page가 memroy에 올라오면 enqueue
+- 프로그램, 알고리즘이 단순
+- 성능은 별로
+- 사용중인 page가 교체되면
+    - 즉시 page fault가 발동되어 다른 page를 교체
+    - 사용중이었던 page는 다시 memory에 올라옴
+    - page-fualt rate가 높음
+
+### Belady's Anomaly
+
+<img src="img_3.png"  width="80%"/>
+
+- FIFO page-replacement algorithm이 더 많은 frame을 사용할수록 page fault가 늘어나는 현상
+- `1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5` reference string 예시
+- 4개의 frame을 사용할 때, page fault가 10번 발생
+- 3개의 frame을 사용할 때, page fault가 9번 발생
+    - frame이 많으면 많을수록 page fault가 더 많이 발생
 
 ## 3. Optimal Page Replacement
 
