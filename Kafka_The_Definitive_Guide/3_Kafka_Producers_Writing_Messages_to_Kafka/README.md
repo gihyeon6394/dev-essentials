@@ -368,6 +368,269 @@ producer.send(record, new DemoProducerCallback());
 
 ## Serializers
 
+- producer 설정에는 의무로 직렬화 클래스를 지정해야함
+- message가 단순 string, integer가 아니면, 직렬화 클래스를 작성해야함
+    - **직렬화 라이브러리 (권장)** : Avro, Thrift, Protobuf
+    - custom 직렬화 클래스 작성
+- 기본 `String` serializer
+- `ByteArrays`
+- 고유한 serializer 작성법
+- Avro serializer
+
+### Custom Serializers
+
+- `org.apache.kafka.common.serialization.Serializer` interface 구현
+- 구현체를 관리해야함
+    - `customerID`의 타입이 바뀐다면?, 추가 field가 생긴다면?
+- 여러 팀에서 serializer 클래스를 공유해서 사용해야함
+
+```Java
+public class Customer {
+    private int customerID;
+    private String customerName;
+    
+    public Customer(int ID, String name) {
+        this.customerID = ID;
+        this.customerName = name;
+    }
+    
+    public int getID() {
+        return customerID;
+    }
+    
+    public String getName() {
+        return customerName;
+    }
+}
+
+import org.apache.kafka.common.errors.SerializationException;
+import java.nio.ByteBuffer;
+import java.util.Map;
+
+public class CustomerSerializer implements Serializer<Customer> {
+    @Override
+    public void configure(Map configs, boolean isKey) {
+    // nothing to configure
+    }
+    
+    @Override
+    /**
+    We are serializing Customer as:
+    4 byte int representing customerId
+    4 byte int representing length of customerName in UTF-8 bytes (0 if name is Null)
+    N bytes representing customerName in UTF-8
+    **/
+    public byte[] serialize(String topic, Customer data) {
+        try {
+            byte[] serializedName;
+            int stringSize;
+            if (data == null)
+                return null;
+            else {
+                if (data.getName() != null) {
+                serializedName = data.getName().getBytes("UTF-8");
+                stringSize = serializedName.length;
+                } else {
+                    serializedName = new byte[0];
+                    stringSize = 0;
+                }
+            }
+            
+            ByteBuffer buffer = ByteBuffer.allocate(4 + 4 + stringSize);
+            buffer.putInt(data.getID());
+            buffer.putInt(stringSize);
+            buffer.put(serializedName);
+            
+            return buffer.array();
+        } catch (Exception e) {
+            throw new SerializationException(
+            "Error when serializing Customer to byte[] " + e);
+        }
+    }
+    
+    @Override
+    public void close() {
+        // nothing to close
+    }
+}
+
+```
+
+### Serializing Using Apache Avro
+
+- language-neutral data serialization format
+- 많은 사람들과 data file을 공유하기위해 고안됨
+- 주로 JSON으로 표현됨
+- schema에 수정이 있어도 계속해서 message를 읽을 수 있음
+    - 예외나 에러 발생하지 않음
+    - `faxNumber` -> `email` 필드로 변경해도 이전 스키마를 읽을 때 에러가 발생하지 않음
+
+```json
+
+{
+  "_comment": "original schema",
+  "namespace": "customerManagement.avro",
+  "type": "record",
+  "name": "Customer",
+  "fields": [
+    {
+      "name": "id",
+      "type": "int"
+    },
+    {
+      "name": "name",
+      "type": "string"
+    },
+    {
+      "name": "faxNumber",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": "null"
+    }
+  ]
+}
+```
+
+- `id`, `name` 필드 : 필수
+- `faxNumber` : optional (default : null)
+
+```json
+{
+  "_comment": "new schema",
+  "namespace": "customerManagement.avro",
+  "type": "record",
+  "name": "Customer",
+  "fields": [
+    {
+      "name": "id",
+      "type": "int"
+    },
+    {
+      "name": "name",
+      "type": "string"
+    },
+    {
+      "name": "email",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": "null"
+    }
+  ]
+}
+
+```
+
+- 변경사항 : `faxNumber` 필드가 `email` 필드로 변경됨
+- consumer application의 `getFaxNumber()` 메서드를 `getEmail()`로 변경해야함
+- 이전 스키마 읽을 시 `getEmail()` 메서드를 호출하면 `null`을 반환
+- 주의점
+    - data를 쓰는 schema와 read하는 application의 schema가
+      호환되어야함 [Avro docs compatibility rules](https://avro.apache.org/docs/1.7.7/spec.html#Schema+Resolution)
+    - 역직렬화기는 데이터를 작성할 때 사용한 스키마를 사용해야함
+
+### Using Avro Records with Kafka
+
+<img src="img_2.png"  width="70%"/>
+
+- Avro file 사이즈 overhead
+    - 각 record에 schema가 포함되어 있음
+- _Schema Registry_ : Avro file을 읽을 때 필요한 schema 정보를 별도 저장
+- [Confluent Schema Registry](https://docs.confluent.io/platform/current/schema-registry/index.html)
+- 아이디어 : Kafka에 전송할 데이터의 모든 schema를 registry에 저장
+    - 저장시 schema 별로 식별자를 둠
+    - Kafka에 produce 시 식별자로 schema를 찾음
+    - consumer는 식별자를 사용해 schema를 찾음
+
+````
+Properties props = new Properties();
+porps.put("bootstrap.servers", "localhost:9092");
+props.put("key.serializer", "io.confluent.kafka.serializers.KafkaAvroSerializer");
+
+// 1.
+props.put("value.serializer", "io.confluent.kafka.serializers.KafkaAvroSerializer");
+
+// 2.
+props.put("schema.registry.url", schemaUrl);
+
+String topic = "customerContacts";
+
+// 3.
+Producer<String, Customer> producer = new KafkaProducer<>(props);
+
+while (true){
+    // 4.
+    Customer customer = CustmoerGenerator.getNext();
+    System.out.println("Generated customer " + customer.toString());
+    
+    // 5.
+    ProducerRecord<String, Customer> record = new ProducerRecord<>(topic, customer.getName(), customer);
+    // 6.
+    producer.send(record);
+````
+
+1. `KafkaAvroSerializer`를 serializer로 사용
+2. `schema.registry.url` : schema가 저장된 url
+    - producer에 의해 전달되는 Avro serializer 설정값
+3. `Customer`를 value로 사용
+4. Avro serializer는 오직 Avro Object만 직렬화 가능 (POJO 불가능)
+    - _avro-tools.jar_ : POJO를 Avro Object로 변환하는 툴
+5. `ProducerRecord` 객체 생성
+6. `Customer` 객체 전달, `KafkaAvroSerializer`가 나머지를 처리
+
+#### generic Avro objects 사용하기
+
+- key-value map 형태
+
+````
+Properties props = new Properties();
+props.put("bootstrap.servers", "localhost:9092");
+props.put("key.serializer", "io.confluent.kafka.serializers.KafkaAvroSerializer");
+props.put("value.serializer", "io.confluent.kafka.serializers.KafkaAvroSerializer");
+props.put("schema.registry.url", url);
+
+// 1. 
+String schemaString =
+    "{\"namespace\": \"customerManagement.avro\",
+    "\"type\": \"record\", " +
+    "\"name\": \"Customer\"," +
+    "\"fields\": [" +
+        "{\"name\": \"id\", \"type\": \"int\"}," +
+        "{\"name\": \"name\", \"type\": \"string\"}," +
+        "{\"name\": \"email\", \"type\": " + "[\"null\",\"string\"], " +
+        "\"default\":\"null\" }" +
+    "]}";
+
+// 2.
+Producer<String, GenericRecord> producer = new KafkaProducer<String, GenericRecord>(props);
+
+Schema.Parser parser = new Schema.Parser();
+Schema schema = parser.parse(schemaString);
+
+for (int nCustomers = 0; nCustomers < customers; nCustomers++) {
+    String name = "exampleCustomer" + nCustomers;
+    String email = "example " + nCustomers + "@example.com";
+       
+    // 3.
+    GenericRecord customer = new GenericData.Record(schema);
+    customer.put("id", nCustomers);
+    customer.put("name", name);
+    customer.put("email", email);
+    
+    ProducerRecord<String, GenericRecord> data = new ProducerRecord<>("customerContacts", name, customer);
+    producer.send(data);
+}
+````
+
+1. schema를 직접 작성
+2. Avro `GenericRecord` 타입 사용
+3. `ProducerRecord` 값은 `GenericRecord` 객체
+    - `GenericRecord` 에 스키마와 데이터가 포함됨
+    - serializer는 record를 읽어 Schema Registry 위치, data 확인 가능
+
 ## Partitions
 
 ## Headers
