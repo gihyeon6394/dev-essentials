@@ -16,10 +16,10 @@
     - Chapter 8 Complex Data Types
     - Chapter 9 Application Development
 4. PART FOUR BIG DATA ANALYTICS
-    - Chapter 10 Big Data
+    - [Chapter 10 Big Data](Chapter_10_Big_Data/README.md)
     - Chapter 11 Data Analytics
 5. PART FIVE STORAGE MANAGEMENT AND INDEXING
-    - Chapter 12 Pysical Storage Systems
+    - Chapter 12 Physical Storage Systems
     - Chapter 13 Data Storage Structures
     - [Chapter 14 Indexing](Chapter_14_Indexing/README.md)
 6. PART SIX QUERY PROCESSING AND OPTIMIZATION

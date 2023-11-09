@@ -1,6 +1,6 @@
 <img src="img_1.png"  width="80%"/>
 
-# CHPATGER 14. INDEXING
+# CHAPTER 14. INDEXING
 
 #### Index의 필요성
 
