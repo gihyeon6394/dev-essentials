@@ -98,18 +98,38 @@
 - 3개의 frame을 사용할 때, page fault가 9번 발생
     - frame이 많으면 많을수록 page fault가 더 많이 발생
 
-## 3. Optimal Page Replacement (OPT, MIN)
+## 3. Optimal Page Replacement (OPT, MIN, statistic algorithm)
 
 <img src="img_4.png"  width="80%"/>
 
 - 알고리즘 중 가장 낮은 page fault rate를 가짐
 - Belady’s anomaly 해소
-- 가장 오랜 시간동안 사용되지 않은 page를 교체
+- 가장 오랜 시간동안 사용되지 않을 페이지를 교체
 - 구현이 어려움
     - SJF CPU scheduling과 유사
 - 다른 알고리들의 성능을 측정하거나 비교할 때 사용
 
-## 4. LRU Page Replacement
+## 4. LRU Page Replacement (Least Recently Used, stack algorithm)
+
+<img src="img_5.png"  width="80%"/>
+
+- 가장 오랜 시간동안 사용되지 않은 page를 교체
+    - page의 마지막 사용시점 사용
+- Belady’s anomaly 해소
+
+### 구현 방법 : 하드웨어의 도움을 받아 마지막 사용 시점을 알아내는 방법
+
+<img src="img_6.png"  width="60%"/>
+
+- Counter : page table entry에 사용시점 field를 둠
+    - CPU 에 logical clock (or counter)를 추가
+    - memory 참조가 일어날 때마다 clock 값을 증분 후 page table entry에 저장
+    - field를 기준으로 탐색 필요
+- Stack : page number를 stack에 저장
+    - page 참조가 일어날 떄마다 stack에서 `pop()` 후 `push()`
+    - 가장 최근에 사용한 page가 항상 stack의 top에 위치
+    - 가장 오랜 시간동안 사용되지 않은 page는 stack의 bottom에 위치
+    - doubly linked list 사용 : stack 중간의 요소를 `pop()` 할 수 있어야함
 
 ## 5. LRU Approximation Page Replacement
 
