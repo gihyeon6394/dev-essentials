@@ -241,6 +241,131 @@ producer.send(record, new DemoProducerCallback());
 > - _end-to-end latency_ : producer가 message를 보내고, consumer가 message를 받는데 걸리는 시간
 > - `acks` 가 높을수록 end-to-end latency가 높음 (replica들에게 쓰이기 전까지 Kafka가 consumer에게 consume을 허용하지 않음)
 
+### Message Delivery Time (Apache Kafka 2.1 기준)
+
+<img src="img_1.png"  width="80%"/>
+
+- `send()` 가 성공/실패하는데 걸리는 시간
+- `send()`를 비동기로 호출한 뒤
+    - 응답을 기다리는 시간 (blocking)
+    - 성공(또는 실패)에 의해 callback이 trigger될때까지의 시간
+
+#### `max.block.ms`
+
+- `send()` 호출 시 producer가 block하는 시간
+    - 혹은 `partitionsFor()` 호출 시 producer가 block하는 시간
+    - `partitionsFor()` : 명시적으로 metadata를 요청하는 메서드
+- producer의 send buffer가 찼거나, metadata가 없으면 block
+- `max.block.ms` 값에 도달하면 timeout exception 발생
+
+#### delivery.timeout.ms
+
+- sending 전송 준비가 완료된 시점 ~ broker가 응답(or client 포기) 까지의 시간
+    - sending 전송 준비가 완료된 시점 : `send()` 의 리턴값이 성공 and record가 batch에 추가되었을 때
+- `lingers.ms`, `request.timeout.ms` 보다 z커야함
+- retrying 중에 `delivery.timeout.ms`에 도달하면 에러가 발생하여 borker가 리턴
+- record batch가 전송을 기다리는 중에 `delivery.timeout.ms`에 도달하면 timeout exception 발생
+
+> #### 적절한 `delivery.timeout.ms`
+>
+> - broker crash 발생 시 leader 재선출에 일반적으로 30 seconds 소요
+> - 120 seconds 동안 재시도 설정  (`delivery.timeout.ms=120000`)
+
+#### `request.timeout.ms`
+
+- producer가 data 전송 시 server로부터 응답을 기다리는 시간
+- retry 시간 포함 X
+- `request.timeout.ms`에 도달하면 `TimeoutException`을 발동하거나, retry
+
+#### `retries and retry.backoff.ms`
+
+- `retries` : producer가 message 전송을 재시도하는 횟수
+    - `retries=0` : 재시도 안함
+- `retry.backoff.ms` : 재시도 사이의 시간 간격
+    - default : 100ms
+- 권장사항 : 설정하지 않기
+    - broker가 crash로부터 복구 (e.g. leader 재선출)하는데 걸리는 시간을 고려
+    - 복구 시간보다 길게 `delivery.timeout.ms`를 설정
+- producer가 모든 에러를 retry하지 않음
+    - e.g. _message too large_ 와 같은 non-retriable 에러
+
+### linger.ms
+
+- 최근 batch에서 send하기 전에, 추가 message를 기다리는 시간
+- KafkaProducer는 batch가 가득 차거나, `linger.ms`에 도달하면 batch를 전송
+    - deafult로 sender thread가 전송이 가능해지는 즉시 전송함 (batch가 가득 차지 않아도)
+- `linger.ms`가 0보다 크면, producer는 batch를 전송하기 전에 `linger.ms`를 기다림
+    - latency를 살짝 늘리고, 처리량 (throughput)을 매우 높임
+
+### buffer.memory
+
+- broker에 message를 전송하기 전에 사용할 buffer size
+- 서버 전송 가능량보다 applciation이 많이 전송하려하면,
+    - `max.block.ms` 만큼 blocking되고,
+    - buffer size가 확보될때까지 기다림 (`max.block.ms`에 도달해도 확보 안되면 exception 발생)
+
+### compression.type
+
+- producer가 message를 전송하기 전에 압축하는 방법
+- default : `none`
+- `snappy` : 압축률이 높고, CPU 사용량이 낮음
+    - 압축 성능, Bandwidth 고려시 적합
+- `gzip` :  압축률 높고, CPU 사용률 높음, 소요시간 높음
+    - bandwidth 제약이 더 높을 떄 적합
+- bottleneck 가능성
+    - broker에 전송 전에 압축 시간이 발생
+- 장점 : network bandwidth, storage 사용량 감소
+
+### batch.size
+
+- 여러 record를 같은 partition에 전송할 떄, producer는 일괄처리 (batch)함
+- batch에 사용할 memory byte size
+- batch가 가득차면 message가 전송됨
+    - producer는 가득차지 않아도 전송시킬 수 있음
+- batch size를 너무 작게 설정하면 overhead가 발생
+    - 너무 자주 message 전송함
+
+### max.in.flight.requests.per.connection
+
+- server의 응답없이 producer가 보낼 수 있는 batch 수
+- 높을수록 memory 사용량, 처리량 (throughput) 증가
+- single Data Center 환경에서 2 in-flight request가 처리량 최대치
+
+> #### Ordering Guarantees
+>
+> - Kafka는 message 순서 그대로 parition에 씀
+> - Consumer는 전송 순서대로 message를 읽음
+> - `max.in.flight.requests.per.connection` 값이 1보다 크거나, `retries` 값이 0보다 크면 순서가 보장되지 않음
+> - ` enable.idempotence=true` 설정하면, in-flight request 5번까지 순서 보장
+
+### max.request.size
+
+- Producer의 request의 사이즈
+- producer가 보낼 수 있는 가장 큰 메시지 크기
+    - `max.request.size`가 1MB일 때, 1MB보다 큰 메시지는 전송 불가
+        - 1KB 메시지를 1024개 묶기 가능
+- `message.max.bytes` : broker가 받을 수 있는 가장 큰 메시지 크기
+    - `max.request.size` 과 통일하는 것을 권장
+
+### receive.buffer.bytes and send.buffer.bytes
+
+- data를 읽고, 쓸 떄 Socket이 사용하는 TCP 송수신 buffer 크기
+- `-1` : OS default
+- producer와 consumer가 서로 다른 Data center에 있을 떄 값을 늘리는 것이 좋음
+    - 높은 latency, 낮은 bandwidth 환경
+
+### enable.idempotence
+
+- _exactly once_ : message가 정확히 한번만 전송되는 것을 보장 (Kafka 0.11 이상)
+- `enable.idempotence=true` : 멱등성 producer 활성화
+    - producer가 각 record에 sequence nubmer를 부여
+    - broker가 동일한 sequence number의 reocrd를 받았으면, replication을 거절하고 무해한 `DuplicateSequenceException`을 발생
+- `enable.idempotence=true` 필요조건
+    - `max.in.flight.requests.per.connection` 이 5 이하
+    - `retries` 가 0 초과
+    - `acks` 가 `all` 이어야 함
+    - 그렇지 않으면 `ConfigException` 발생
+
 ## Serializers
 
 ## Partitions
