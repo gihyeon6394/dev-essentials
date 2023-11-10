@@ -11,7 +11,7 @@
 ---
 
 1. [Motivation](1_Motivation/README.md)
-2. Big Data Storage Systems
+2. [Big Data Storage Systems](2_Big_Data_Storage_Systems/README.md)
 3. The MapReduce Paradigm
 4. Beyond MapReduce: Algebraic Operations
 5. Steaming Data
