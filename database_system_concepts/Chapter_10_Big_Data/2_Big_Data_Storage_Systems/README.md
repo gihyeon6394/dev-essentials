@@ -217,4 +217,13 @@ db.student.drop() // Drops the entire collection
 
 ## 4. Parallel and Distributed Databases
 
+- N개의 machine에서 운용되는 DB
+- cluster
+- 현대 Big Data system의 기반
+- programmer 입장에서는 single machine으로 보임
+- replication 지원 (fault-tolerance)
+- machine이 늘어날수록 fail이 발생할 확률이 높아짐
+- _map-reduce_ : parallel query processing을 위한 기법
+    - fail 발생시 fail이 발생한 machine에서 다시 실행
+
 ## 5. Replication and Consistency
