@@ -41,6 +41,28 @@
     - 1개 파일에 대한 block은 여러 machine에 걸칠 수 있음
     - 각 block은 여러 machine에 걸쳐 replicated 될 수 있음 (fault-tolerance)
 
+#### File System의 기본 지원
+
+- directory system : 파일을 계층형의 디렉토리로 저장 가능
+- block의 식별자 번호와 file을 매핑
+- 식별자로 data를 저장하고, 탐색
+    - centralized file system에서는 식별자로 disk를 특정
+    - distributed file system에서는 식별자로 machine + disk를 특정
+
+### Distributed File System 예시 : Hadoop Distributed File System (HDFS)
+
+<img src="img.png"  width="70%"/>
+
+- **NameNode** : 파일의 metadata를 저장 (Hadoop의 코어)
+    - file system의 모든 요청은 NameNode로 전달
+    - 파일별 block 식별자 정보를 유지
+    - block replication 정보를 유지
+- **DataNode** : block을 저장
+- Read : block이 있는 machine 식별자, file이 있는 block 식별자를 가져옴
+- Write : block 식별자를 생성해서 각 machine에 할당
+- API 지원
+    - Java, Python 등의 언어로 구현된 API 제공
+
 ## 2. Sharding
 
 ## 3. Key-Value Storage Systems
