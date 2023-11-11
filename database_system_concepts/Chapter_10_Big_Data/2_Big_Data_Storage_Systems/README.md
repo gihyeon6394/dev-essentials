@@ -65,6 +65,32 @@
 
 ## 2. Sharding
 
+- 대용량 파일, 수백만 이상 사용자, SNS application 등에서는 single application으로 역부족
+- **sharding** : data를 partition 하여, 여러 DB (or machine)에 걸쳐 저장
+
+### paritioning 방법
+
+- _partitioning attributes (partitioning keys, shard keys)_ : data를 partitioning하는데 사용되는 attribute
+    - 1개 이상의 속성 사용 e.g. 사용자 식별 키 등
+- _range partitioning_ : partitioning attribute의 값의 범위에 따라 partitioning
+    - e.g. 사용자 식별 키의 범위에 따라 partitioning
+    - e.g. 1 ~ 100,000은 DB1, 100,001 ~ 200,000은 DB2, ...
+- _hash partitioning_ : partitioning attribute의 hash 값에 따라 partitioning
+    - e.g. 사용자 식별 키의 hash 값에 따라 partitioning
+    - e.g. hash(1) % 10 = DB1, hash(2) % 10 = DB2, ...
+
+### application에서 query 처리
+
+- query를 처리하기 위해, client는 어떤 DB에 접근해야 하는지 알아야 함
+    - paritioning attribute에 대한 정보를 알고 있어야 함
+- 하나의 query를 여러 DB에 걸쳐 질의해야할 수도 있음
+
+### 한계
+
+- application이 paritioning 정보를 기반으로 query를 라우팅해야함
+- 특정 DB에 부하가 생기면, 데이터를 다른 DB로 이동시켜야 함
+- Key-Value Storage System이 일부 해결
+
 ## 3. Key-Value Storage Systems
 
 ## 4. Parallel and Distributed Databases
