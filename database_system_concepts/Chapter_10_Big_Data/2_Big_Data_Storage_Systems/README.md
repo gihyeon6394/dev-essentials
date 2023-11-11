@@ -89,9 +89,131 @@
 
 - application이 paritioning 정보를 기반으로 query를 라우팅해야함
 - 특정 DB에 부하가 생기면, 데이터를 다른 DB로 이동시켜야 함
-- Key-Value Storage System이 일부 해결
+- Key-Value Storage System이 일부 해결 (parallel key-value store)
 
-## 3. Key-Value Storage Systems
+## 3. Key-Value Storage Systems (Key-Value Store, NoSQL)
+
+- 많은 web-app은 작은 사이즈의 레코드를 수십억 이상 저장 (작은 사이즈 : KB ~ MB)
+- 작은 record를 각자 file에 저장하는 것은 비효율적
+- **key-value storage system** : key를 통해 record를 저장, 질의
+    - 대용량 데이터 저장 가능
+    - 수천개의 machine으로 scaling
+- NoSQL system
+    - SQL을 지원하지 않기 떄문에 붙여짐
+
+### Parallel Key-Value store
+
+- 직접 각 machine 별 partition key를 유지
+    - application code에서 partition 을 고려할 필요 없음
+    - 오늘날 sharding 보다 더 사용되는 이유
+- replication 지원
+- load balancing 지원
+- Google Bigtable, Apache HBase, Amazon Dynamo, Facbook Cassandra, MongoDB, ...
+
+### document stores (e.g. MongoDB)
+
+- value에 대해 단순히 byte sequence로 간주
+- value에 간결하게 schema를 정의해서 쿼리를 지원
+- MongoDB는 JSON document를 value로 저장
+
+### 동작
+
+- `put(key, value)` : key-value pair를 저장
+- `get(key)` : key에 해당하는 value를 가져옴
+- 주로 API를 통해 접근이 이루어짐
+- Bigtable은 range query 지원
+- Document store는 여러 추가 쿼리 지원
+
+### cluster
+
+- 다수의 machine에 걸쳐 cluster를 구성
+- 대용량 데이터를 저장 가능
+- record는 cluster안의 machine에 partitioning되어 저장
+
+### 한계
+
+- 표준 DB system이 제공하는 여러 기능을 미지원
+    - declarative quering (SQL)
+    - transcation
+- 기본적으로 non-key 속성에 대한 쿼리 지원이 제한적
+    - e.g. 사용자의 나이가 20살 이상인 사용자를 찾는 쿼리
+
+### 예시 : MongoDB
+
+#### DB 연결, 데이터 생성, 조회, 삭제
+
+```Javascript
+show dbs // Shows available databases
+use sampledb // Use database sampledb, creating it if it does not exist
+db.createCollection("student") // Create a collection
+db.createCollection("instructor")
+show collections // Shows all collections in the database
+db.student.insert({ "id" : "00128", "name" : "Zhang",
+    "dept name" : "Comp. Sci.", "tot cred" : 102, "advisors" : ["45565"] })
+db.student.insert({ "id" : "12345", "name" : "Shankar",
+    "dept name" : "Comp. Sci.", "tot cred" : 32, "advisors" : ["45565"] })
+db.student.insert({ "id" : "19991", "name" : "Brandt",
+    "dept name" : "History", "tot cred" : 80, "advisors" : [] })
+db.instructor.insert({ "id" : "45565", "name" : "Katz",
+    "dept name" : "Comp. Sci.", "salary" : 75000,
+    "advisees" : ["00128","12345"] })
+db.student.find() // Fetch all students in JSON format
+db.student.findOne({"ID": "00128"}) // Find one matching student
+db.student.remove({"dept name": "Comp. Sci."}) // Delete matching students
+db.student.drop() // Drops the entire collection
+```
+
+- `use` : database를 선택하고, 없으면 생성
+- `db.createCollection` : collection 생성 (_document_ 저장 용도)
+- `student`, `instructor` collection 생성
+    - 각 collection에 JSON 형태의 document를 저장
+    - 자동으로 식별자를 지정 (key), `_id` 속성에 저장, index 생성
+- value에 대한 쿼리 지원 `db.student.find({"dept name": "Comp. Sci."})`
+- `remove()`, `drop()` : document, collection 삭제
+
+#### 기타 특징
+
+- 저장된 데이터 대한 인덱스 생성 지원
+- 2개 이상의 machine으로 cluster 구성 지원
+    - 데이터는 machine에 걸쳐 sharding되어 저장
+    - **partitioning attribute (shard key)** : 데이터를 partitioning하는데 사용되는 attribute
+    - replication 지원
+    - request -> MongoDB router -> machine
+
+### 예시 : Bigtable
+
+- record에 여러 속성을 가질 수 있고, record 마다 속성 구성이 다를 수 있음
+- key는 (record-identifier, attribute-name, timestamp)로 구성
+    - record-identifier : record를 식별하는 식별자
+    - attribute-name : record의 속성을 식별하는 식별자
+    - timestamp : 속성의 값이 변경된 시간
+- Json을 지원하지 않고 단순 문자열로 취급
+- application과 1:N으로 연결 가능
+    - 각 application마다 table을 생성해서 사용
+
+````json
+{
+  "ID": "22222",
+  "name": {
+    "firstname": "Albert",
+    "lastname": "Einstein"
+  },
+  "deptname": "Physics",
+  "children": [
+    {
+      "firstname": "Hans",
+      "lastname": "Einstein"
+    },
+    {
+      "firstname": "Eduard",
+      "lastname": "Einstein"
+    }
+  ]
+}
+````
+
+- record identifier : `ID`
+- attribute name : `name.firstname`, `name.lastname`, `deptname`, `children.firstname`, `children.lastname`
 
 ## 4. Parallel and Distributed Databases
 
