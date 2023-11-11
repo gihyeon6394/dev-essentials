@@ -227,3 +227,40 @@ db.student.drop() // Drops the entire collection
     - fail 발생시 fail이 발생한 machine에서 다시 실행
 
 ## 5. Replication and Consistency
+
+- replication : 데이터를 여러 machine에 복제해서 저장
+- fault-tolerance의 핵심
+- data가 수정되면 모든 replica에 수정이 반영되어야 함
+- _consistency_ : 살아있는 모든 replica는 동일한 데이터를 저장하고, 가장 최신 데이터를 read해야함
+- _availability_ : client가 DB에 접근, 쿼리를 실행할 수 있어야 함
+- 문제 1. 여러 machine에 대한 transaction 처리
+- 문제 2. replca에 대한 transaction 전파
+    - replica 의 반 이상은 항상 살아있어야 함
+
+#### _network partition_
+
+- network partition : network이 두 개 이상의 partition으로 나뉘는 상황
+- 어떤 protocol도 network partition에서 _availability_ 와 _consistency_ 를 모두 보장할 수 없음
+
+#### trade-off : _consistency_ vs _availability_
+
+- _consistency_ : 모든 replica는 동일한 데이터를 저장
+- _availability_ : client가 DB에 접근, 쿼리를 실행할 수 있어야 함
+- _consistency_ vs _availability_ 는 trade-off 관계
+
+### Key-value store와 RDB의 조합
+
+- 자주 read되는 데이터는 key-value store에 저장
+    - e.g. 사용자의 profile, 계정 등
+    - select key로 간결하게 처리
+    - 더 복잡한 value가 필요하면 key 외의 요소에 index를 지원하는 DB에 저장 (e.g. MongoDB)
+- 복잡합 쿼리로 사용되는 데이터는 사용되는 RDB에 저장
+    - 데이터 수정을 replica에 전파
+
+### In-memory cashing system (e.g. Redis, Memcached)
+
+- RDB에 대한 read-only access를 확장하기 위해 사용
+- 몇 Relationd을 in-memory에 저장
+- applicaion이 빠르게 접근할 수 있도록 함
+- 데이터 수정은 반드시 RDB에서 수행되어야함
+    - application이 수정사항을 cache에 반영
