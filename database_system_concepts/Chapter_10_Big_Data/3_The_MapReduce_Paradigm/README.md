@@ -259,3 +259,14 @@ public static class Reduce extends Reducer<Text, IntWritable, Text, IntWritable>
 - network traffic을 줄임
 
 ## 6. SQL on MapReduce
+
+- map-reduce를 SQL로 처리하는 것은 복잡함
+- 그러나 이미 많은 application이 데이터를 RDB에 저장 중
+    - 데이터를 SQL로 처리하는 것이 더 효율적일 수 있음
+- `GROUP BY` + 집계함수
+    - `GROUP BY` : `map()`의 결과를 reduce key로 사용
+    - 집계함수 : `reduce()`
+- SQL을 병렬로 실행하여 처리하는 새로운 시스템
+    - e.g. _Apache Hive, SCOPE, Apache Pig, Pig Latin_
+    - data를 file system에서 직접 읽어 프로그래머가 function을 정의해서 converting
+    - Hadoop과 같은 map-reduce framework에서 compile, 실행
