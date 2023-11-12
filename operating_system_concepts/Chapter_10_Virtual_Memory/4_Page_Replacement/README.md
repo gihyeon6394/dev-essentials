@@ -133,6 +133,48 @@
 
 ## 5. LRU Approximation Page Replacement
 
+- **reference bit** : page가 참조되었는지 여부를 나타내는 bit (hardware가 설정)
+    - 최초에는 0
+    - page 참조가 일어나면 1로 설정
+- reference bit을 활용해 LRU page replacement을 흉내낼 수 있음
+
+### 1. Additional-Reference-Bits Algorithm
+
+- 주기적으로 reference bit 값을 추적해 ordering information 생성
+- Additional-Reference-Bits (추가 참조 비트) 필요
+
+### 동작 예시
+
+- page마다 Additional-Reference-Bits 8-bit byte 공간을 둠
+- 100ms 마다 timer interrupt 발생
+- OS가 각 page들의 referenc bit을 Additional-Reference-Bits의 최상위 bit에 둠
+    - 나머지 bit는 오른쪽으로 shift
+- e.g. `00000000` : 8시간 동안 사용되지 않음
+    - `11111111` : 100ms마다 적어도 1번 사용됨
+
+### 2. Second-Chance Algorithm (clock algorithm)
+
+- FIFO page replacement algorithm을 기반으로 함
+
+### 동작 예시
+
+- FIFO로 탐색
+- page의 referenc bit이 0 -> 교체
+- page의 referenc bit이 1 -> 2번째 기회를 주고 다음 FIFO page로 이동
+    - 2번째 기회를 줄 때, reference bit을 0, page 도착시간 = 현재시간으로 설정
+    - 따라서 다른 모든 FIFO page가 교체될 때까지 교체되지 않음
+
+### circular queue
+
+<img src="img_7.png"  width="70%"/>
+
+- Second-Chance Algorithm 구현 방법
+- pointer가 다음 fifo page를 가리키도록 함
+- frame이 필요해지면, pointer가 가리키는 reference bit = 0인 page를 찾을때까지 탐색
+- 최악의 경우 : 모든 page의 reference bit이 1이면,
+    - queue 전체를 탐색해서 reference bit을 0으로 만들어야함
+    - 즉, queue의 모든 page에 second chance를 줘야함
+
 ## 6. Counting-Based Page Replacement
 
 ## 7. Page-Buffering Algorithms
