@@ -173,4 +173,89 @@ reduce(String key, List value list) {
 
 ## 5. MapReduce in Hadoop
 
+- Hadoop은 Java로 구현된 널리 사용되는 오픈소스 MapReduce system
+- `map()`, `reduce()`의 input, output type이 모두 정해져야함
+- Hadoop mapper, Reducer class를 상속받아 구현
+- file을 record로 쪼갤 수 있음
+    - e.g. `TextInputFormat` : file을 line 단위로 쪼갬
+- HDFS와 같이 distributed file system을 input, output으로 사용 가능
+- `combine()` : `map()`이 실행되는 node에서 `reduce()`를 수행
+    - network를 통해 `reduce()`에 전달하는 데이터를 줄임
+
+### 예시 Java 구현
+
+````Java
+public class WordCount {
+    public static class Map extends Mapper<LongWritable, Text, Text, IntWritable> {
+        private final static IntWritable one = new IntWritable(1);
+        private Text word = new Text();
+        
+        public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+            // line을 읽어서 단어로 쪼갬
+            String line = value.toString();
+            StringTokenizer tokenizer = new StringTokenizer(line);
+            while (tokenizer.hasMoreTokens()) {
+                word.set(tokenizer.nextToken());
+                
+                // 단어를 key로, 1을 value로 emit
+                context.write(word, one);
+        }
+    }
+}
+
+public static class Reduce extends Reducer<Text, IntWritable, Text, IntWritable> {
+    public void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
+        int sum = 0;
+        
+        // 같은 key를 가지는 value들을 모두 더함
+        for (IntWritable val : values) {
+            sum += val.get();
+        }
+        
+        // key, sum을 output
+        context.write(key, new IntWritable(sum));
+    }
+}
+    public static void main(String[] args) throws Exception {
+        Configuration conf = new Configuration();
+        
+        Job job = new Job(conf, "wordcount");
+        job.setOutputKeyClass(Text.class); // output key type 지정
+        job.setOutputValueClass(IntWritable.class); // output value type 지정
+        
+        job.setMapperClass(Map.class); // Map class 지정
+        job.setReducerClass(Reduce.class); // Reduce class 지정
+        
+        job.setInputFormatClass(TextInputFormat.class); // input format 지정
+        job.setOutputFormatClass(TextOutputFormat.class); // output format 지정
+        
+        FileInputFormat.addInputPath(job, new Path(args[0]));
+        FileOutputFormat.setOutputPath(job, new Path(args[1]));
+        job.waitForCompletion(true);
+    }
+}
+
+````
+
+- `Mapper`, `Reducer` interface
+    - Generic type을 통해 input, output type을 지정
+    - `LongWritable` : input key type
+    - `Text` : input value type
+    - `Text` : output key type
+    - `IntWritable` : output value type
+- `map()`의 결과물은 MapReduce system 인프라가 list에 저장
+    - 같은 reduce key를 가지는 pair들이 모이도록 shuffle
+    - sorting
+    - 여러 reduce task에 전달될 수 있음
+    - distributed setting이면 network를 통해 전달
+
+#### Combiner class
+
+- `map()`의 결과를 aggregate (reduce 전에)
+- map task에서만 실행
+- `map()`의 결과가 single key-single value pair가 되도록 만듦
+    - e.g. <_word_, 1>, <_word_, 1> -> <_word_, 2>
+- 실행 후 `reduce()`에 전달
+- network traffic을 줄임
+
 ## 6. SQL on MapReduce
