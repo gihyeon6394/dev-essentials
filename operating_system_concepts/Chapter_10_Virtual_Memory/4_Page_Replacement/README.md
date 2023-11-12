@@ -171,9 +171,25 @@
 - Second-Chance Algorithm 구현 방법
 - pointer가 다음 fifo page를 가리키도록 함
 - frame이 필요해지면, pointer가 가리키는 reference bit = 0인 page를 찾을때까지 탐색
-- 최악의 경우 : 모든 page의 reference bit이 1이면,
+- **최악의 경우 : 모든 page의 reference bit이 1이면,**
     - queue 전체를 탐색해서 reference bit을 0으로 만들어야함
     - 즉, queue의 모든 page에 second chance를 줘야함
+
+### 3. Enhanced Second-Chance Algorithm
+
+- modifiy bit을 추가로 사용
+- `(0, 0)` : 교체 최우선 대상, 최근에 사용되지 않음, 수정되지 않음
+- `(0, 1)` : 최근에 사용되지 않음, 수정됨
+- `(1, 0)` : 최근에 사용됨, 수정되지 않음
+    - 바로 다시 사용될 가능성
+- `(1, 1)` : 최근에 사용됨, 수정됨
+    - 바로 다시 사용될 가능성
+    - 교체 이전 2차 저장소에 쓰여져야함
+- 위 4가지 경우를 clock algorithm으로 탐색
+- **일반 clock algorithm의 차이점** : I/O수를 줄이기 위해 modify bit이 1인 page는 교체되지 않음
+    - modify bit이 1인 page는 secondary storage에 쓰여져야함
+    - 즉, I/O가 일어남
+    - 따라서, modify bit이 1인 page는 교체되지 않음
 
 ## 6. Counting-Based Page Replacement
 
