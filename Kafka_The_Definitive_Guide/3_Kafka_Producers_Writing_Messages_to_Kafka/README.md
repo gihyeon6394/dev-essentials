@@ -701,6 +701,18 @@ public class BananaPartitioner implements Partitioner {
 
 ## Headers
 
+- record에 key, value에 더해 header 가능
+- metadata 기능
+- message parse 없이 간단히 정보 확인 가능
+- key-value pair list로 구성
+    - key는 String, value는 직렬화된 object
+
+````
+ProducerRecord<String, String> record =
+    new ProducerRecord<>("CustomerCountry", "Precision Products", "France");
+record.headers().add("privacy-level", "YOLO".getBytes(StandardCharsets.UTF_8));
+````
+
 ## Interceptors
 
 ## Quotas and Throttling
