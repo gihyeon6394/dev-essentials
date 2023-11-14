@@ -633,6 +633,72 @@ for (int nCustomers = 0; nCustomers < customers; nCustomers++) {
 
 ## Partitions
 
+- key를 통해 message 저장 partition 위치 결정
+- key가 같은 messgae는 같은 partition에 저장됨
+
+```Java
+ProducerRecord<String, String> record = new ProducerRecord<>("CustomerCountry", "Precision Products", "France");
+
+// null key
+ProducerRecord<String, String> record = new ProducerRecord<>("CustomerCountry", "France");
+```
+
+#### default partitioner
+
+- 가장 많이 사용되는 partitioner
+- key가 null이면 defatul partitioner가 랜덤하게 partition을 선택
+    - round-robin 방식으로 partition을 선택
+- key가 null이 아니면, key의 hashcode를 계산해 partition을 선택
+    - 같은 key는 항상 같은 partition에 저장됨
+- topic의 partition 수가 바뀌지 않는 한 partition은 고정
+    - partition 수를 늘리면, 기존 partition에 있는 message는 새로운 partition으로 이동하지 않음
+    - 따라서 key로 parittion을 구분하려면 최초에 partition 수를 충분히 크게 설정해야함
+
+#### Round-Robin Partitioner, UniformStickyPartitioner
+
+- message에 key가 있을 때에도 randomg하게 partition 할당
+- consumer에게 key가 중요할 때 유용
+    - e.g. ETL application에서 Kafka record key를 DB PK로 사용할 때
+
+### Implementing a custom partitioning strategy
+
+- data partition 전략을 customizing
+- e.g. 특정 key에 대한 데이터가 너무 많아져 한 parititon이 매우 커질 때
+
+```Java
+
+import org.apache.kafka.clients.producer.Partitioner;
+import org.apache.kafka.common.Cluster;
+import org.apache.kafka.common.PartitionInfo;
+import org.apache.kafka.common.record.InvalidRecordException;
+import org.apache.kafka.common.utils.Utils;
+
+public class BananaPartitioner implements Partitioner {
+    public void configure(Map<String, ?> configs) {}
+    
+    public int partition(String topic, Object key, byte[] keyBytes,
+    Object value, byte[] valueBytes,
+    Cluster cluster) {
+        List<PartitionInfo> partitions = cluster.partitionsForTopic(topic);
+        int numPartitions = partitions.size();
+        
+        // key는 String만 받음
+        if ((keyBytes == null) || (!(key instanceOf String)))
+            throw new InvalidRecordException("We expect all messages " +
+                "to have customer name as key");
+        
+        if (((String) key).equals("Banana"))
+            return numPartitions - 1; // Banana will always go to last partition
+        
+        // Other records will get hashed to the rest of the partitions
+        return Math.abs(Utils.murmur2(keyBytes)) % (numPartitions - 1);
+    }
+    public void close() {}
+}
+```
+
+- `partition()` 만 구현
+
 ## Headers
 
 ## Interceptors
