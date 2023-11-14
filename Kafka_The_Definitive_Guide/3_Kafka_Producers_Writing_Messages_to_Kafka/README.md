@@ -715,6 +715,58 @@ record.headers().add("privacy-level", "YOLO".getBytes(StandardCharsets.UTF_8));
 
 ## Interceptors
 
+- Kafka cliente Applicatoin에 대한 일괄 수정 시 유용
+
+#### `ProducerInterceptor` interceptor
+
+- `ProducerRecord<K, V> onSend(ProducerRecord<K, V> record)`
+    - Kafka에 reocord를 produce 하기 전에 호출 (정확히 직렬화 전)
+    - return된 `ProducerRecord`는 직렬화되어 kafka에 전송
+- `void onAcknowledgement(RecordMetadata metadata, Exception exception)`
+    - Kafka가 ack을 응답했을 때
+    - 응답에 대한 정보 조회 가능
+- 목적 : 모니터링, 추적, 표준 header 추가
+
+#### producer interceptor 예제 : 보낸 message 수 세기
+
+```Java
+public class CountingProducerInterceptor implements ProducerInterceptor {
+
+    ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+    static AtomicLong numSent = new AtomicLong(0);
+    static AtomicLong numAcked = new AtomicLong(0);
+    
+    // producer 전체 설정을 읽고, executorService에 스케줄링
+    public void configure (Map<String, ?> map) {
+        Long windowSize = Long.valueOf((String) map.get("counting.interceptor.window.size.ms"));
+        executorService.scheduleAtFixedRate(CountingProducerInterceptor::run,
+            windowSize, windowSize, TimeUnit.MILLISECONDS);       
+    }
+    
+    // record가 보내질 때, numSent 증가
+    public ProducerRecord onSend(ProducerRecord producerRecord) {
+        numSent.incrementAndGet();
+        return producerRecord;
+    }
+    
+    // Kafka가 ack을 응답했을 때, numAcked 증가
+    public void onAcknowledgement(RecordMetadata recordMetadata, Exception e) {
+        numAcked.incrementAndGet();
+    }
+    
+    // producer가 닫히면, executorService 종료
+    public void close(){
+        executorService.shutdownNow();
+    }
+    
+    public static void run() {
+         System.out.println(numSent.getAndSet(0));
+         System.out.println(numAcked.getAndSet(0));
+    }
+    
+}    
+```
+
 ## Quotas and Throttling
 
 ## Summary
