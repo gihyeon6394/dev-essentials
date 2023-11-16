@@ -209,4 +209,24 @@
 
 ## 7. Page-Buffering Algorithms
 
+#### free frame pool을 유지하는 방법
+
+- page fault가 일어나면, victim page를 빼기 전에 free frame에서 page를 가져옴
+- 빠르게 page를 가져올 수 있음
+- victim page이 나갈때 victim 의 page는 free-frame pool에 추가됨ㅣ
+
+#### modified page list를 유지하는 방법
+
+- page에 수정이 일어나면 paging device가 idle 상태일 떄, page를 secondary storage에 씀
+- 그 후 modify bit reset
+- page가 선택될 때 page가 clean 할 확률을 높여줌
+    - clean하면 2차 저장소에 쓰기작업이 필요 없어짐
+
+#### free frame pool 유지 and page와 frame 매핑관계 유지하기
+
+- frame이 2차 저장소에 쓰여질 때, frame contents를 수정하지 않음
+- 따라서 이전 page는 free-frame pool에 바로 재사용 가능
+- page fault 발생 시 free-frame pool을 먼저 확인
+- UNIX는 second-chance algorithm과 함께 사용
+
 ## 8. Applications and Page Replacement
