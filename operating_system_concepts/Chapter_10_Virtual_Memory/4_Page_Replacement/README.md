@@ -193,6 +193,20 @@
 
 ## 6. Counting-Based Page Replacement
 
+- 각 page에 참조된 횟수를 counting해서 페이지를 교체하는 방법
+- 알고리즘 구현 비용 비쌈
+- OPT 구현하지 못함
+
+### scheme
+
+- least frequently used (LFU) : 가장 적게 참조된 page를 교체
+    - 현재 사용중인 page의 count는 아주 높다는 전제
+    - 문제점 : process 초기에만 자주 사용된 page는 count는 높지만 앞으로 필요가 없음
+        - 그럼에도 불구하고 교체되지 않는 문제
+    - 해결책 : count를 주기적으로 1 bit 씩 shift
+- most frequently used (MFU) : 가장 많이 참조된 page를 교체
+    - count가 적은 page는 최근에 사용되기 위해 memory에 올라와, 아직 많이 사용되지 않았다는 전제
+
 ## 7. Page-Buffering Algorithms
 
 ## 8. Applications and Page Replacement
