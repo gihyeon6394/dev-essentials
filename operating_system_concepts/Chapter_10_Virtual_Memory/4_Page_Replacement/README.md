@@ -230,3 +230,20 @@
 - UNIX는 second-chance algorithm과 함께 사용
 
 ## 8. Applications and Page Replacement
+
+#### Database Systems
+
+- Database는 자체 memory management, I/O buffering 제공
+- OS가 제공하는 것보다 더 효율적인 알고리즘 구현
+
+#### Data warehouse
+
+- 대용량 storage를 순차적으로 읽고 씀
+- MFU가 LRU보다 효율적
+    - LRU는 오래된 page를 교체하기 때문
+
+#### raw disk
+
+- 2차 저장소의 partition을 큰 순차적 logical block 배열로 사용
+- raw I/O : raw disk에 직접 접근하는 것
+- raw I/O는 모든 file system을 bypass
