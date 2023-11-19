@@ -769,4 +769,44 @@ public class CountingProducerInterceptor implements ProducerInterceptor {
 
 ## Quotas and Throttling
 
+- quota mechanism으로 메시지 전송/소비율을 지정
+- quota type 3가지 : produce, consume, request
+- produce, consume : client가 data를 1초마다 전송/소비할 bytes 수
+- request : client가 1초마다 요청할 수 있는 request %
+- 기본설정, 특정 client id, 특정 user 등에게 적용 가능
+- 기본값
+    - produce/consume : 모든 client에게 지정
+        - `quota.producer.default=2M` : 모든 producer는 2MBps를 넘길 수없음
+        - `quota.producer.override="clientA:4M,clientB:10M"` (비추)
+
+#### 동적으로 설정하는 방법
+
+- 설정이 바뀌면 broker를 재시작해야함 (static)
+- `kafka-config.sh` or AdminCLient API를 통해 동적으로 설정 가능 (dynamic)
+
+```Bash
+# client C 1024 bytes/sec 제한
+bin/kafka-configs --bootstrap-server localhost:9092 --alter --add-config 'producer_byte_rate=1024' --entity-name clientC --entity-type clients
+
+# user1 에게 producer 1024 bytes/sec, consumer 2048 bytes/sec 제한 
+bin/kafka-configs --bootstrap-server localhost:9092 --alter --add-config 'producer_byte_rate=1024,consumer_byte_rate=2048' --entity-name user1 --entity-type users
+
+# 모든 user에게 consumer 2048 bytes/sec 제한
+bin/kafka-configs --bootstrap-server localhost:9092 --alter --add-config 'consumer_byte_rate=2048' --entity-type users 
+```
+
+#### throttling : quota에 도달했을 때
+
+- broker가 throttling 시작
+- borker의 응답이 delay됨
+- 대부분의 client는 자동으로 request를 줄임
+- `produce-throttle-time-avg,
+  produce-throttle-time-max, fetch-throttle-time-avg, fetch-throttle-time-max` : client가 broker의 throttling을 경험한 시간
+
+> #### producer의 비동기 전송과 quota
+>
+> - `Producer.send()`를 비동기로 broker 허용량이 넘치도록 전송하면,
+> - client 메모리 버퍼가 가득 찬 다음 `TimeoutException` 발동
+> - 아니면 이미 batch에 들어간 record는 `delivery.timeout.ms`에 도달하면 `TimeoutException` 발동
+
 ## Summary
