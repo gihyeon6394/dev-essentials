@@ -810,3 +810,12 @@ bin/kafka-configs --bootstrap-server localhost:9092 --alter --add-config 'consum
 > - 아니면 이미 batch에 들어간 record는 `delivery.timeout.ms`에 도달하면 `TimeoutException` 발동
 
 ## Summary
+
+- Kafka에게 event를 전송하는 코드
+- error handiling
+- 동기/비동기 통신
+- producer 설정 파라미터
+- serializer :  kafka에게 전송할 event formatting
+- Avro : schema를 사용해 event를 직렬화하는 가장 널리 사용되는 라이브러리
+- partition : event를 저장할 위치 결정
+    - partitioning 전략
