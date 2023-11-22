@@ -20,7 +20,7 @@
 2. [Demand Paging](2_Demand_Paging/README.md)
 3. [Copy-on-Write](3_Copy_on_Write/README.md)
 4. [Page Replacement](4_Page_Replacement/README.md)
-5. Allocation of Frames
+5. [Allocation of Frames](5_Allocation_of_Frames/README.md)
 6. Thrashing
 7. Memory C
 8. Allocating Kernel Memory
