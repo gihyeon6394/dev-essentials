@@ -20,13 +20,15 @@
 
 <img src="img_7.png"  width="30%"/>
 
+## [Redis for dummies](redis_for_dummies/README.md)
+
+### Steve Suehring
+
+<img src="img_9.png"  width="30%"/>
+
 ## [HTTP 완벽가이드](http-the-definitive-guide)
 
 <img src="img_2.png"  width="30%"/>
-
-## [컴퓨팅 사고력을 키우는 이산수학](ubu)
-
-![img_5.png](img_5.png)
 
 ## [이것이 우분투 리눅스다 (개정판)](ubu)
 
