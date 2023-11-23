@@ -14,7 +14,7 @@
 - Redis Enterprise : Enterprise 솔루션
 - Redis Enterprise Cloud : Redis Enterprise를 cloud에 배포
 
-1. What is Redis?
+1. [What is Redis?](1_What_is_Redis/README.md)
 2. What is Redis Used For?
 3. Getting Started with Redis
 4. Using Multi-Model Redis : Data Models. Structures, and Modules
