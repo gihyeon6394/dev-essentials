@@ -34,6 +34,25 @@
 
 ## 2. Allocation Algorithms
 
+### equal allocation : 각 process에 동일한 수의 frame을 할당
+
+- 가장 쉬운 방법 _m/n_ (m : frame 수, n : process 수)
+    - e.g. 93 frame, 5 process -> 18 frame 씩 할당
+- 한계 : 각 process는 다양한 크기의 memory를 원함
+
+### proportional allocation : process의 크기에 비례하여 frame을 할당
+
+- 프로세스의 사이즈에 따라 frame을 할당
+- e.g. 총 62 frame, 2 process
+    - 한 process에 10 pages, 4 frames
+    - 다른 process에 57 pages, 57 frames
+
+### process 우선순위에 비례하여 frame을 할당
+
+- 사이즈로 비교하면 프로세스의 우선순위가 전혀 고려되지 않음
+- 더 높은 우선순위에 더 많은 frame을 할당하여 실행 속도를 높임
+
+
 ## 3. Global versus Local Allocation
 
 ## 4. Non Uniform Memory Access
