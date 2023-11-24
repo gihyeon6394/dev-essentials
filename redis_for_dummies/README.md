@@ -16,7 +16,7 @@
 
 1. [What is Redis?](1_What_is_Redis/README.md)
 2. [What is Redis Used For?](2_What_is_Redis_Used_For/README.md)
-3. Getting Started with Redis
+3. [Getting Started with Redis](3_Getting_Started_with_Redis/README.md)
 4. Using Multi-Model Redis : Data Models. Structures, and Modules
 5. Redis Architecture and Topology
 6. Using Redis Enterprise Software and Redis Enterprise Cloud
