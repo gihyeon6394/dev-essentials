@@ -157,6 +157,25 @@ KafkaConsumer<String, String> consumer =
 
 ## Subscribing to Topics
 
+````
+// topic customerCountries를 subscribe
+consumer.subscribe(Collections.singletonList("customerCountries"));
+
+// topic test.*를 subscribe (regular expression)
+consumer.subscribe("test.*");
+````
+
+- `KafkaConsumer` 인스턴스에 topic을 subscribe
+- regular expression도 가능 (1개 이상의 topic을 subscribe)
+- 만일 구독 후 topic이 생성되면, rebalance 발생 후 새로운 topic 구독 가능
+
+#### 주의사항 : 정규표현식 오버헤드
+
+- 정규표현식에 해당하는 topic 리스트를 필터링하는 건 client의 책임
+- client는 interval마다 topic 리스트를 가져와서 정규표현식에 해당하는 topic을 필터링해야함
+    - cluster의 모든 topic에 대한 metadata read 권한 필요
+- topic 목록이 매우 많으면, 네트워크 오버헤드가 발생할 수 있음
+
 ## The Poll Loop
 
 ## Configuring Consumers
