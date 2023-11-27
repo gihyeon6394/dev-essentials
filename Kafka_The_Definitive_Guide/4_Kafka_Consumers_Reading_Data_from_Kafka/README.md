@@ -178,6 +178,47 @@ consumer.subscribe("test.*");
 
 ## The Poll Loop
 
+- `poll()` : consumer가 broker로부터 데이터를 가져오는 메소드
+- 새로운 consumer로 첫 호출 시 `GroupCoordinator`에게 join request를 보내고, parition 할당을 받음
+- rebalance가 트리거되면, poll loop 안에서 rebalance가 발생함
+- `poll()`이 `max.poll.interval.ms` 만큼 실행되지 않으면, consumer가 dead로 간주되어 rebalance가 발생함
+
+````
+// poll이 blocking 되는 시간 (consumer buffer에 데이터가 있으면 바로 return)
+Duration timeout = Duration.ofMillis(100); 
+
+// Kafka data를 얻기위해 무한 루프를 돌면서 poll
+while(true) {
+    // polling을 유지하지 않으면 consumer dead로 간주되어 다른 consumer에게 rebalance
+    ConsumerRecords<String, String> records = consumer.poll(timeout);
+    
+    // records에 있는 모든 record를 처리
+    for(ConsumerRecord<String, String> record : records) {
+        System.out.println("topic = %s, partition = %s, offset = %d, customer = %s, country = %s\n",
+            record.topic(), record.partition(), record.offset(), record.key(), record.value());
+        
+        int updatedCount = 1;
+        if(custCountryMap.containsKey(record.value())) {
+            updatedCount = countryCounter.get(record.value()) + 1;
+        }
+        custCountryMap.put(record.value(), updatedCount);
+        
+        JSONObject json = new JSONObject(custCountryMap);
+        System.out.println(json.toString());   
+    }
+}
+````
+
+### Thread Safety
+
+- 동일한 스레드에서 2개 이상의 consumer를 가질 수 없음
+- 같은 consumer에서 multi-thread를 안전하게 가질 수 없음
+- **1 consumer, 1 thread 는 rule**
+- 하나의 applicaiton에서 동일한 consumer group의 여러 consumer를 가지려면 각 consumer마다 스레드를 생성해야함
+    - `ExecutorService`를 사용하여 thread 마다 consumer를
+      할당 [Confluent example](https://www.confluent.io/blog/tutorial-getting-started-with-the-new-apache-kafka-0-9-consumer-client/)
+    - [또 다른 방법](https://www.confluent.io/blog/kafka-consumer-multi-threaded-messaging/)
+
 ## Configuring Consumers
 
 ## Commits and Offsets
