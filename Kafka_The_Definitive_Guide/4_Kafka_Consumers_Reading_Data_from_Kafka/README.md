@@ -135,6 +135,26 @@
 
 ## Creating a kafka Consumer
 
+````
+Properties props = new Properties();
+
+// Kafka cluster conneciton string
+props.put("bootstrap.servers", "broker1:9092,broker2:9092");
+// Consumer group ID (optional)
+props.put("group.id", "CountryCounter");
+// Deserializer
+props.put("key.deserializer",
+    "org.apache.kafka.common.serialization.StringDeserializer");
+props.put("value.deserializer",
+    "org.apache.kafka.common.serialization.StringDeserializer");
+    
+// Create KafkaConsumer instance
+KafkaConsumer<String, String> consumer =
+    new KafkaConsumer<String, String>(props);
+````
+
+- `KafkaConumer` 인스턴스 생성
+
 ## Subscribing to Topics
 
 ## The Poll Loop
