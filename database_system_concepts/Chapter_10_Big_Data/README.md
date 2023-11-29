@@ -16,4 +16,4 @@
 4. [Beyond MapReduce: Algebraic Operations](4_Beyond_MapReduce_Algebraic_Operations/README.md)
 5. [Steaming Data](5_Steaming_Data/README.md)
 6. [Graph DataBases](6_Graph_DataBases/README.md)
-7. Summary
+7. [Summary](7_Summary/README.md)
