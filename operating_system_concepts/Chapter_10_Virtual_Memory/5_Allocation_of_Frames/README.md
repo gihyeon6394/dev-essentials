@@ -52,7 +52,24 @@
 - 사이즈로 비교하면 프로세스의 우선순위가 전혀 고려되지 않음
 - 더 높은 우선순위에 더 많은 frame을 할당하여 실행 속도를 높임
 
-
 ## 3. Global versus Local Allocation
+
+- global replacement : 프로세스가 모든 프레임 중에서 선택
+    - 프로세스가 다른 프로세스의 frame을 가질 수 있음
+    - 다른 프로세스로부터 영향을 받음
+    - 일반적으로 사용됨
+- Local replacement : 프로세스가 자신의 프레임 중에서만 선택
+    - 사용할 수 있는 메모리 페이지가 적으므로 전체 성능에 제한이 있음
+
+#### global replacement 사용 전략
+
+![img.png](img.png)
+
+- 메모리 여유 공간의 최소값을 정해둠
+- **reapers** : 메모리 여유 공간이 최소값 밑으로 떨어지면 모든 프로세스로부터 페이지를 가져옴
+    - page 교체 알고리즘을 일으킴 (일반적으로 LRU Approximation 사용)
+        - 최대임계치에 도달하지 못하면 더 강력한 알고리즘 사용 (FIFO, Linux OOM killer)
+    - 최솟값을 넘길때까지
+    - 최대 임계점에 도달하면 reapers를 중지함
 
 ## 4. Non Uniform Memory Access
