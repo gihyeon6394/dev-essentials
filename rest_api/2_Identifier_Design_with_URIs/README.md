@@ -202,6 +202,143 @@ POST /alerts/1311/resend
 
 ## URI Path Design
 
+![img.png](img.png)
+
+- 각 URI path segment는 forward slash (/)로 구분
+- 각 segment를 의미있게 모델링
+
+### Rule: A singular noun should be used for document names
+
+- document는 단수 명사를 사용
+
+````
+http://api.soccer.restapi.org/teams/barcelona001/players/messi
+````
+
+### Rule: A plural noun should be used for collection names
+
+- collection은 복수 명사를 사용
+
+````
+http://api.soccer.restapi.org/teams/barcelona001/players
+````
+
+### Rule: A plural noun should be used for store names
+
+- store는 복수 명사를 사용
+
+````
+http://api.music.restapi.org/users/user001/playlists
+````
+
+### Rule: A verb or verb phrase should be used for controller names
+
+- controller는 동사나 동사구를 사용해서 controller의 action을 표현
+- 컴퓨터 function과 같음
+
+````
+http://api.soccer.restapi.org/teams/barcelona001/matches/2015-01-01/cancel
+http://api.soccer.restapi.org/teams/barcelona001/rename
+````
+
+### Rule: Variable path segments may be substituted with identity-based values
+
+- URI path segment는 identity-based value로 대체 가능
+- _URI Template_ : identity-based value와 고정 문자열을 조합한 URI
+
+````
+- REST API에서의 식별자값은 UUID, GUID, DB record ID 등이 될 수 있음
+    - 이게 DB record ID인지는 알 수 없음 (설사 그렇다해도 Client는 신경쓰지 않아야함!)
+    - resource 식별자 그 이상으로 사용하지 말것
+
+````
+
+http://api.soccer.restapi.org/teams/{teamId}/players/{playerId}
+http://api.soccer.restapi.org/teams/barcelona001/players/messi
+
+http://api.soccer.restapi.org/players/{playerId}
+http://api.soccer.restapi.org/players/3fd6b6f9-6e7a-4a1a-8b5d-7a7f1a2a1a2a
+
+````
+
+### Rule: CRUD function names should not be used in URIs
+
+- CRUD function 이름을 URI에 사용하지 말것
+
+````
+
+## good
+
+DELETE /players/messi0001
+
+## bad
+
+DELETE /deletePlayer/messi0001
+GET /getPlayer/messi0001
+POST /createPlayer
+
+````
+
 ## URI Query Design
+
+- RFC 3986에서 URI는 optional query가 path 다음, fragment 앞에 올 수 있음
+- 쿼리로 캐시 여부를 판단하면 안됨
+    - 캐시 여부는 header에서 판단되어야함
+
+````
+
+URI = scheme "://" authority "/" path [ "?" query ] [ "#" fragment ]
+
+## 1.
+
+http://api.soccer.restapi.org/players/messi001/send-sms
+
+## 2.
+
+http://api.soccer.restapi.org/players/messi001/send-sms?msg=hello
+
+````
+
+1. controller resource를 사용해 SMS를 전송
+2. controller resource를 사용해 SMS를 전송 & SMS 내용을 query parameter로 전달
+
+### Rule: The query component of a URI may be used to filter collections or stores
+
+- collection이나 store를 search 할 때 적합
+
+````Bash
+## 1.
+GET /users
+
+## 2.
+GET /users?role=admin
+````
+
+1. collection의 모든 user를 반환
+2. colleciton에서 role이 admin인 user를 반환
+
+### Rule: The query component of a URI should be used to paginate collection or store results
+
+- collection이나 store를 paginate 할 때 적합
+- `pageSize` : response에 담길 최대 item 수
+- `pageStartIndex` : response에 담길 item의 시작 index
+
+```Bash
+GET /users?pageSize=25&pageStartIndex=50
+````
+
+복잡한 쿼리들이 필요할 때는 아래처럼 request entity body에 담아서 전송
+
+```Bash
+POST /users
+{
+    "pageSize": 25,
+    "pageStartIndex": 50,
+    "sort": "lastName",
+    "filter": {
+        "role": "admin"
+    }
+}
+````
 
 ## Recap
