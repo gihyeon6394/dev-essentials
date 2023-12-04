@@ -57,3 +57,10 @@ Real-Time Data and Stream Processing at Scale
 ### Powerful and Scalable Data Storage
 
 <img src="img_10.png"  width="30%"/>
+
+## [REST API](rest_api/README.md)
+
+### Design Rulebook
+
+<img src="img_11.png"  width="30%"/>
+
