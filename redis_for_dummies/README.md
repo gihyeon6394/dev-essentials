@@ -1,5 +1,7 @@
 # Redis for dummies
 
+<img src="img.png" width="30%">
+
 ### Introduction
 
 #### NoSQL
