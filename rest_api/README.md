@@ -2,8 +2,6 @@
 
 Design Rulebook
 
-<img src="img.png" width="30%">
-
 ---
 
 - [Chapter 1. Introduction](1_Introduction/README.md)
