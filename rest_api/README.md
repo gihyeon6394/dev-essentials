@@ -8,6 +8,6 @@ Design Rulebook
 - [Chapter 2. Identifier Design with URIs](2_Identifier_Design_with_URIs/README.md)
 - [Chapter 3. Interaction Design with HTTP](3_Interaction_Design_with_HTTP/README.md)
 - [Chapter 4. Metadata Design](4_Metadata_Design/README.md)
-- Chapter 5. Representation Design
+- [Chapter 5. Representation Design](5_Representation_Design/README.md)
 - Chapter 6. Client Concerns
 - Chapter 7. Final Thoughts
