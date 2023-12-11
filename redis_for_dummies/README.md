@@ -22,7 +22,7 @@
 4. [Using Multi-Model Redis : Data Models. Structures, and Modules](4_Using_Multi_Model_Redis/README.md)
 5. [Redis Architecture and Topology](5_Redis_Architecture_and_Topology/README.md)
 6. Using Redis Enterprise Software and Redis Enterprise Cloud
-7. A Simple Redis Application
+7. [A Simple Redis Application](7_A_Simple_Redis_Application/README.md)
 8. Building an Application with RedisSearch
 9. Developing an Active-Active / Conflict-Free Replicated Data Type Application
 10. Ten Things You Can Do with Redis
