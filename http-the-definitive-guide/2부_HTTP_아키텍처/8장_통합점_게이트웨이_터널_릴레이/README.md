@@ -54,6 +54,42 @@ HTTP/FTP
 
 ## 2. 프로토콜 게이트웨이
 
+![img_2.png](img_2.png)
+
+1. 브라우저는 `gw1.joes-hardware.com`에 HTTP 요청
+2. `gw1.joes-hardware.com`은 HTTP 요청을 받아 `ftp.irs.gov`에 FTP 요청
+3. `ftp.irs.gov`은 FTP 요청을 받아 `gw1.joes-hardware.com`에 FTP 응답
+4. `gw1.joes-hardware.com`은 FTP 응답을 받아 HTTP 응답
+5. 브라우저는 HTTP 응답을 받아 화면에 표시
+
+### 2.1 HTTP/*: 서버 측 게이트웨이
+
+![img_3.png](img_3.png)
+
+- `USER`, `PASS` 명령어를 사용해 FTP 서버에 로그인
+- `CWD` 명령어를 사용해 디렉토리 변경
+- 다운로드 형식을 ASCII로 설정
+- `MDTM` 명령어를 사용해 파일의 최종 수정 시간을 확인
+- `PASV` 명령어로 수동모드 진입
+- `RETR` 명령어로 파일 요청
+- FTP 커넥션이 맺어지면 게이트웨이로 FTP 응답을 보냄
+
+### 2.2 HTTP/HTTPS: 서버 측 보안 게이트웨이
+
+![img_4.png](img_4.png)
+
+- 기업 내부로 들어오는 모든 웹 요청을 암호화
+- 사용자는 HTTP로 탐요청하지만, 게이트웨이가 자도응로 모든 세션 암호화
+
+### 2.3 HTTPS/HTTP: 클라이언트 측 보안 가속 게이트웨이
+
+![img_5.png](img_5.png)
+
+- 웹서버 앞 단에 위치해 인터셉트 게이트웨이, 리버스 프락시 역할
+- HTTPS 트래픽을 받아 복호화하여 웹서버에 HTTP 요청
+- 장점 : 암/복호화를 게이트웨이 하드웨어에서 처리 -> 원 서버 부하 감소
+- 단점 : 네트워크 보안 안정성 검증 필요
+
 ## 3. 리소스 게이트웨이
 
 ## 4. 애플리케이션 인터페이스와 웹 서비스
