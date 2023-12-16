@@ -94,6 +94,7 @@ HTTP/FTP
 
 ![img_6.png](img_6.png)
 
+- 리소스 게이트웨이 : web server가 application과 통신할 때 사용
 - application server = destination server + gateway 를 하나의 서버에 통합
     - 클라이언트와 HTTP 통신
     - 서버측의 다른 backend application과 통신
@@ -118,6 +119,12 @@ HTTP/FTP
 - Apache는 API를 제공하여 개발자가 웹 서버의 동작을 바꿀 수 있게 해줌
 
 ## 4. 애플리케이션 인터페이스와 웹 서비스
+
+- 웹 서비스 : 어플리케이션이 정보를 공유하는데 사용하는 메커니즘
+    - HTTP 같은 표준 웹 기술 위에서 개발, 동작
+- 더 복잡한 정보를 서로 교환하기에 HTTP header로는 제한적
+- SOAP을 통해 XML 메시지를 주고받음
+    - SOAP (Simple Object Access Protocol) : HTTP 메시지에 XML을 실어 보내는 방식의 표준
 
 ## 5. 터널
 
