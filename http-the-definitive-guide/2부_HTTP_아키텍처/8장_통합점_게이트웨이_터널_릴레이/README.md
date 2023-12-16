@@ -92,6 +92,31 @@ HTTP/FTP
 
 ## 3. 리소스 게이트웨이
 
+![img_6.png](img_6.png)
+
+- application server = destination server + gateway 를 하나의 서버에 통합
+    - 클라이언트와 HTTP 통신
+    - 서버측의 다른 backend application과 통신
+    - API (Application Programming Interface) 제공
+- CGI (Common Gateway Interface) : application gateway의 최초 API
+
+![img_7.png](img_7.png)
+
+### 3.1 공용 게이트웨이 인터페이스 (CGI)
+
+- 웹 서버가 사용하는 표준 인터페이스 집합
+- 특정 URL의 HTTP 요청에 따라 프로그램 실행
+- 최초의 서버 확장이자 지금도 가장 널리쓰이는 확장방법
+- 동적인 HTML, 신용카드 처리, DB query 등 실행
+- 단점 : 성능 문제
+    - 모든 CGI 요청마다 프로세스 생성
+- Fast CGI : CGI와 유사하지만 데몬으로 동작하여 프로세스 생성, 제거
+
+### 3.2 서버 확장 API
+
+- HTTP 서버 자체의 성능이나 동작을 바꾸고 싶을 때 사용
+- Apache는 API를 제공하여 개발자가 웹 서버의 동작을 바꿀 수 있게 해줌
+
 ## 4. 애플리케이션 인터페이스와 웹 서비스
 
 ## 5. 터널
