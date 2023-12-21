@@ -72,4 +72,29 @@
     - 최솟값을 넘길때까지
     - 최대 임계점에 도달하면 reapers를 중지함
 
-## 4. Non Uniform Memory Access
+## 4. Non Uniform Memory Access (NUMA)
+
+![img_1.png](img_1.png)
+
+- 특정 CPU는 다른 CPU보다 더 빨리 main memory에 접근 가능
+- 각 CPU에 local memory를 할당
+- CPU는 local memory에 접근할 때는 빠르지만, 다른 CPU의 local memory에 접근할 때는 느림
+- 모든 메모리에 동일하게 접근하는 다른 시스템보다는 느리나, 더 높은 처리량 (throughput), parallism을 제공함
+
+#### NUMA 시스템에서의 Frame Allocation
+
+- CPU에 최대한 가깝게 (동일한 시스템 보드, 가장 낮은 latency) frame을 할당
+- virtual memory 시스템은 프로세스가 page fault를 일으키면 가장 가까운 frame을 할당
+    - Scheduler는 프로세스를 실행한 마지막 CPU를 항상 추적해 할당
+
+#### multi-thread 환경 : 스레드가 서로 다른 시스템 보드에 있을 때
+
+- Linux : 커널이 schduling domain 계층 구조를 식별
+    - Linux CFS scheduler는 스레드가 서로다른 도메인을 가로질러 이동하지 않도록 함
+    - NUMA node 별로 free-frame list를 관리
+- Solaris : **lgroups** 을 커널에 생성
+    - **lgroups** : "locality groups"
+    - 각 lgroup 은 CPU와 메모리를 그룹으로 관리
+    - 해당 그룹의 CPU는 해당 그룹의 메모리에 접근 가능
+    - 스레드는 lgroup안에서만 메모리를 할당 받을 수 있음
+        - 불가능할 때에는 가장 가까운 lgroup에서 할당 받음
