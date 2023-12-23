@@ -77,3 +77,21 @@
 - e.g. 편지를 보내기위해 사용되는 우편 서비스
 
 ## 3. What is a Protocol?
+
+![img_1.png](img_1.png)
+
+- **protocol** : 두 개의 통신 개체가 서로 통신하기 위해 사용하는 규칙의 집합
+- 2개 이상의 end system이 동일한 프로토콜로 통신함
+
+### Network Protocols
+
+- Internet의 모든 활동은 2개 이상의 remote entity가 protocol을 통해 통신함
+    - remote entity : 하드웨어 또는 소프트웨어로 이루어진 원격 통신 기기 e.g. 라우터, 스마트폰, 네트워크 기기 등
+- congestion-control protocol (혼잡 제어 프로토콜) : end system이 packet을 보내는 속도를 제어하는 프로토콜
+- router의 protocol은 packet의 source와 destination을 결정
+
+### 예시 : 브라우저에서 URL을 통해 웹 페이지 요청
+
+1. 컴퓨터가 Webserver에 connection request를 보내고 응답을 기다림
+2. GET 메시지로 Web server에 웹 페이지 요청
+3. Web server가 웹 페이지를 컴퓨터에게 응답
