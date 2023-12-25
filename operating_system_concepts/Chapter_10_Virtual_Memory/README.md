@@ -21,7 +21,7 @@
 3. [Copy-on-Write](3_Copy_on_Write/README.md)
 4. [Page Replacement](4_Page_Replacement/README.md)
 5. [Allocation of Frames](5_Allocation_of_Frames/README.md)
-6. Thrashing
+6. [Thrashing](6_Thrashing/README.md)
 7. Memory C
 8. Allocating Kernel Memory
 9. Other Considerations
