@@ -202,5 +202,22 @@ Proxy-agent: Netscape-Proxy/1.1
 
 ## 6. 릴레이
 
+- 릴레이 : 단순한 HTTP 프락시
+- 커넥션을 맺기 위한 HTTP 통신을 한 다음 바이트를 맹목적으로 전달
+
+#### 문제점 : hang
+
+![img_12.png](img_12.png)
+
+- a. 클라이언트가 `Connection: keep-alive` 헤더를 포함한 요청을 보냄
+- b. 릴레이가 HTTp 요청을 받았으나, Connection header를 지원하지 않으므로 맹목적으로 서버로 넘김
+    - **문제점 : `Connection` header는 hop-by-hop 전용 헤더, chain (릴레이) 지원 안함**
+- c. 웹 서버는 클라이언트가 `keep-alive` 를 요청한거로 알고, 응답
+- d. 릴레이는 `Connection: keep-alive` 헤더를 포함한 응답을 받아서 클라이언트에게 전달
+    - 클라이언트는 릴레이가 `keep-alive` 를 지원하는 것으로 착각
+- hang 문제 발생
+    - 릴레이는 웹서버가 커넥션을 종료하길 바라지만, 웹 서버는 `keep-alive` 중 (hang)
+    - 클라이언트는 `keep-alive` 가 되는 줄 알고 다음 요청을 보냄 -> 아무 응답 없음
+
 ## 7. 추가정보
 
