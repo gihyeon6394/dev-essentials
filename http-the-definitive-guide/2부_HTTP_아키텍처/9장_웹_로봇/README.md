@@ -260,6 +260,201 @@
 
 ## 4. 로봇 차단하기
 
+![img_6.png](img_6.png)
+
+- robots.txt : 로봇의 접근 제어 정보를 저장하는 파일
+    - = Robots Exclusion Standard
+- 웹서버의 document root에 robots.txt 파일을 두면 로봇은 이 파일을 읽어 접근 제어 정보를 얻음
+
+### 4.1 로봇 차단 표준 (The Robots Exclusion Standard)
+
+- 임시 방편으로 마련된 표준
+- 대부분 v0.0, v1.0을 채택
+
+| version | title                                    | description                         | Date |
+|---------|------------------------------------------|-------------------------------------|------|
+| 0.0     | A Standard for Robot Exclusion           | 로봇 배제 표준 Disallow 지시자 지원            | 1994 |
+| 1.0     | A Method for Web Robots Control          | 로봇 제어 방법 Allow 지시자 추가               | 1996 |
+| 2.0     | An Extended Standard for Robot Exclusion | 확장 표준, 정규식, timing 정보 등 (잘 사용되지 않음) | 1996 |
+
+### 4.2 웹 사이트와 robots.txt 파일들
+
+- 웹사이트는 단 하나의 robots.txt 파일만 가질 수 있음
+- 가상 호스팅 환경에서 각 호스팅마다 robots.txt 파일을 가질 수 있음
+
+#### robots.txt 가져오기
+
+````Bash
+GET /robots.txt HTTP/1.0
+Host: www.joes-hardware.com
+User-Agent: WebCrawler/1.1
+Date: Tue, 11 Aug 1998 18:57:33 GMT
+````
+
+- `GET`으로 가져옴
+- `text/plain` 으로 본문을 반환
+- 만일 `404 Not found` 를 응답한다면, 제어가 없는 것으로 간주 모든 문서를 크롤링
+
+#### 응답 코드
+
+- 로봇은 `GET /robots.txt` 요청에 대한 응답에 따라 다르게 동작
+- `200 OK` : robots.txt 파일이 존재, 로봇은 robots.txt 을 파싱하여 규칙을 지켜가며 크롤링
+- `404 Not Found` : robots.txt 파일이 존재하지 않음, 로봇은 모든 문서를 크롤링
+- `403 Forbidden` or `401 Unauthorized` : 로봇은 모든 문서를 크롤링하지 않음
+- `500 Internal Server Error` : 크롤링을 다음으로 미룸
+- `3xx` : 로봇은 `Location` 헤더를 따라가며 크롤링
+
+### 4.3 robots.txt 파일 포맷
+
+```text
+# 이 robots.txt 파일은 www.joes-hardware.com 에서 사용됩니다.
+# 크롤러 Slurp, Webcralwer가 허용됩니다.
+
+User-agent: Slurp
+User-agent: WebCrawler
+Disallow: /private
+
+User-agent: *
+Disallow:
+```
+
+- Slurp, WebCrawler 는 `/private` 디렉토리를 크롤링하지 않음
+- 그 외 Agent는 모든 디렉토리 크롤링 불가능
+
+#### User-Agent line
+
+````text
+User-Agent: <robot-name>
+or
+User-Agent: *
+````
+
+- 로봇의 GET 요청의 `User-Agent` 헤더를 사용해 로봇을 식별
+- 만일 <robot-name>에도 없고, `*` 에도 없다면 어떠한 제한도 없음
+
+#### Disallow, Allow lines
+
+- `Disallow` : 로봇이 크롤링하지 말아야할 디렉토리
+- `Allow` : 로봇이 크롤링해도 되는 디렉토리
+
+#### Disallw/Allw 접두 매칭 (prefix matching)
+
+| 규칙 경로 | URL           | 결과 | 비고                        |
+|-------|---------------|----|---------------------------|
+| /tmp  | /tmp          | O  | 정확히 일치                    |
+| /tmp  | /tmpfile.html | O  | 규칙경로가 URL의 접두 부분          |
+| /tmp  | /tmp/dir.html | O  | 규칙경로가 URL의 접두 부분          |
+| /tmp/ | /tmp          | X  | 규칙경로가 /tmp/는 URL의 접두어가 아님 |
+|       | README.txt    | O  | 빈 문자열은 모든 URL에 일치         |
+
+### 4.4 그 외에 알아둘 점
+
+- robots.txt 파일은 명세가 발전함에 따라 추가적인 필드가 있을 수 있음
+- 하위 호환성 : 한 줄을 여러줄로 나누어 적지 않아야함
+- 주석은 파일 어디에든 위치
+- v0.0은 Allow 미지원
+    - 몇 보수적인 로봇들은 Allo를 무시하므로 컨텐츠 수집이 안될 수 있음
+
+### 4.5 robots.txt의 캐싱과 만료
+
+- 매 수집마다 robots.txt 파일을 가져오는 것은 비효율적
+- robots.txt 파일은 변경될 가능성이 적으므로 캐싱해도 무방
+- HTTP 캐시 제어 메커니즘을 원서버, 로봇 양쪽에 사용
+- 로봇은 응답의 `Cache-Control`, `Expires` 헤더를 확인해 캐시된 robots.txt 파일을 사용
+
+### 4.6 로봇 차단 Perl code
+
+- robots.txt와 상효작용하는 공개된 Perl 라이브러리들이 있음
+- e.g. `WWW::RobotRules` 모듈
+    - 파싱된 robots.txt를 객체에 담아두고, 주어진 URL에 접근 가능한지 확인하는 메서드 제공
+
+```
+require WWW::RobotRules;
+
+# 로봇 이름 SuperRobot으로 객체 생성
+my $robotsrules = new WWW::RobotRules 'SuperRobot/1.0';
+use LWP::Simple qw(get);
+
+# 죠의 하드웨어 사이트의 robots.txt를 가져옴, 파싱, 규칙
+$url = 'http://www.joes-hardware.com/robots.txt';
+my $robots_txt = get $url;
+$robotsrules->parse($url, $robots_txt);
+
+# 타겟 검사
+if($robotsrules -> allowed($some_target_url)){
+    # 타겟에 접근 가능
+} else {
+    # 타겟에 접근 불가능
+}
+```
+
+### 4.7 HTML 로봇 제어 META 태그
+
+- HTML 파일 자체에서 로봇 제어를 하는 방법
+
+````html
+
+<html>
+<head>
+    <meta name="robots" content="directive-list">
+</head>
+<body>
+...
+</body>
+</html>
+````
+
+#### 로봇 META 지시자
+
+- 지시자에는 몇가지 종류가 있으며, 점차 추가될 가능성이 있음
+- 대표적으로 `NOINDEX`, `NOFOLLOW` 가 있음
+
+#### NOINDEX
+
+- 로봇에게 이 페이지를 처리하지 말고 무시하라고 말함
+
+````html
+
+<meta name="robots" content="noindex">
+````
+
+#### NOFOLLOW
+
+- 로봇에게 이 페이지가 링크한 페이즈를 크롤링하지 말라고 말함
+
+````html
+
+<meta name="robots" content="nofollow">
+````
+
+#### INDEX
+
+- 로봇에게 이 페이지를 처리하라고 말함
+
+#### FOLLOW
+
+- 로봇에게 이 페이지가 링크한 페이지를 크롤링하라고 말함
+
+#### NOARCHIVE
+
+- 로봇에게 이 페이지를 캐시하지 말라고 말함
+
+#### ALL
+
+- `INDEX` + `FOLLOW` 와 같음
+
+#### NONE
+
+- `NOINDEX` + `NOFOLLOW` 와 같음
+
+#### 검색엔진 META 태그
+
+| name          | conent        | description                                                                 |
+|---------------|---------------|-----------------------------------------------------------------------------|
+| DESCRIPTION   | <description> | 페이지에 대한 간략한 설명 `<meta name="description" content="이 페이지는 간략히  ~~ 페이지입니다.">` |
+| KEYWORDS      | <쉼표 목록>       | 페이지에 대한 키워드, 검색을 도움 `<meta name="keywords" content="키워드1, 키워드2, 키워드3">`     |
+| REVISIT-AFTER | <숫자 days>     | 검색엔진이 페이지를 다시 방문할 때까지의 시간 `<meta name="revisit-after" content="7 days">`    |
+
 ## 5. 로봇 에티켓
 
 ## 6. 검색엔진
