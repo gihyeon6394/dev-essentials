@@ -457,4 +457,7 @@ if($robotsrules -> allowed($some_target_url)){
 
 ## 5. 로봇 에티켓
 
+- 1993년 웹 로봇 커뮤니티 개척자 Martijn Koster가 작성한 가이드
+- https://www.robotstxt.org/guidelines.html
+
 ## 6. 검색엔진
