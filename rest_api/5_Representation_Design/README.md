@@ -453,6 +453,156 @@ application/wrml;
 
 ````
 
+#### Document Schema Representation
+
+- Document는 모든 reousrce의 base type
+
+````
+# Request
+GET /common/Document HTTP/1.1
+Host: api.schemas.wrml.org
+
+# Response
+HTTP/1.1 200 OK
+Content-Type: application/wrml;
+  format="http://api.formats.wrml.org/application/json";
+  schema="http://api.schemas.wrml.org/common/Document"
+{
+  "name" : "Document",
+  "version" : 1,
+  "stateFacts" : ["Docroot", "Identifiable", "ReadOnly"],
+  "linkFormulas" : {
+    "self" : {
+      "rel" : "http://api.relations.wrml.org/common/self",
+      "condition" : "Identifiable"
+    },
+    "metadata" : {
+      "rel" : "http://api.relations.wrml.org/common/metadata",
+      "condition" : "Identifiable"
+    },
+    "parent" : {
+      "rel" : "http://api.relations.wrml.org/common/parent",
+      "condition" : "Identifiable and not Docroot"
+    },
+    "update" : {
+      "rel" : "http://api.relations.wrml.org/common/update",
+      "condition" : "Identifiable and not ReadOnly"
+    },
+    "delete" : {
+      "rel" : "http://api.relations.wrml.org/common/delete",
+      "condition" : "Identifiable and not Docroot"
+    }
+  },
+  "description" : "A resource archetype used to model a singular concept.",
+  "links" : {
+    "self" : {
+      "href" : "http://api.schemas.wrml.org/common/Document",
+      "rel" : "http://api.relations.wrml.org/common/self"
+    }
+    # Other common schema links...
+  }
+}
+````
+
+- `stateFacts` : REST API 리소스 타입을 universal하게 표현
+- `linkFormulas` : common link avaliability
+- `metadata` : `HEAD` request에 대한 응답으로 포함됨
+
+#### Container Schema Representation
+
+- Collection : server과 관리하는 deriectory 리소스를 표현
+- Store : client가 관리하는 repository 리소스 표현
+
+````
+# Request
+GET /common/Container HTTP/1.1
+Host: api.schemas.wrml.org
+
+# Response
+HTTP/1.1 200 OK
+Content-Type: application/wrml;
+  format="http://api.formats.wrml.org/application/json";
+  schema="http://api.schemas.wrml.org/common/Container"
+{
+  "name" : "Container",
+  "version" : 1,
+  "extends" : ["http://api.schemas.wrml.org/common/Document"],
+  "fields" : {
+    "elements" : {
+      "type" : "List",
+      "description" : "The paginated list of contained elements."
+    },
+    "size" : {
+      "type" : "Integer",
+      "description" : "The total number of elements currently contained."
+    },
+    "pageSize" : {
+      "type" : "Integer",
+      "description" : "The maximum number of elements returned per page."
+    },
+    "pageStartIndex" : {
+        "type" : "Integer",
+        "description" : "The zero-based index of the page's first element."
+      },
+    },
+    "stateFacts" : [
+      "Empty",
+      "FirstPage",
+      "LastPage",
+      "Paginated"
+    ],
+    "linkFormulas" : {
+      "delete" : {
+        "rel" : "http://api.relations.wrml.org/common/delete",
+        "condition" : "Identifiable and not Docroot and Empty"
+      },
+      "next" : {
+        "rel" : "http://api.relations.wrml.org/common/next",
+        "condition" : "(Identifiable and not Empty) and (Paginated and not LastPage)"
+      },
+      "previous" : {
+        "rel" : "http://api.relations.wrml.org/common/previous",
+        "condition" : "(Identifiable and not Empty) and (Paginated and not FirstPage)"
+      }
+  },
+  "description" : "A base container of elements."
+}
+````
+
+- schema `Container` : `Document` 스키마 확장
+    - `extends` 키워드가 없으면, `Document` 스키마를 묵시적으로 확장
+- `elements` : collection이나 store를 표현하기 위한 field
+- `Container` 로 표기된 리소스는 empty 일 때 삭제됨
+
+#### Store Schema Representation
+
+````
+# Request
+GET /common/Store HTTP/1.1
+Host: api.schemas.wrml.org
+
+# Response
+HTTP/1.1 200 OK
+Content-Type: application/wrml;
+  format="http://api.formats.wrml.org/application/json";
+  schema="http://api.schemas.wrml.org/common/Store"
+# NOTE: The description's line break must be omitted in well-formed JSON.
+{
+  "name" : "Store",
+  "version" : 1,
+  "extends" : ["http://api.schemas.wrml.org/common/Container"],
+    "linkFormulas" : {
+    "insert" : {
+      "rel" : "http://api.relations.wrml.org/common/insert",
+      "condition" : "Identifiable and not ReadOnly"
+    }
+  },
+  "description" : "A resource archetype used to model a client-managed
+  resource repository."
+}
+````
+
+- `insert` : store에 새로운 리소스를 추가하는 link
 
 ## Error Representation
 
