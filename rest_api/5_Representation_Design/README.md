@@ -606,4 +606,81 @@ Content-Type: application/wrml;
 
 ## Error Representation
 
+- 4xx, 5xx 에러는 클라이언트에게 추가 정보를 entity body를 통해 주기를 권장
+
+### Rule : A consistent form should be used to represent errors
+
+````
+application/wrml;
+  format="http://api.formats.wrml.org/application/json";
+  schema="http://api.schemas.wrml.org/common/Error"
+````
+
+```json
+{
+  "id": "Text",
+  "description": "Text"
+}
+```
+
+- `id` : error type의 식별 ID
+- `description` : 에러에 대한 추가 설명
+
+```json
+{
+  "id": "http://api.errors.wrml.org/common/invalidRequest",
+  "description": "The request is invalid."
+}
+```
+
+```json
+{
+  "id": "BAD_REQUEST",
+  "description": "The request is invalid."
+}
+
+```
+
+### Rule: A consistent form should be used to represent error responses
+
+- request를 처리하는데 에러가 있으면 응답 message body에 error representation을 포함
+- 응답 코드는 4xx or 5xx를 써야함
+
+````
+application/wrml;
+  format="http://api.formats.wrml.org/application/json";
+  schema="http://api.schemas.wrml.org/common/ErrorContainer" 
+````
+
+- WRML media type
+- `ErrorContainer` schema
+
+```json
+{
+  "elements": [
+    {
+      "id": "Text",
+      "description": "Text"
+    }
+  ]
+}
+```
+
+```json
+{
+  "elements": [
+    {
+      "id": "Update Failed",
+      "description": "Failed to update /users/1234"
+    }
+  ]
+}
+```
+
+- `elements` :  `ErrorContainer` schema를 List 필드로 확장
+
+### Rule: Consistent error types should be used for common error conditions
+
+- generic error type을 정의하고 여러 API에서 공유
+
 ## Recap
