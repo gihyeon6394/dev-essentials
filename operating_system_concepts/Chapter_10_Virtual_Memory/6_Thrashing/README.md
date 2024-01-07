@@ -83,4 +83,14 @@ D = ∑ WSSi
 
 ## 3. Page-Fault Frequency
 
+![img_3.png](img_3.png)
+
+- page-fualt rate가 너무 높으면 프로세스가 frame이 부족한 것 (Thrashing)
+- page-fault rate가 너무 낮으면 프로세스가 frame이 충분한 것
+- upper lmit, lower limit를 정해두고, 그 사이에 page-fault rate를 유지하도록 함
+- upper limit을 초과하면, 프로세스에 frame을 더 할당
+- lower limit을 넘지 못하면, 프로세스의 frame을 회수
+- working-set 전략과 마찬가지로, swap out할 프로세스를 선택해야함
+    - page-fault rate가 올라가지만, free frame이 없을 때
+
 ## 4. Current Practice
