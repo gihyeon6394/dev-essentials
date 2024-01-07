@@ -22,7 +22,7 @@
 4. [Page Replacement](4_Page_Replacement/README.md)
 5. [Allocation of Frames](5_Allocation_of_Frames/README.md)
 6. [Thrashing](6_Thrashing/README.md)
-7. Memory C
+7. [Memory Compression](7_Memory_Compression/README.md)
 8. Allocating Kernel Memory
 9. Other Considerations
 10. Operating-System Examples
