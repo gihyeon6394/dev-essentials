@@ -94,3 +94,7 @@ D = ∑ WSSi
     - page-fault rate가 올라가지만, free frame이 없을 때
 
 ## 4. Current Practice
+
+- 최근의 best practice는 컴퓨터에 충분한 물리 메로리를 제공하여 thrashing, swapping을 피하도록 함
+- 작은 스마트폰부터, 큰 서버까지 충분한 메모리를 제공하여 thrashing을 피함
+- 극악의 조건이 아니면, 가장 좋은 해결책은 충분한 메모리를 제공하는 것
