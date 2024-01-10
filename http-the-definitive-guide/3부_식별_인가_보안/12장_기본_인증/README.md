@@ -93,3 +93,10 @@ WWW-Authenticate: Basic realm="Corporate Financials"
 | `Authentication-Info` | `Proxy-Authentication-Info` |
 
 ## 3. 기본 인증의 보안 결함
+
+- bae64 인코딩은 암호화가 아님
+    - 누구나 디코딩 가능
+- 재전송 공격 : 인증정보를 탈취해 제3자가 서버에 재전송해서 인증 가능
+- 사이트마다 인증정보를 다르지 않게함 : 탈취한 동일한 인증정보로 여러 사이트에 접근 가능
+- 가짜 서버가 위장해서 인증정보를 받아낼 수 있음
+- 해결방안 : 기본인증을 SSL 암호화 채널로 연계
