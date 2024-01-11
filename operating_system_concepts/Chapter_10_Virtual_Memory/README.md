@@ -23,7 +23,7 @@
 5. [Allocation of Frames](5_Allocation_of_Frames/README.md)
 6. [Thrashing](6_Thrashing/README.md)
 7. [Memory Compression](7_Memory_Compression/README.md)
-8. Allocating Kernel Memory
+8. [Allocating Kernel Memory](8_Allocating_Kernel_Memory/README.md)
 9. Other Considerations
 10. Operating-System Examples
 11. Summary
