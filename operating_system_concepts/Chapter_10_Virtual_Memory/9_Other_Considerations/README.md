@@ -60,6 +60,32 @@
 
 ## 3. TLB Reach
 
+- TLB (Translation Lookaside Buffer) : page table의 일부를 저장하는 cache
+- TLB **hit ratio** : 가상주소 변환이 page table이 아닌 TLB에서 일어나는 비율
+- hit ratio는 TLB entiry 수에 비례
+- TLB 관련 메모리는 비용이 비쌈
+
+#### TLB Reach
+
+- **TLB Reach** : TLB가 접근할 수 있는 메모리 공간 (page size의 배수의 entiry 수)
+- 방법 1 : working set을 TLB에 저장
+    - working set이 TLB에 저장됨
+    - TLB에 없으면, 프로세스는 page table을 통해 메모리 참조를 일으킴
+    - memory-intesive application은 비효율 적인 방법
+- 방법 2 : page size를 증가하거나, page size를 2배로 제공하는 방법
+    - page size를 증가하면 (4KB -> 16KB) TLB reach가 4배로 증가
+    - 큰 page size를 요구하지 않는 application에서는 fragmentaion 증가
+    - e.g. Linux는 4KB 페이지 사이즈를 제공하고, **huge page** 를 (더큰 사이즈의 page) 제공
+
+#### 예시 : ARMv8 architecture
+
+- page와 region들의 크기가 서로 다름
+- 각 TLB entry에 **contiguous bit**을 둠
+- 특정 TLB entry에 있는 contiguous bit은 연속적인 메모리 block에 매핑됨
+    - 방법 1. 64-KB TLB entryf를 16 * 4KB 근접 block으로 구성
+    - 방법 2. 1-GB TLB entry를 32 * 32MB 근접 block으로 구성
+    - 방법 3. 2-MB TLB entry를 32 * 64KB 혹은 128 * 16KB 근접 block으로 구성
+
 ## 4. Inverted Page Tables
 
 ## 5. Program Structure
