@@ -88,6 +88,20 @@
 
 ## 4. Inverted Page Tables
 
+![img.png](img.png)
+
+- 물리 메모리의 page마다 entry에 매핑되는 하나의 table
+- 가상 메모리와 physical frame간의 매핑 정보를 table에 저장
+
+#### external page table(각 process마다 가지는 page table)
+
+- Inverted Page Table 단점 : process의 가상 주소 공간에 대한 완전한 벙보를 포함하지 않음
+- 참조가 일어난 페이지가 memory에 있는지 알 수 없음
+- 따라서 external page talbe(각 process마다 가지는 page table)을 유지해야함
+    - 전통적인 page table과 비슷
+    - virtual page의 위치를 저장
+- external page table은 page fault 시에만 사용
+
 ## 5. Program Structure
 
 ## 6. I/O Interlock and Page Locking
