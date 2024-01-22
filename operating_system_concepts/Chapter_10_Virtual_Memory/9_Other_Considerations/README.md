@@ -104,4 +104,41 @@
 
 ## 5. Program Structure
 
+- demand paging은 메모리 구조를 분석하여 잘 설계할수록 시스템 성능이 좋아짐
+
+#### 예시 : - 1 page 크기가 128 word 일 때
+
+- `data`는 1 row당 1 page를 사용
+
+````
+int i, j;
+int[128][128] data;
+
+for (j = 0; j < 128; j++)
+    for (i = 0; i < 128; i++)
+        data[i][j] = 0;
+````
+
+- `data[0][0], data[1][0], data[2][0], ...` 순으로 메모리에 올라감
+- 각 페이지마다 0씩 초기화하면서 시작
+- 문제 : OS가 128 frame 미만으로 할당하면, 16,384 (128 * 128) page fault가 발생
+
+````
+int i, j;
+int[128][128] data;
+for (i = 0; i < 128; i++)
+    for (j = 0; j < 128; j++)
+        data[i][j] = 0;
+````
+
+- `data[0][0], data[0][1], data[0][2], ...` 순으로 메모리에 올라감
+- 다음 페이지를 할당하기 전에, 이전 페이지를 모두 0으로 초기화
+
+#### compiler와 loader 성능
+
+- code와 data를 분리하면, code page는 read-only로 설정 가능
+- clean page는 page-out 할 필요가 없음
+    - clean page : page가 disk에 있는 것과 동일한 내용을 가지고 있는 page
+- loader는 page boundary를 가로지르는 routine을 피함
+
 ## 6. I/O Interlock and Page Locking
