@@ -142,3 +142,65 @@ for (i = 0; i < 128; i++)
 - loader는 page boundary를 가로지르는 routine을 피함
 
 ## 6. I/O Interlock and Page Locking
+
+![img_1.png](img_1.png)
+
+- Demand paging에서 몇 page를 memory에 **locked** 을 허용할 필요가 있음
+    - user memory로부터 I/O가 완료되었을 떄
+        1. USB storage device의 controller 가 전송할 bytes 수와 buffer 메모리 주소를 받음
+        2. 전송이 완료되면, CPU에 interrupt를 발생시킴
+
+#### 문제점
+
+1. process A가 I/O request를 보내고, I/O device를 위해 enqueue
+2. CPU는 다른 process들을 실행하러감
+3. 다른 프로세스들에서 page fault 발생 (global replacement alorithm을 사용 중)
+    - waiting process를 위한 memory buffer를 포함하는 페이지를 교체
+    - page out
+4. 조금 뒤
+5. process A의 I/O request가 queue의 head에 도달
+6. I/O 가 지정된 주소를 발행하지만, 해당 주소의 frame은 다른 process의 page로 사용중
+
+#### 해결방안 1. I/O를 절대 user memory에서 실행하지 않음
+
+- data를 항상 system memory와 user memeory간에 복사해서 사용
+- I/O는 system memroy와 I/O device에서만 발생
+- e.g. tape에 wirte을 해야한다면,
+    1. system memory로 block을 copy
+    2. I/O device로 block을 write
+- 문제점 : overhead
+    - 추가 copy가 필요함
+
+#### 해결방안 2. memeory에 page를 locked
+
+- 모든 frame에 lock bit
+- frame이 locked되면, replacement algorithm은 해당 frame을 무시
+- e.g. disk에 blockd을 write해야한다면,
+    1. block을 가진 page를 memory에 lock
+    2. lock된 page는 replacement algorithm에서 무시
+    3. wirte이 종료되면, page를 unlock
+
+### Lock bit
+
+- Lock bit의 위험함
+    - on되지만 절대 off되지 않을 수 있음
+    - 즉, locked frame이 unusable이 될 수 있음
+
+#### Lock bit 사용처 1. user process (e.g database)
+
+- 자주 몇몇 혹은 모든 OS kernel이 memory에 locked
+    - 대부분의 OS는 kernel (or kernel module)이 일으킨 page fualt를 막음
+- user process도 page locking이 필요할 수 있음
+    - e.g. database process는 memory chunk를 관리
+        - e.g. 2차 저장소와 memory간에 block을 복사할 때
+- page **pinning** (고정) : page를 memory에 lock하는 것
+    - 대부분의 OS에서 application이 논리적 주소공간을 특정 영역에 고정되도록 허용하는 system call을 제공
+
+#### Lock bit 사용처 2. 일반적인 page 교체 알고리즘
+
+1. 낮은 우선순위의 process 가 page fault를 일으킴
+2. paging system이 필요한 page를 찾아 memory에 올림
+3. process는 ready queue에 enqueue
+4. 프로세스의 우선순위가 낮기 때문에 CPU scheduler는 해당 process를 얼마동안 실행하지 않음
+5. 높은 우선순위의 프로세스가 page fault를 일으킴
+6. 낮은 프로세스 떄문에 올라갔지만 사용되지 않는 page로 교체
