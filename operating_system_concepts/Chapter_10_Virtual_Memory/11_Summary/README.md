@@ -1,0 +1,34 @@
+# 11. Summary
+
+- Virtual Memory는 물리 메모리를 추상화해서 매우 큰 스토리지 배열로 보이게 한다.
+- Virtual Memory의 장점
+    - 물리 메모리 크기보다 큰 프로그램 실행 가능
+    - 프로그램이 전체 메모리를 사용하지 않아도 됨
+    - 프로세스간에 메모리 공유 가능
+    - 프로세스가 효율적으로 생성될 수 있음
+- Demand Paging 기술은 프로그램 실행 중에 필요할때만 페이지를 로딩하는 방식
+    - 필요 없는 페이지는 메모리에 로드되지 않음
+- Page fault : 최근에 참조된 페이지가 메모리에 없을 때 발생
+    - Page fault가 발생하면 운영체제는 backing store에서 가능한 페이지를 메모리에 로드
+- Copy-on-write는 자식 프로세스가 부모 프로세스와 동일한 address space를 공유하게 해줌
+    - 자식이나 부모가 페이지를 수정하면 페이지 복사본이 생성됨
+- page-replacement 알고리즘 : 가용 가능한 메모리가 부족할 때, 새로운 페이지와 교체할 페이지를 선택하는 알고리즘
+    - FIFO, Optimal, LRU 등의 알고리즘이 있음
+    - 대부분의 시스템이 LRU-approximation 알고리즘을 사용
+- Global page-replacement 알고리즘은 프로세스간에 페이지 교체가 가능
+    - Local page-replacement 알고리즘은 프로세스 내에서만 페이지 교체가 가능
+- Thrasging은 프로세스가 너무 많은 페이지 폴트를 발생시킬 때 발생
+- locality는 특정 페이지 집합이 자주 참조되는 경향을 의미
+    - 프로세스가 실행될 때 locality 간에 이동됨
+    - working set은 locality에 기반하여 프로세스가 필요로 하는 페이지 집합으로 정의됨
+- Memory compression : 여러 페이지를 하나의 페이지로 압축하는 메모리 관리 테크닉
+    - 압축된 메모리는 모바일 시스템 등에서 사용됨
+- Kernel memory는 user-mode 프로세스와 달리 할당됨
+    - 서로 다른 사이즈의 청크에 연속적으로 할당됨
+    - buddy system, slab allocation 기술이 사용됨
+- TLB reach는 TLB에 있는 접근 가능한 메모리 양을 의미
+    - TLB 엔트리 수 * 페이지 사이즈
+    - 페이지 사이즈를 높이면 TLB reach가 높아짐
+- Linux, Windows, Solaris는 비슷하게 Virtual Memory를 구현
+    - demand paging, copy-on-write, 다른 기술들을 사용
+    - clock algorithm으로 알려진 LRU approximation 변형을 사용
