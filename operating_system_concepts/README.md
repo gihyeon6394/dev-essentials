@@ -17,7 +17,7 @@
     - [Chapter 9 Main Memory](Chapter_9_Main_Memory/README.md)
     - [Chapter 10 Virtual Memory](Chapter_10_Virtual_Memory/README.md)
 5. PART FIVE STORAGE MANAGEMENT
-    - Chapter 11 Mass-Storage Structure
+    - [Chapter 11 Mass-Storage Structure](Chapter_11_Mass_Storage_Structure/README.md)
     - Chapter 12 I/O Systems
 6. PART SIX FILE SYSTEMS
     - Chapter 13 File-System Interface
