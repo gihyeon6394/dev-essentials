@@ -38,7 +38,7 @@
     - e.g. n계층은 n-1 계층이 제공한 비신뢰 메시지를 신뢰 메시지로 가공해 n+1 계층에게 제공함
 - 프로토콜 계층은 하드웨어, 소프트웨어, 혹은 둘의 조합으로 구현됨
     - Application Layer prodtocol (HTTP/SMTP)는 end system에서 실행되는 소프트웨어로 구현됨
-    - pysical layer, data link layer (Ethernet, WiFi interces Card)는 하드웨어로 구현됨
+    - physical layer, data link layer (Ethernet, WIFI interface Card)는 하드웨어로 구현됨
 - **protocol stack** : 계층별 프로토콜을 모아놓은 것
 
 ### Application Layer (애플리케이션 계층)
@@ -54,7 +54,7 @@
 - 둘 다 application layer의 메시지를 전달 가능
 - TCP : connection-oriented
     - 메시지 전송 보장
-    - flow contorl(흐름 제어 = 전송 속도 조절)
+    - flow control(흐름 제어 = 전송 속도 조절)
     - long message를 작은 segment로 나누어 전송, source는 네트워크가 혼잡할때 전송 속도를 조절함
 - UDP : connectionless
     - 메시지 전송 보장 안함
