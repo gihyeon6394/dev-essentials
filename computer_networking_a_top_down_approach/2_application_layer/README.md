@@ -6,4 +6,4 @@
 4. [DNS-The Internet's Directory Service](4_dns_the_internets_directory_service/README.md)
 5. [Peer-to-Peer File Distribution](5_peer_to_peer_file_distribution/README.md)
 6. [Video Streaming and Content Distribution Networks](6_video_streaming_and_content_distribution_networks/README.md)
-7. Socket Programming: Creating Network Applications
+7. [Socket Programming: Creating Network Applications](7_socket_programming_creating_network_applications/README.md)
