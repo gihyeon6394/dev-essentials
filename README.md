@@ -67,3 +67,7 @@ Real-Time Data and Stream Processing at Scale
 ## [Computer Networking A Top-Down Approach](computer_networking_a_top_down_approach/README.md)
 
 <img src="img_12.png"  width="30%"/>
+
+## [Hadoop: The Definitive Guide](hadoop_the_definitive_guide/README.md)
+
+![img_13.png](img_13.png)
