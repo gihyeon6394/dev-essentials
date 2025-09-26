@@ -10,7 +10,6 @@ combiner: (K2, list(V2)) → list(K2, V2)
 reduce: (K2, list(V2)) → list(K3, V3)
 partition: (K2, V2) → integer
 ```
-
 ### Java API 타입 매개변수
 
 ```java
